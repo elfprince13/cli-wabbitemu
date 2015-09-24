@@ -1,17 +1,17 @@
 #define CALC_C
-#include "calc.h"
-#include "core.h"
-#include "81hw.h"
-#include "83hw.h"
-#include "83phw.h"
-#include "83psehw.h"
-#include "86hw.h"
-#include "device.h"
-#include "var.h"
-#include "gif.h"
-#include "gifhandle.h"
-#include "link.h"
-#include "keys.h"
+#include "calc.hpp"
+#include "../core/core.hpp"
+#include "../hardware/81hw.hpp"
+#include "../hardware/83hw.hpp"
+#include "../hardware/83phw.hpp"
+#include "../hardware/83psehw.hpp"
+#include "../hardware/86hw.hpp"
+#include "../core/device.hpp"
+#include "../utilities/var.hpp"
+#include "../utilities/gif.hpp"
+#include "../utilities/gifhandle.hpp"
+#include "../hardware/link.hpp"
+#include "../hardware/keys.hpp"
 
 #ifdef _WINDOWS
 #include "disassemble.h"
@@ -306,7 +306,7 @@ bool rom_load(CALC* lpCalc, const char * FileName) {
 #ifdef WINVER
 		StringCbCopy(lpCalc->rom_path, sizeof(lpCalc->rom_path), FileName);
 #else
-		_tcscpy_s(lpCalc->rom_path, FileName);
+		strcpy(lpCalc->rom_path, FileName);
 #endif
 		FindRomVersion(tifile->model, lpCalc->rom_version, lpCalc->mem_c.flash, lpCalc->mem_c.flash_size);
 	} else if (tifile->type == ROM_TYPE) {
@@ -365,7 +365,7 @@ bool rom_load(CALC* lpCalc, const char * FileName) {
 #ifdef WINVER
 		StringCbCopy(lpCalc->rom_path, sizeof(lpCalc->rom_path), FileName);
 #else
-		_tcscpy_s(lpCalc->rom_path, FileName);
+		strcpy(lpCalc->rom_path, FileName);
 #endif
 		
 
@@ -686,7 +686,7 @@ bool calc_start_screenshot(calc_t *calc, const char *filename)
 #ifdef _WINDOWS
 		StringCbCopy(gif_file_name, PATH_MAX, filename);
 #else
-		_tcscpy_s(gif_file_name, filename);
+		strcpy(gif_file_name, filename);
 #endif
 		return true;
 	}
