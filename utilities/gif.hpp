@@ -12,7 +12,7 @@
 #ifdef WINVER
 #include "gui.h"
 #else
-#include "coretypes.h"
+#include "../core/coretypes.hpp"
 #endif
 
 extern int gif_write_state;

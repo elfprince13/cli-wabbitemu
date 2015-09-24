@@ -20,11 +20,10 @@
  * Compuserve Incorporated.  Gif(sm) is a Service Mark property of
  * Compuserve Incorporated.
  */
-#include "stdafx.h"
 
-#include "calc.h"
+#include "calc.hpp"
 #ifndef WINVER
-#include "coretypes.h"
+#include "../core/coretypes.hpp"
 #endif
 
 //#include "gif.h" // uhh...

@@ -1,8 +1,6 @@
-#include "stdafx.h"
-
-#include "var.h"
-#include "calc.h"
-#include "fileutilities.h"
+#include "var.hpp"
+#include "../hardware/calc.hpp"
+#include "fileutilities.hpp"
 #ifdef _WINDOWS
 #include "miniunz.h"
 #endif

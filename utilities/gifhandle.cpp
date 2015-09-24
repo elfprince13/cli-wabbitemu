@@ -1,13 +1,11 @@
-#include "stdafx.h"
-
-#include "gif.h"
+#include "gif.hpp"
 #ifdef WINVER // ...oops
 #include "resource.h"
 #else
-#include "coretypes.h"
+#include "../core/coretypes.hpp"
 #endif
-#include "lcd.h"
-#include "gifhandle.h"
+#include "../hardware/lcd.hpp"
+#include "gifhandle.hpp"
 #ifdef WINVER
 #include "fileutilities.h"
 #endif

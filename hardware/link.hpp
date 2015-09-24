@@ -7,7 +7,7 @@
 #endif
 
 #include "var.hpp"
-#include "../interface/state.h"
+#include "../interface/state.hpp"
 
 // Link timing
 #define LINK_DELAY 			100				/* Delay between commands */

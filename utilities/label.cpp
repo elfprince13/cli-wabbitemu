@@ -1,10 +1,10 @@
 #define LABEL_C
-#include "label.h"
-#include "core.h"
-#include "calc.h"
+#include "label.hpp"
+#include "../core/core.hpp"
+#include "../calc/calc.hpp"
 
-#include "bcalls.h"
-#include "flags.h"
+#include "bcalls.hpp"
+#include "flags.hpp"
 
 label_struct *lookup_label(LPCALC lpCalc, TCHAR *label_name) {
 	int i;

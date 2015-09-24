@@ -1,9 +1,9 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include "disassemble.h"
-#include "calc.h"
-#include "dbcommon.h"
+#include "../debugger/disassemble.h"
+#include "../hardware/calc.hpp"
+#include "../debugger/dbcommon.h"
 
 void MyDrawText(LPCALC, HDC, RECT *, Z80_info_t *, ViewType, const TCHAR *, ...);
 TCHAR* mysprintf(LPCALC, Z80_info_t *, ViewType, const TCHAR *, ...);

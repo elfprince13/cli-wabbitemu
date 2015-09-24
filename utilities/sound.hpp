@@ -1,7 +1,7 @@
 #ifndef SOUND_H
 #define SOUND_H
 
-#include "core.h"
+#include "../core/core.hpp"
 
 #define	SampleRate		(48000)
 #define Channels		(2)

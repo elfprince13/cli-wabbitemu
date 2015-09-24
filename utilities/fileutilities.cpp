@@ -1,11 +1,10 @@
-#include "stdafx.h"
-#include "coretypes.h"
+#include "../core/coretypes.hpp"
 #ifdef WXVER
 #include <wx/wx.h>
 extern char* wxStringToChar(wxString);
 #endif
 
-#include "fileutilities.h"
+#include "fileutilities.hpp"
 
 int BrowseFile(TCHAR* lpstrFile, const TCHAR *lpstrFilter, const TCHAR *lpstrTitle, const TCHAR *lpstrDefExt, unsigned int flags) {
 	lpstrFile[0] = '\0';

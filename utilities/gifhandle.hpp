@@ -1,4 +1,4 @@
-#include "calc.h"
+#include "../hardware/calc.hpp"
 
 extern int gif_base_delay_start;
 bool get_gif_filename();

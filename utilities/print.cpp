@@ -1,6 +1,6 @@
-#include "print.h"
-#include "label.h"
-#include "core.h"
+#include "print.hpp"
+#include "label.hpp"
+#include "../core/core.hpp"
 
 
 #define press_text(sztext, zcolor) press_textA(sztext, zcolor, &r, hdc)

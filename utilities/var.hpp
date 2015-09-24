@@ -1,7 +1,7 @@
 #ifndef VAR_H
 #define VAR_H
 
-#include "savestate.h"
+#include "savestate.hpp"
 
 typedef struct INTELHEX {
 	int DataSize;

@@ -1,6 +1,6 @@
 #ifndef _LABEL_H_TYPES
 #define _LABEL_H_TYPES
-#include "coretypes.h"
+#include "../core/coretypes.hpp"
 
 typedef struct {
     TCHAR *name;
@@ -13,7 +13,7 @@ typedef struct {
 
 #ifndef _LABEL_H_PROTOTYPES
 
-#include "calc.h"
+#include "../hardware/calc.hpp"
 
 #ifdef _HAS_CALC_H
 #define _LABEL_H_PROTOTYPES

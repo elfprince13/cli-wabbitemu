@@ -1,10 +1,8 @@
-#include "stdafx.h"
-
-#include "core.h"
-#include "calc.h"
-#include "sound.h"
-#include "link.h"
-#include "gif.h"
+#include "../core/core.hpp"
+#include "../interface/calc.hpp"
+#include "sound.hpp"
+#include "../hardware/link.hpp"
+#include "gif.hpp"
 
 
 

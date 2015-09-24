@@ -1,7 +1,7 @@
 #ifndef EXPORTVAR_H
 #define EXPORTVAR_H
 
-#include "link.h"
+#include "../hardware/link.hpp"
 
 typedef struct {
 	FILE* stream;

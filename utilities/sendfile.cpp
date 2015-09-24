@@ -1,6 +1,6 @@
-#include "calc.h"
-#include "link.h"
-#include "label.h"
+#include "../hardware/calc.hpp"
+#include "../hardware/link.hpp"
+#include "label.hpp"
 
 //Sends a file to the given calculator
 //from the given filename

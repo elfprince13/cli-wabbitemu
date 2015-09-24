@@ -1,9 +1,7 @@
-#include "stdafx.h"
-
-#include "calc.h"
-#include "core.h"
-#include "link.h"
-#include "exportvar.h"
+#include "../hardware/calc.hpp"
+#include "../core/core.hpp"
+#include "../hardware/link.hpp"
+#include "exportvar.hpp"
 
 void intelhex (MFILE*, const unsigned char*, int size, int page = 0, int start_address = 0x4000);
 

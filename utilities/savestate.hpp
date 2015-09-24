@@ -1,7 +1,7 @@
 #ifndef SAVESTATE_H
 #define SAVESTATE_H
 
-#include "lcd.h"
+#include "../hardware/lcd.hpp"
 
 typedef struct {
 	char tag[4];

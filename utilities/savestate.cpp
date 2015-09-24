@@ -1,12 +1,10 @@
-#include "stdafx.h"
-
-#include "core.h"
-#include "savestate.h"
-#include "lcd.h"
-#include "link.h"
-#include "calc.h"
-#include "83psehw.h"
-#include "fileutilities.h"
+#include "../core/core.hpp"
+#include "savestate.hpp"
+#include "../hardware/lcd.hpp"
+#include "../hardware/link.hpp"
+#include "../hardware/calc.hpp"
+#include "../hardware/83psehw.hpp"
+#include "fileutilities.hpp"
 
 extern int def(FILE *, FILE *, int);
 extern int inf(FILE *, FILE *);
