@@ -1,6 +1,6 @@
 #ifndef DISASSEMBLE_H
 #define DISASSEMBLE_H
-#include "core.h"
+#include "core.hpp"
 #include "dbcommon.h"
 
 #define DA_NOP	0
@@ -123,22 +123,22 @@ typedef struct Z80_info {
 	int index;
 	union {
 		struct {
-			INT_PTR a1, a2, a3, a4;
+			uint32_t * a1, a2, a3, a4;
 		};
-		INT_PTR a[4];
+		uint32_t * a[4];
 	};
 	int size;			/* Size of command */
 	waddr_t waddr;
-	TCHAR expanded[32];
+	char expanded[32];
 } Z80_info_t;
 
 typedef struct Z80_command {
-	TCHAR format[32];			/* printf formatted string */
-	TCHAR clocks;				/* clocks to complete */
-	TCHAR clocks_cond;			/* Conditional clocks to complete */
+	char format[32];			/* printf formatted string */
+	char clocks;				/* clocks to complete */
+	char clocks_cond;			/* Conditional clocks to complete */
 #ifdef da_ready
-	TCHAR flag_effects[8];		/* Flag effects for all 8 bits */
-	TCHAR *flag_description;		/* optional description of flag effects */
+	char flag_effects[8];		/* Flag effects for all 8 bits */
+	char *flag_description;		/* optional description of flag effects */
 #endif
 } Z80_com_t;
 

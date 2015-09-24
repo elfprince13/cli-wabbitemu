@@ -50,7 +50,7 @@
 typedef struct GIF_TREE {
 	char typ;
 	int code;
-	BYTE ix;
+	uint8_t ix;
 	struct GIF_TREE **node;
 	struct GIF_TREE *nxt;
 	struct GIF_TREE *alt;
@@ -58,9 +58,9 @@ typedef struct GIF_TREE {
 
 int gif_write_state = GIF_IDLE;
 
-TCHAR gif_file_name[512] = _T("wabbitemu.gif");
-bool gif_autosave = FALSE;
-bool gif_use_increasing = FALSE;
+char gif_file_name[512] = ("wabbitemu.gif");
+bool gif_autosave = false;
+bool gif_use_increasing = false;
 #ifdef HIGH_SHADE_GIF
 int gif_colors = 8;
 #else
@@ -68,11 +68,11 @@ int gif_colors=7;
 #endif
 
 int gif_base_delay_start = 4;
-u_int gif_size = 2;
+uint32_t gif_size = 2;
 
-WORD gif_base_delay;
+uint16_t gif_base_delay;
 int gif_file_size = 0;
-WORD gif_delay;
+uint16_t gif_delay;
 int gif_xs;
 int gif_indiv_xs;
 int gif_ys;
@@ -80,17 +80,17 @@ int gif_frame_x;
 int gif_frame_y;
 int gif_frame_xs;
 int gif_frame_ys;
-BYTE gif_frame[GIF_FRAME_MAX];
+uint8_t gif_frame[GIF_FRAME_MAX];
 int gif_time;
 int gif_newframe;
 
 int gif_file_num = 0;
-bool gif_bw = FALSE;
+bool gif_bw = false;
 
 
 int chainlen = 0, maxchainlen = 0, nodecount = 0, lookuptypes = 0, nbits;
 short need = 8;
-GIF_TREE *empty[256], GifRoot = {LOOKUP, 0, 0, empty, NULL, NULL},
+GIF_TREE *empty[256], GifRoot = {LOOKUP, 0, 0, empty, nullptr, nullptr},
 	*topNode, *baseNode, **nodeArray, **lastArray;
 
 void gif_clear_tree(int cc, GIF_TREE *root) {
@@ -108,8 +108,8 @@ void gif_clear_tree(int cc, GIF_TREE *root) {
 	topNode = baseNode;
 	for(i = 0; i < cc; i++) {
 		root->node[i] = newNode = ++topNode;
-		newNode->nxt = NULL;
-		newNode->alt = NULL;
+		newNode->nxt = nullptr;
+		newNode->alt = nullptr;
 		newNode->code = i;
 		newNode->ix = i;
 		newNode->typ = TERMIN;
@@ -144,21 +144,21 @@ unsigned char *gif_code_to_buffer(int code, short n, unsigned char *buf) {
 	return buf;
 }
 
-int gif_encode(FILE *fout, BYTE *pixels, int depth, int siz) {
+int gif_encode(FILE *fout, uint8_t *pixels, int depth, int siz) {
 	GIF_TREE *first = &GifRoot, *newNode, *curNode;
-	BYTE *end;
+	uint8_t *end;
 	int cc, eoi, next, tel = 0;
 	int fsize;
 	short cLength;
 
 	unsigned char *pos, *buffer;
 
-	empty[0] = NULL;
+	empty[0] = nullptr;
 	need = 8;
 
 	nodeArray = empty;
 	memmove(++nodeArray, empty, 255 * sizeof(GIF_TREE **));
-	if ((buffer = (unsigned char*)malloc((BUFLEN + 1) * sizeof(char))) == NULL) return -1;
+	if ((buffer = (unsigned char*)malloc((BUFLEN + 1) * sizeof(char))) == nullptr) return -1;
 	buffer++;
 	pos = buffer;
 	buffer[0] = 0x0;
@@ -170,15 +170,15 @@ int gif_encode(FILE *fout, BYTE *pixels, int depth, int siz) {
 	next = cc + 2;
 	cLength = (depth == 1) ? 3 : depth + 1;
 
-	if ((topNode = baseNode = (GIF_TREE*)malloc(sizeof(GIF_TREE) * 4094)) == NULL) return -1;
-	if ((nodeArray = first->node = (GIF_TREE**)malloc(256 * sizeof(GIF_TREE*) * ARRNO)) == NULL) return -1;
+	if ((topNode = baseNode = (GIF_TREE*)malloc(sizeof(GIF_TREE) * 4094)) == nullptr) return -1;
+	if ((nodeArray = first->node = (GIF_TREE**)malloc(256 * sizeof(GIF_TREE*) * ARRNO)) == nullptr) return -1;
 	lastArray = nodeArray + (256 * ARRNO - cc);
 	gif_clear_tree(cc, first);
 	pos = gif_code_to_buffer(cc, cLength, pos);
 	end = pixels+siz;
 	curNode = first;
 	while(pixels < end) {
-		if ( curNode->node[*pixels] != NULL ) {
+		if ( curNode->node[*pixels] != nullptr ) {
 			curNode = curNode->node[*pixels];
 			tel++;
 			pixels++;
@@ -186,7 +186,7 @@ int gif_encode(FILE *fout, BYTE *pixels, int depth, int siz) {
 			continue;
 		} else if ( curNode->typ == SEARCH ) {
 			newNode = curNode->nxt;
-			while ( newNode->alt != NULL ) {
+			while ( newNode->alt != nullptr ) {
 				if ( newNode->ix == *pixels ) break;
 				newNode = newNode->alt;
 			}
@@ -202,8 +202,8 @@ int gif_encode(FILE *fout, BYTE *pixels, int depth, int siz) {
 		newNode = ++topNode;
 		switch (curNode->typ) {
 			case LOOKUP:
-				newNode->nxt = NULL;
-				newNode->alt = NULL,
+				newNode->nxt = nullptr;
+				newNode->alt = nullptr,
 				curNode->node[*pixels] = newNode;
 				break;
 			case SEARCH:
@@ -214,14 +214,14 @@ int gif_encode(FILE *fout, BYTE *pixels, int depth, int siz) {
 					curNode->node[*pixels] = newNode;
 					curNode->node[(curNode->nxt)->ix] = curNode->nxt;
 					lookuptypes++;
-					newNode->nxt = NULL;
-					newNode->alt = NULL,
-					curNode->nxt = NULL;
+					newNode->nxt = nullptr;
+					newNode->alt = nullptr,
+					curNode->nxt = nullptr;
 					break;
 				}
 			case TERMIN:
 				newNode->alt = curNode->nxt;
-				newNode->nxt = NULL,
+				newNode->nxt = nullptr,
 				curNode->nxt = newNode;
 				curNode->typ = SEARCH;
 				break;
@@ -292,14 +292,14 @@ int gif_encode(FILE *fout, BYTE *pixels, int depth, int siz) {
 void gif_writer(int shades) {
 	static FILE *fp;
 	// flags = 1 111 0 010
-	BYTE gif_header[205] = {'G', 'I', 'F', '8', '9', 'a', 96, 0, 64, 0, 0xf2, 0x0f, 0};
-	static BYTE gif_info[31] = {
+	uint8_t gif_header[205] = {'G', 'I', 'F', '8', '9', 'a', 96, 0, 64, 0, 0xf2, 0x0f, 0};
+	static uint8_t gif_info[31] = {
 		0x21, 0xff, 0x0b, 'N', 'E', 'T', 'S', 'C', 'A', 'P', 'E', '2', '.', '0', 3, 1, 0, 0, 0,
 		0x21, 0xfe, 8, 'W', 'a', 'b', 'b', 'i', 't', 0, 0, 0
 	};
-	static BYTE gif_img[18] = {0x21, 0xf9, 4, 5, 11, 0, 0x0f, 0, 0x2c, 0, 0, 0, 0, 96, 0, 64, 0, 0};
-	static BYTE gif_frame_old[GIF_FRAME_MAX];
-	static BYTE gif_frame_out[GIF_FRAME_MAX];
+	static uint8_t gif_img[18] = {0x21, 0xf9, 4, 5, 11, 0, 0x0f, 0, 0x2c, 0, 0, 0, 0, 96, 0, 64, 0, 0};
+	static uint8_t gif_frame_old[GIF_FRAME_MAX];
+	static uint8_t gif_frame_out[GIF_FRAME_MAX];
 
 	switch (gif_write_state) {
 		case GIF_IDLE:
@@ -316,13 +316,13 @@ void gif_writer(int shades) {
 #define LCD_HIGH_MUL 6
 				
 				if (gif_bw) {
-					gif_header[13 + i * 3] = (BYTE) (0xFF * color_ratio);
-					gif_header[14 + i * 3] = (BYTE) (0xFF * color_ratio);
-					gif_header[15 + i * 3] = (BYTE) (0xFF * color_ratio);
+					gif_header[13 + i * 3] = (uint8_t) (0xFF * color_ratio);
+					gif_header[14 + i * 3] = (uint8_t) (0xFF * color_ratio);
+					gif_header[15 + i * 3] = (uint8_t) (0xFF * color_ratio);
 				} else {
-					gif_header[13 + i * 3] = (BYTE) ((0x9E - (0x9E/LCD_HIGH_MUL)) * color_ratio + (0x9E/LCD_HIGH_MUL));
-					gif_header[14 + i * 3] = (BYTE) ((0xAB - (0xAB/LCD_HIGH_MUL)) * color_ratio + (0xAB/LCD_HIGH_MUL));
-					gif_header[15 + i * 3] = (BYTE) ((0x88 - (0x88/LCD_HIGH_MUL)) * color_ratio + (0x88/LCD_HIGH_MUL));
+					gif_header[13 + i * 3] = (uint8_t) ((0x9E - (0x9E/LCD_HIGH_MUL)) * color_ratio + (0x9E/LCD_HIGH_MUL));
+					gif_header[14 + i * 3] = (uint8_t) ((0xAB - (0xAB/LCD_HIGH_MUL)) * color_ratio + (0xAB/LCD_HIGH_MUL));
+					gif_header[15 + i * 3] = (uint8_t) ((0x88 - (0x88/LCD_HIGH_MUL)) * color_ratio + (0x88/LCD_HIGH_MUL));
 				}
 #else
 				gif_header[13 + i * 3] = 255 - i * 255 / (gif_colors-1);
@@ -344,11 +344,7 @@ void gif_writer(int shades) {
 			gif_header[7] = gif_xs >> 8;
 			gif_header[8] = gif_ys;
 			gif_header[9] = gif_ys >> 8;
-#ifdef WINVER
-			_tfopen_s(&fp, gif_file_name, _T("wb"));
-#else
-			fp = _tfopen_s(gif_file_name, "wb");
-#endif
+			fp = fopen(gif_file_name, "wb");
 			fwrite(gif_header, 13 + (3 * (1 << (palette_bits+1))), 1, fp);
 			fwrite(gif_info, 31, 1, fp);
 			gif_file_size = 236;
@@ -368,7 +364,7 @@ void gif_writer(int shades) {
 				gif_delay += gif_base_delay;
 			} else {
 				gif_img[3] = 5;
-				gif_img[4] = (BYTE) gif_delay;
+				gif_img[4] = (uint8_t) gif_delay;
 				gif_img[5] = gif_delay >> 8;
 				gif_img[9] = gif_frame_x;
 				gif_img[10] = gif_frame_x >> 8;
@@ -422,7 +418,7 @@ void gif_writer(int shades) {
 		}
 		case GIF_END: {
 			int i;
-			gif_img[4] = (BYTE) gif_delay;
+			gif_img[4] = (uint8_t) gif_delay;
 			gif_img[5] = gif_delay >> 8;
 			gif_img[9] = gif_frame_x;
 			gif_img[10] = gif_frame_x >> 8;

@@ -129,9 +129,9 @@ void gui_debug(LPCALC lpCalc) {
 		oldDebugger->Show();
 		return;
 	}
-	lpCalc->running = FALSE;
+	lpCalc->running = false;
 	calc_pause_linked();
-	WabbitemuDebugger *debugger = new WabbitemuDebugger(NULL, lpCalc);
+	WabbitemuDebugger *debugger = new WabbitemuDebugger(nullptr, lpCalc);
 	debugger->Show();
 }
 
@@ -168,7 +168,7 @@ WabbitemuFrame * gui_frame(LPCALC lpCalc) {
 		mainFrame->wxLCD->Move(lpCalc->LCDRect.GetX(), lpCalc->LCDRect.GetY());
 	}
 	
-	lpCalc->running = TRUE;
+	lpCalc->running = true;
 	lpCalc->breakpoint_callback = gui_debug;
 	mainFrame->SetSpeed(100);
 	
@@ -230,7 +230,7 @@ void WabbitemuFrame::gui_frame_update() {
 	bool foundScreen = false;
 	if (((skinWidth != keymapWidth) || (skinHeight != keymapHeight)) && skinHeight > 0 && skinWidth > 0) {
 		lpCalc->SkinEnabled = false;
-		wxMessageBox(wxT("Skin and Keymap are not the same size"), wxT("Error"),  wxOK, NULL);
+		wxMessageBox(wxT("Skin and Keymap are not the same size"), wxT("Error"),  wxOK, nullptr);
 	} else {
 		lpCalc->SkinSize.SetWidth(skinWidth);
 		lpCalc->SkinSize.SetHeight(skinHeight);		//find the screen size
@@ -262,17 +262,17 @@ void WabbitemuFrame::gui_frame_update() {
 		lpCalc->LCDRect.SetBottom(--foundY);
 	}
 	if (!foundScreen) {
-		wxMessageBox(wxT("Unable to find the screen box"), wxT("Error"), wxOK, NULL);
+		wxMessageBox(wxT("Unable to find the screen box"), wxT("Error"), wxOK, nullptr);
 		lpCalc->SkinEnabled = false;
 	}
 
 	if (!lpCalc->SkinEnabled) {
-		if (wxMenu != NULL) {
+		if (wxMenu != nullptr) {
 			wxMenu->Check(ID_View_Skin, false);
 		}
 		// Create status bar
 		wxStatusBar *wxStatus = this->GetStatusBar();
-		if (wxStatus == NULL) {
+		if (wxStatus == nullptr) {
 			wxStatus = this->CreateStatusBar(2, wxST_SIZEGRIP, wxID_ANY );
 		}
 		const int iStatusWidths[] = {100, -1};
@@ -283,11 +283,11 @@ void WabbitemuFrame::gui_frame_update() {
 		wxSize skinSize(128*lpCalc->scale, 64*lpCalc->scale);
 		this->SetClientSize(skinSize);
 	} else {
-		if (wxMenu != NULL) {
+		if (wxMenu != nullptr) {
 			wxMenu->Check(ID_View_Skin, true);
 		}
 		wxStatusBar *wxStatus = this->GetStatusBar();
-		if (wxStatus != NULL) {
+		if (wxStatus != nullptr) {
 			wxStatus->Destroy();
 		}
 		wxSize skinSize(350, 725);
@@ -298,7 +298,7 @@ void WabbitemuFrame::gui_frame_update() {
 	this->SendSizeEvent();
 }
 
-WabbitemuFrame::WabbitemuFrame(LPCALC lpCalc) : wxFrame(NULL, wxID_ANY, wxT("Wabbitemu"))
+WabbitemuFrame::WabbitemuFrame(LPCALC lpCalc) : wxFrame(nullptr, wxID_ANY, wxT("Wabbitemu"))
 {
 	this->lpCalc = lpCalc;
 	this->skinWindow = new SkinWindow(this, lpCalc);
@@ -546,8 +546,8 @@ void WabbitemuFrame::OnPaint(wxPaintEvent& event)
 }
 
 void WabbitemuFrame::OnFileNew(wxCommandEvent &event) {
-	TCHAR *newFilePath = (TCHAR *) malloc(PATH_MAX);
-	_tcscpy(newFilePath, lpCalc->rom_path);
+	char *newFilePath = (char *) malloc(PATH_MAX);
+	strcpy(newFilePath, lpCalc->rom_path);
 	lpCalc = calc_slot_new();
 	if (rom_load(lpCalc, newFilePath) == -1) {
 		wxMessageBox(wxT("Failed to create new calc"));
@@ -571,7 +571,7 @@ All Files (*.*)|*.*\0");
 	filepath[0] = '\0';
 	filestr[0] = '\0';
 	
-	wxFileDialog dialog(NULL, wxT("Wabbitemu Open File"),
+	wxFileDialog dialog(nullptr, wxT("Wabbitemu Open File"),
 	wxT(""), wxT(""), lpstrFilter, wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
 	if (dialog.ShowModal() != wxID_OK) {
 		return;	
@@ -588,24 +588,24 @@ All Files (*.*)|*.*\0");
 }
 
 void WabbitemuFrame::OnFileSave(wxCommandEvent &event) {
-	TCHAR FileName[MAX_PATH];
-	const TCHAR lpstrFilter[] = _T("\
+	char FileName[PATH_MAX];
+	const char lpstrFilter[] = ("\
 Known File types ( *.sav; *.rom; *.bin) |*.sav;*.rom;*.bin|\
 Save States  (*.sav)|*.sav|\
 ROMS  (*.rom; .bin)|*.rom;*.bin|\
 All Files (*.*)|*.*\0");
-	if (!SaveFile(FileName, lpstrFilter, _T("Wabbitemu Save State"), _T(".sav"))) {
+	if (!SaveFile(FileName, lpstrFilter, ("Wabbitemu Save State"), (".sav"))) {
 		return;
 	}	
 	SAVESTATE_t* save = SaveSlot(lpCalc);
 
-	_tcscpy(save->author, _T("Default"));
+	strcpy(save->author, ("Default"));
 	save->comment[0] = '\0';
 	WriteSave(FileName, save, false);
 }
 
 void WabbitemuFrame::OnFileClose(wxCommandEvent &event) {
-	Close(TRUE);
+	Close(true);
 }
 
 void WabbitemuFrame::OnSetSize(wxCommandEvent &event) {
@@ -719,11 +719,11 @@ void WabbitemuFrame::OnPauseEmulation(wxCommandEvent &event) {
 	wxMenuBar *wxMenu = this->GetMenuBar();
 	if (lpCalc->running) {
 		//Tick is checked and emulation stops
-		lpCalc->running = FALSE;
+		lpCalc->running = false;
 		wxMenu->Check(ID_Calc_Pause, true);
 	} else {
 		//Tick is unchecked and emulation resumes
-		lpCalc->running = TRUE;
+		lpCalc->running = true;
 		wxMenu->Check(ID_Calc_Pause, false);
 	}
 }
@@ -825,7 +825,7 @@ void WabbitemuFrame::OnLeftButtonUp(wxMouseEvent& event)
 	int group, bit;
 	event.Skip(true);
 	static wxPoint pt;
-	bool repostMessage = FALSE;
+	bool repostMessage = false;
 	keypad_t *kp = lpCalc->cpu.pio.keypad;
 
 #define KEY_TIMER 1
@@ -837,7 +837,7 @@ void WabbitemuFrame::OnLeftButtonUp(wxMouseEvent& event)
 			if (kp->last_pressed[group][bit] - lpCalc->cpu.timer_c->tstates >= MIN_KEY_DELAY || !lpCalc->running) {
 				kp->keys[group][bit] &= (~KEY_MOUSEPRESS);
 			} else {
-				repostMessage = TRUE;
+				repostMessage = true;
 			}
 		}
 	}
@@ -845,11 +845,11 @@ void WabbitemuFrame::OnLeftButtonUp(wxMouseEvent& event)
 	if (kp->on_last_pressed - lpCalc->cpu.timer_c->tstates >= MIN_KEY_DELAY || !lpCalc->running) {
 		lpCalc->cpu.pio.keypad->on_pressed &= ~KEY_MOUSEPRESS;
 	} else {
-		repostMessage = TRUE;
+		repostMessage = true;
 	}
 
 	if (repostMessage) {
-		//SetTimer(hwnd, KEY_TIMER, 50, NULL);
+		//SetTimer(hwnd, KEY_TIMER, 50, nullptr);
 	}
 
 	FinalizeButtons();
@@ -857,7 +857,7 @@ void WabbitemuFrame::OnLeftButtonUp(wxMouseEvent& event)
 
 void WabbitemuFrame::OnFileQuit(wxCommandEvent& WXUNUSED(event))
 {
-	Close(TRUE);
+	Close(true);
 }
 
 void WabbitemuFrame::OnViewSkin(wxCommandEvent& event)
@@ -888,7 +888,7 @@ void WabbitemuFrame::OnViewSkin(wxCommandEvent& event)
 
 void WabbitemuFrame::OnViewVariables(wxCommandEvent & WXUNUSED(event))
 {
-	wxWindow *foundWindow = wxWindow::FindWindowByName(_T("Calculator Variables"), this);
+	wxWindow *foundWindow = wxWindow::FindWindowByName(("Calculator Variables"), this);
 	if (foundWindow && foundWindow == varTree) {
 		varTree->Show();
 		varTree->SetFocus();
@@ -937,7 +937,7 @@ void WabbitemuFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 void WabbitemuFrame::OnFileGIF(wxCommandEvent& WXUNUSED(event))
 {
 	wxMenuBar *wxMenu = this->GetMenuBar();
-	wxFileDialog* saveGIFDialog = new wxFileDialog(NULL, wxT("Save GIF file"), wxT(""), wxT(""), wxT("\
+	wxFileDialog* saveGIFDialog = new wxFileDialog(nullptr, wxT("Save GIF file"), wxT(""), wxT(""), wxT("\
 GIF File (*.gif)|*.GIF;*.gif;*.Gif;*.GIf;*.gIf;*.gIF;*.giF|\
 All Files (*.*)|*.*\0"),wxFD_SAVE|wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
 	if (saveGIFDialog->ShowModal() != wxID_OK)
@@ -946,7 +946,7 @@ All Files (*.*)|*.*\0"),wxFD_SAVE|wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
 	path.append( saveGIFDialog->GetDirectory() );
 	path.append( wxFileName::GetPathSeparator() );
 	path.append( saveGIFDialog->GetFilename() );
-	_tcscpy(gif_file_name, path.c_str());
+	strcpy(gif_file_name, path.c_str());
 	// Now to actually do something!
 	if (gif_write_state == GIF_IDLE) {
 		gif_write_state = GIF_START;
@@ -965,7 +965,7 @@ All Files (*.*)|*.*\0"),wxFD_SAVE|wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
 
 void WabbitemuFrame::OnQuit(wxCloseEvent& event)
 {
-	lpCalc->active = FALSE;
+	lpCalc->active = false;
 	event.Skip();
 }
 
@@ -984,7 +984,7 @@ void WabbitemuFrame::FinalizeButtons() {
 }
 
 int SetGIFName() {
-	wxFileDialog* saveGIFDialog = new wxFileDialog(NULL, wxT("Save GIF file"), wxT(""), wxT(""), wxT("\
+	wxFileDialog* saveGIFDialog = new wxFileDialog(nullptr, wxT("Save GIF file"), wxT(""), wxT(""), wxT("\
 GIF File (*.gif)|*.GIF;*.gif;*.Gif;*.GIf;*.gIf;*.gIF;*.giF|\
 All Files (*.*)|*.*\0"),wxFD_SAVE|wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
 	if (saveGIFDialog->ShowModal() != wxID_OK)
@@ -993,6 +993,6 @@ All Files (*.*)|*.*\0"),wxFD_SAVE|wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
 	path.append( saveGIFDialog->GetDirectory() );
 	path.append( wxFileName::GetPathSeparator() );
 	path.append( saveGIFDialog->GetFilename() );
-	_tcscpy(gif_file_name, path.c_str());
+	strcpy(gif_file_name, path.c_str());
 	return true;
 }

@@ -41,8 +41,8 @@ WizardStartPage::WizardStartPage( wxWizard* parent) : wxWizardPage( parent )
 void WizardStartPage::OnFileChanged(wxFileDirPickerEvent &event) {
 	wxWindow *win = FindWindowById(wxID_FORWARD, GetParent());
 	wxString path = m_filePicker1->GetPath();
-	TIFILE_t *tifile =  newimportvar(path.c_str(), TRUE);
-	if (tifile == NULL) {
+	TIFILE_t *tifile =  newimportvar(path.c_str(), true);
+	if (tifile == nullptr) {
 		win->Enable(false);
 	} else {
 		win->Enable(true);
@@ -55,8 +55,8 @@ void WizardStartPage::OnRadioSelected(wxCommandEvent &event) {
 	if (m_browseRadio->GetValue()) {
 		win->SetLabel(wxT("Finish"));
 		wxString path = m_filePicker1->GetPath();
-		TIFILE_t *tifile =  newimportvar(path.c_str(), TRUE);
-		if (tifile == NULL) {
+		TIFILE_t *tifile =  newimportvar(path.c_str(), true);
+		if (tifile == nullptr) {
 			win->Enable(false);
 		}
 		FreeTiFile(tifile);
@@ -69,12 +69,12 @@ void WizardStartPage::OnRadioSelected(wxCommandEvent &event) {
 }
 
 wxWizardPage * WizardStartPage::GetPrev() const {
-	return NULL;
+	return nullptr;
 }
 
 wxWizardPage * WizardStartPage::GetNext() const {
 	if (m_browseRadio->GetValue()) {
-		return NULL;
+		return nullptr;
 	}
 	return next;
 }

@@ -11,12 +11,12 @@ static double timer_freq81[4] = { 1.0 / 800.0, 1.0 / 400.0, 3.0 / 800.0, 1.0 / 2
 static void port0(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = 0;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		dev->aux = (LPVOID) (0x100 * ((cpu->bus % 0x20) + 0xE0));
 		cpu->pio.devices[0x10].aux = dev->aux;
 		port10(cpu, dev);
-		cpu->output = FALSE;
+		cpu->output = false;
 		device_t devt;
 		devt.aux = cpu->pio.lcd;
 		LCD_data(cpu, &devt);
@@ -28,13 +28,13 @@ static void port0(CPU_t *cpu, device_t *dev) {
 static void port2(CPU_t *cpu, device_t *dev) {
 	LCD_t *lcd = (LCD_t *) dev->aux;
 	if (cpu->input) {
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		//HACK: still not sure exactly how this works :P
 		lcd->contrast = lcd->base_level - 19 + cpu->bus;
 		if (lcd->contrast > 64)
 			lcd->contrast = 64;
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 	return;
 }
@@ -50,43 +50,43 @@ static void port3(CPU_t *cpu, device_t *dev) {
 		else result += 8;
 		
 		cpu->bus = result;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		if (cpu->bus & 0x08) {
-			cpu->pio.lcd->active = TRUE;		//I'm worried about this
+			cpu->pio.lcd->active = true;		//I'm worried about this
 		} else {
-			cpu->pio.lcd->active = FALSE;
+			cpu->pio.lcd->active = false;
 		}
 		
 		if ((cpu->bus & 0x01) == 0)
-			stdint->on_latch = FALSE;
+			stdint->on_latch = false;
 		
 		stdint->intactive = cpu->bus;
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 	
-	if (!(stdint->intactive & 0x04) && cpu->pio.lcd->active == TRUE) {
+	if (!(stdint->intactive & 0x04) && cpu->pio.lcd->active == true) {
 		if ((tc_elapsed(cpu->timer_c) - stdint->lastchk1) > stdint->timermax1) {
-			cpu->interrupt = TRUE;
+			cpu->interrupt = true;
 			while ((tc_elapsed(cpu->timer_c) - stdint->lastchk1) > stdint->timermax1)
 				stdint->lastchk1 += stdint->timermax1;
 		}
 	}
 
 	if ((stdint->intactive & 0x01) && (cpu->pio.keypad->on_pressed & KEY_VALUE_MASK) && (stdint->on_backup & KEY_VALUE_MASK) == 0)  {
-		stdint->on_latch = TRUE;
+		stdint->on_latch = true;
 	}
 	stdint->on_backup = cpu->pio.keypad->on_pressed;
 	if (stdint->on_latch)
-		cpu->interrupt = TRUE;
+		cpu->interrupt = true;
 }
 
 static void port4(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = 0x00;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
-		cpu->output = FALSE;
+		cpu->output = false;
 		dev->aux = (void *) cpu->bus;
 		int freq = (cpu->bus >> 1) & 0x3;
 		cpu->pio.stdint->timermax1 = cpu->pio.stdint->freq[freq];
@@ -99,25 +99,25 @@ static void port4(CPU_t *cpu, device_t *dev) {
 		}
 
 		
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
 static void port5(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = 0x00;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
 static void port6(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = 0x00;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
@@ -139,7 +139,7 @@ static STDINT_t* INT81_init(CPU_t* cpu) {
 	STDINT_t * stdint = (STDINT_t *) malloc(sizeof(STDINT_t));
 	if (!stdint) {
 		printf("Couldn't allocate memory for standard interrupt\n");
-		return NULL;
+		return nullptr;
 	}
 	
 	memcpy(stdint->freq, timer_freq81, 4 * sizeof(stdint->freq[0]));
@@ -148,7 +148,7 @@ static STDINT_t* INT81_init(CPU_t* cpu) {
 	stdint->timermax1 = stdint->freq[3];
 	stdint->lastchk1 = tc_elapsed(cpu->timer_c);
 	stdint->on_backup = 0;
-	stdint->on_latch = FALSE;
+	stdint->on_latch = false;
 	return stdint;
 }
 
@@ -179,18 +179,18 @@ int memory_init_81(memc *mc) {
 		return 1;
 	}
 
-	mc->boot_mapped				= FALSE;
-	mc->flash_locked			= TRUE;
+	mc->boot_mapped				= false;
+	mc->flash_locked			= true;
 
 	/* Organize bank states here */
 	
 	/*	Address								page	write?	ram?	no exec?	*/
 	bank_state_t banks[5] = {
-		{mc->flash, 						0, 		FALSE,	FALSE, 	FALSE},
-		{mc->flash+0x1*PAGE_SIZE,			0x1, 	FALSE, 	FALSE, 	FALSE},
-		{mc->flash+0x1*PAGE_SIZE,			0x1, 	FALSE, 	FALSE, 	FALSE},
-		{mc->ram,							0,		FALSE,	TRUE,	FALSE},
-		{NULL,								0,		FALSE,	FALSE,	FALSE}
+		{mc->flash, 						0, 		false,	false, 	false},
+		{mc->flash+0x1*PAGE_SIZE,			0x1, 	false, 	false, 	false},
+		{mc->flash+0x1*PAGE_SIZE,			0x1, 	false, 	false, 	false},
+		{mc->ram,							0,		false,	true,	false},
+		{nullptr,								0,		false,	false,	false}
 	};
 
 	memcpy(mc->normal_banks, banks, sizeof(banks));
@@ -202,47 +202,47 @@ int device_init_81(CPU_t *cpu) {
 	ClearDevices(cpu);
 
 	LCD_t *lcd = LCD_init(cpu, TI_81);
-	cpu->pio.devices[0x00].active = TRUE;
-	cpu->pio.devices[0x00].aux = NULL;
+	cpu->pio.devices[0x00].active = true;
+	cpu->pio.devices[0x00].aux = nullptr;
 	cpu->pio.devices[0x00].code = (devp) &port0;
 
 	keypad_t *keyp = keypad_init(cpu);
-	cpu->pio.devices[0x01].active = TRUE;
+	cpu->pio.devices[0x01].active = true;
 	cpu->pio.devices[0x01].aux = keyp;
 	cpu->pio.devices[0x01].code = (devp) &keypad;
 
-	cpu->pio.devices[0x02].active = TRUE;
+	cpu->pio.devices[0x02].active = true;
 	cpu->pio.devices[0x02].code = (devp) &port2;
 	cpu->pio.devices[0x02].aux = lcd;
 
 	STDINT_t *stdint = INT81_init(cpu);
-	cpu->pio.devices[0x03].active = TRUE;
+	cpu->pio.devices[0x03].active = true;
 	cpu->pio.devices[0x03].aux = stdint;
 	cpu->pio.devices[0x03].code = (devp) &port3;
 
-	cpu->pio.devices[0x04].active = TRUE;
+	cpu->pio.devices[0x04].active = true;
 	cpu->pio.devices[0x04].code = (devp) &port4;
 	cpu->pio.devices[0x04].aux = lcd;
 
-	cpu->pio.devices[0x05].active = TRUE;
+	cpu->pio.devices[0x05].active = true;
 	cpu->pio.devices[0x05].code = (devp) &port5;
 
-	cpu->pio.devices[0x06].active = TRUE;
+	cpu->pio.devices[0x06].active = true;
 	cpu->pio.devices[0x06].code = (devp) &port6;
 
-	cpu->pio.devices[0x10].active = TRUE;
-	cpu->pio.devices[0x10].aux = NULL;
+	cpu->pio.devices[0x10].active = true;
+	cpu->pio.devices[0x10].aux = nullptr;
 	cpu->pio.devices[0x10].code = (devp) &port10;
 
-	cpu->pio.devices[0x11].active = TRUE;
+	cpu->pio.devices[0x11].active = true;
 	cpu->pio.devices[0x11].aux = lcd;
 	cpu->pio.devices[0x11].code = (devp) &LCD_data;
 	
 	cpu->pio.lcd		= lcd;
 	cpu->pio.keypad		= keyp;
-	cpu->pio.link		= NULL;
+	cpu->pio.link		= nullptr;
 	cpu->pio.stdint		= stdint;
-	cpu->pio.se_aux		= NULL;
+	cpu->pio.se_aux		= nullptr;
 	cpu->pio.model		= TI_81;
 	
 	//Append_interrupt_device(cpu, 0x00, 1);

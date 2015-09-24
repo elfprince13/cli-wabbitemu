@@ -17,7 +17,7 @@ BEGIN_EVENT_TABLE(VarTree, wxFrame)
 END_EVENT_TABLE()
 
 extern char type_ext[][4];
-VarTree::VarTree( wxWindow* parent) : wxFrame(parent, wxID_ANY, _T("Calculator Variables"),
+VarTree::VarTree( wxWindow* parent) : wxFrame(parent, wxID_ANY, ("Calculator Variables"),
 	wxDefaultPosition, wxSize(350, 400), wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN )
 {
 	*export_file_name = '\0';
@@ -62,7 +62,7 @@ VarTree::VarTree( wxWindow* parent) : wxFrame(parent, wxID_ANY, _T("Calculator V
 	this->Layout();
 	
 	imageList = new wxImageList(16, 16, true, 20);
-	imageList->Add(wxImage(_T("./res/ti-icons.png")), wxColor(0, 0xFF, 0));
+	imageList->Add(wxImage(("./res/ti-icons.png")), wxColor(0, 0xFF, 0));
 	m_treeVariables->AssignImageList(imageList);
 	
 	UpdateVarTree(true);
@@ -71,18 +71,18 @@ VarTree::VarTree( wxWindow* parent) : wxFrame(parent, wxID_ANY, _T("Calculator V
 VarTree::~VarTree()
 {
 	delete m_staticPageText;
-	m_staticPageText = NULL;
+	m_staticPageText = nullptr;
 	delete m_staticRamText;
-	m_staticRamText = NULL;
+	m_staticRamText = nullptr;
 	delete m_staticAddressText;
-	m_staticAddressText = NULL;
+	m_staticAddressText = nullptr;
 	delete m_staticNameText;
-	m_staticNameText = NULL;
+	m_staticNameText = nullptr;
 }
 
 void VarTree::OnTreeSelChanged(wxTreeEvent &event)
 {
-	TCHAR varString[MAX_PATH];
+	char varString[PATH_MAX];
 	apphdr_t *app;
 	symbol83P_t *symbol;
 	int slot;
@@ -120,7 +120,7 @@ void VarTree::OnExport(wxCommandEvent &event)
 	wxTreeItemId item = m_treeVariables->GetSelection();
 	FILE *file;
 	char *buf;
-	TCHAR filePath[MAX_PATH];
+	char filePath[PATH_MAX];
 	int size = FillDesc(item, filePath);
 	if (size == -1) {
 		return;
@@ -130,25 +130,25 @@ void VarTree::OnExport(wxCommandEvent &event)
 	if (SetVarName(filePath) == -1) {
 		return;
 	}
-	file = _tfopen_s(export_file_name, wxT("wb"));
+	file = fopen(export_file_name, wxT("wb"));
 	fwrite(buf, 1, size, file);
 	fclose(file);
 	free(buf);
 }
 
-int VarTree::FillDesc(wxTreeItemId &hSelect, TCHAR *filePath) {
+int VarTree::FillDesc(wxTreeItemId &hSelect, char *filePath) {
 	int slot;
-	u_int i;
-	TCHAR varString[MAX_PATH];
+	uint32_t i;
+	char varString[PATH_MAX];
 	memset(varString, 0, sizeof(varString));
 	for(slot = 0; slot < MAX_CALCS; slot++) {
 		if (Tree[slot].model) {
 			for(i = 0; i < Tree[slot].applist.count; i++) {
 				if (Tree[slot].hApps[i] && *Tree[slot].hApps[i] == hSelect) {
 					if (App_Name_to_String(&Tree[slot].applist.apps[i], varString)) {
-						_tcscat(varString, _T(".8xk"));
-						_tcscpy(filePath, varString);
-						MFILE *outfile = ExportApp(&calcs[slot], NULL, &Tree[slot].applist.apps[i]);
+						_tcscat(varString, (".8xk"));
+						strcpy(filePath, varString);
+						MFILE *outfile = ExportApp(&calcs[slot], nullptr, &Tree[slot].applist.apps[i]);
 						int size = msize(outfile);
 						mclose(outfile);
 						return size;
@@ -156,16 +156,16 @@ int VarTree::FillDesc(wxTreeItemId &hSelect, TCHAR *filePath) {
 					return -1;
 				}
 			}
-			if (Tree[slot].sym.last == NULL) {
+			if (Tree[slot].sym.last == nullptr) {
 				continue;
 			}
-			for(i = 0; i < (u_int) (Tree[slot].sym.last - Tree[slot].sym.symbols + 1); i++) {
+			for(i = 0; i < (uint32_t) (Tree[slot].sym.last - Tree[slot].sym.symbols + 1); i++) {
 				if (Tree[slot].hVars[i] && *Tree[slot].hVars[i] == hSelect) {
 					if (Symbol_Name_to_String(Tree[slot].model, &Tree[slot].sym.symbols[i], varString)) {
 						_tcscat(varString, wxT("."));
-						_tcscat(varString, (const TCHAR *) type_ext[Tree[slot].sym.symbols[i].type_ID]);
-						_tcscpy(filePath, varString);
-						MFILE *outfile = ExportVar(&calcs[slot], NULL, &Tree[slot].sym.symbols[i]);
+						_tcscat(varString, (const char *) type_ext[Tree[slot].sym.symbols[i].type_ID]);
+						strcpy(filePath, varString);
+						MFILE *outfile = ExportVar(&calcs[slot], nullptr, &Tree[slot].sym.symbols[i]);
 						int size = msize(outfile);
 						mclose(outfile);
 						return size;
@@ -178,17 +178,17 @@ int VarTree::FillDesc(wxTreeItemId &hSelect, TCHAR *filePath) {
 }
 
 void *VarTree::FillFileBuffer(wxTreeItemId &hSelect, void *buf) {
-	u_int slot, i, b;
+	uint32_t slot, i, b;
 	unsigned char *buffer = (unsigned char *) buf;
-	TCHAR varString[64];
+	char varString[64];
 	memset(varString, 0, sizeof(varString));
 	for(slot = 0; slot < MAX_CALCS; slot++) {
 		if (Tree[slot].model) {
 			for(i = 0; i < Tree[slot].applist.count; i++) {
 				if (Tree[slot].hApps[i] && *Tree[slot].hApps[i] == hSelect) {
-					MFILE *outfile = ExportApp(&calcs[slot], NULL, &Tree[slot].applist.apps[i]);
+					MFILE *outfile = ExportApp(&calcs[slot], nullptr, &Tree[slot].applist.apps[i]);
 					if(!outfile) {
-						return NULL;
+						return nullptr;
 					}
 					for(b = 0; b < outfile->size; b++) {
 						buffer[b] = outfile->data[b];
@@ -197,12 +197,12 @@ void *VarTree::FillFileBuffer(wxTreeItemId &hSelect, void *buf) {
 					return buffer;
 				}
 			}
-			for(i = 0; i < (u_int) (Tree[slot].sym.last - Tree[slot].sym.symbols + 1); i++) {
+			for(i = 0; i < (uint32_t) (Tree[slot].sym.last - Tree[slot].sym.symbols + 1); i++) {
 				if (Tree[slot].hVars[i] && *Tree[slot].hVars[i] == hSelect) {
 					if (Symbol_Name_to_String(Tree[slot].model, &Tree[slot].sym.symbols[i], varString)) {
-						MFILE *outfile = ExportVar(&calcs[slot], NULL, &Tree[slot].sym.symbols[i]);
+						MFILE *outfile = ExportVar(&calcs[slot], nullptr, &Tree[slot].sym.symbols[i]);
 						if(!outfile) {
-							return NULL;
+							return nullptr;
 						}
 						for(b = 0; b < outfile->size; b++) {
 							buffer[b] = outfile->data[b];
@@ -214,7 +214,7 @@ void *VarTree::FillFileBuffer(wxTreeItemId &hSelect, void *buf) {
 			}
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 //TODO: well this code is a mess. We need to refactor this, so that the HTREEITEM is somehow
@@ -223,7 +223,7 @@ void *VarTree::FillFileBuffer(wxTreeItemId &hSelect, void *buf) {
 apphdr_t *VarTree::GetAppVariable(wxTreeItemId &hTreeItem, int &slot) {
 	for (int temp = 0; temp < MAX_CALCS; temp++) {
 		if (Tree[temp].model) {
-			for(u_int i = 0; i < Tree[temp].applist.count; i++) {
+			for(uint32_t i = 0; i < Tree[temp].applist.count; i++) {
 				if (*Tree[temp].hApps[i] == hTreeItem) {
 					slot = temp;
 					return &Tree[temp].applist.apps[i];
@@ -231,20 +231,20 @@ apphdr_t *VarTree::GetAppVariable(wxTreeItemId &hTreeItem, int &slot) {
 			}
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 symbol83P_t *VarTree::GetSymbolVariable(wxTreeItemId &hTreeItem, int &slot) {
 	for (int temp = 0; temp < MAX_CALCS; temp++) {
 		if (Tree[temp].model) {
-			if (Tree[temp].sym.last == NULL || Tree[temp].sym.symbols == NULL) {
+			if (Tree[temp].sym.last == nullptr || Tree[temp].sym.symbols == nullptr) {
 				continue;
 			}
 			int numSymbols = (Tree[temp].sym.last - Tree[temp].sym.symbols + 1);
 			if (numSymbols < 0) {
 				continue;
 			}
-			for(u_int i = 0; i < numSymbols; i++) {
+			for(uint32_t i = 0; i < numSymbols; i++) {
 				if (Tree[temp].hVars[i] && *Tree[temp].hVars[i] == hTreeItem) {
 					slot = temp;
 					return &Tree[temp].sym.symbols[i];
@@ -252,18 +252,18 @@ symbol83P_t *VarTree::GetSymbolVariable(wxTreeItemId &hTreeItem, int &slot) {
 			}
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
-int VarTree::SetVarName(TCHAR *filePath) {
-	TCHAR *defExt;
+int VarTree::SetVarName(char *filePath) {
+	char *defExt;
 	int filterIndex;
-	const TCHAR lpstrFilter[] = wxT("Programs  (*.8xp)|*.8xp|Applications (*.8xk)|*.8xk|App Vars (*.8xv)|*.8xv|Lists  (*.8xl)|*.8xl|Real/Complex Variables  (*.8xn)|*.8xn|\
+	const char lpstrFilter[] = wxT("Programs  (*.8xp)|*.8xp|Applications (*.8xk)|*.8xk|App Vars (*.8xv)|*.8xv|Lists  (*.8xl)|*.8xl|Real/Complex Variables  (*.8xn)|*.8xn|\
 Pictures  (*.8xi)|*.8xi|GDBs  (*.8xd)|*.8xd|Matrices  (*.8xm)|*.8xm|Strings  (*.8xs)|*.8xs|Groups  (*.8xg)|*.8xg|All Files (*.*)|*.*");
-	const TCHAR lpstrTitle[] = wxT("Wabbitemu Export");
-	TCHAR lpstrFile[MAX_PATH];
-	_tcscpy(lpstrFile, filePath);
-	size_t i = _tcslen(lpstrFile);
+	const char lpstrTitle[] = wxT("Wabbitemu Export");
+	char lpstrFile[PATH_MAX];
+	strcpy(lpstrFile, filePath);
+	size_t i = strlen(lpstrFile);
 	lpstrFile[i] = '\0';
 	defExt = &lpstrFile[i];
 	while (*defExt != '.') {
@@ -308,7 +308,7 @@ Pictures  (*.8xi)|*.8xi|GDBs  (*.8xd)|*.8xd|Matrices  (*.8xm)|*.8xm|Strings  (*.
 	if (SaveFile(lpstrFile, lpstrFilter, lpstrTitle, defExt, wxFD_FILE_MUST_EXIST , filterIndex)) {
 		return -1;
 	}
-	_tcscpy(export_file_name, lpstrFile);
+	strcpy(export_file_name, lpstrFile);
 	return 0;
 }
 
@@ -348,7 +348,7 @@ void VarTree::UpdateVarTree(bool New)
 			/* If nodes haven't been init or the model is reset, create nodes */
 			/* otherwise delete children so the vars can be appended */
 			if (!Tree[slot].hApplication || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Application"), TI_ICON_APP);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Application"), TI_ICON_APP);
 				Tree[slot].hApplication = new wxTreeItemId(item);
 				
 			} else {
@@ -356,70 +356,70 @@ void VarTree::UpdateVarTree(bool New)
 			}
 
 			if (!Tree[slot].hProgram || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Program"), TI_ICON_PROGRAM);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Program"), TI_ICON_PROGRAM);
 				Tree[slot].hProgram = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hProgram);
 			}
 
 			if (!Tree[slot].hAppVar || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Application Variable"));
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Application Variable"));
 				Tree[slot].hAppVar = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hAppVar);
 			} 
 
 			if (!Tree[slot].hPic || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Picture"), TI_ICON_PIC);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Picture"), TI_ICON_PIC);
 				Tree[slot].hPic = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hPic);
 			}
 
 			if (!Tree[slot].hGDB || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Graph Database"), TI_ICON_GDB);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Graph Database"), TI_ICON_GDB);
 				Tree[slot].hGDB = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hGDB);
 			}
 
 			if (!Tree[slot].hString || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("String"), TI_ICON_STRING);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("String"), TI_ICON_STRING);
 				Tree[slot].hString = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hString);
 			}
 
 			if (!Tree[slot].hNumber || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Number"), TI_ICON_NUMBER);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Number"), TI_ICON_NUMBER);
 				Tree[slot].hNumber = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hNumber);
 			}
 
 			if (!Tree[slot].hList || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("List"), TI_ICON_LIST);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("List"), TI_ICON_LIST);
 				Tree[slot].hList = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hList);
 			}
 
 			if (!Tree[slot].hMatrix || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Matrix"), TI_ICON_MATRIX);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Matrix"), TI_ICON_MATRIX);
 				Tree[slot].hMatrix = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hMatrix);
 			}
 
 			if (!Tree[slot].hGroup || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Group"), TI_ICON_GROUP);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Group"), TI_ICON_GROUP);
 				Tree[slot].hGroup = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hGroup);
 			}
 
 			if (!Tree[slot].hEquation || Tree[slot].model == 0) {
-				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, _T("Equation"), TI_ICON_EQUATIONS);
+				wxTreeItemId item = m_treeVariables->AppendItem(Tree[slot].hRoot, ("Equation"), TI_ICON_EQUATIONS);
 				Tree[slot].hEquation = new wxTreeItemId(item);
 			} else {
 				m_treeVariables->DeleteChildren(*Tree[slot].hEquation);
@@ -442,7 +442,7 @@ void VarTree::UpdateVarTree(bool New)
 			if (sym) {
 				// FIXME
 				for(i = 0; (&sym->symbols[i]) <= sym->last; i++) {
-					TCHAR tmpstring[64];
+					char tmpstring[64];
 					int icon;
 					
 					/* whether its archived or not */
@@ -555,7 +555,7 @@ void VarTree::UpdateVarTree(bool New)
 				if (Tree[slot].hTypes[i]) {
 					if (m_treeVariables->GetChildrenCount(*Tree[slot].hTypes[i]) == 0) {
 						m_treeVariables->Delete(*Tree[slot].hTypes[i]);
-						Tree[slot].hTypes[i] = NULL;
+						Tree[slot].hTypes[i] = nullptr;
 					}
 				}
 			}

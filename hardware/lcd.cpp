@@ -121,10 +121,10 @@ LCD_t* LCD_init(CPU_t* cpu, int model) {
 	
 	// Set all values to the defaults
 #ifdef WINVER
-	lcd->shades = (u_int) QueryWabbitKey(_T("shades"));
-	lcd->mode = (LCD_MODE) QueryWabbitKey(_T("lcd_mode"));
-	lcd->steady_frame = 1.0 / QueryWabbitKey(_T("lcd_freq"));
-	lcd->lcd_delay = (u_int) QueryWabbitKey(_T("lcd_delay"));
+	lcd->shades = (uint32_t) QueryWabbitKey(("shades"));
+	lcd->mode = (LCD_MODE) QueryWabbitKey(("lcd_mode"));
+	lcd->steady_frame = 1.0 / QueryWabbitKey(("lcd_freq"));
+	lcd->lcd_delay = (uint32_t) QueryWabbitKey(("lcd_delay"));
 #else
 	lcd->shades = LCD_DEFAULT_SHADES;
 	lcd->mode = MODE_PERFECT_GRAY;
@@ -159,7 +159,7 @@ void LCD_timer_refresh(CPU_t * cpu) {
  * Simulates the state of the LCD after a power reset
  */
 static void LCD_reset(LCD_t *lcd) {
-	lcd->active = FALSE;
+	lcd->active = false;
 	lcd->word_len = 8;
 	lcd->cursor_mode = Y_UP;
 	lcd->x = 0;
@@ -196,9 +196,9 @@ void LCD_command(CPU_t *cpu, device_t *dev) {
 		Add_SE_Delay(cpu);
 	//int min_wait = MICROSECONDS(lcd->lcd_delay);
 	if (lcd->lcd_delay > (tc_tstates(cpu->timer_c) - lcd->last_tstate)) {
-		cpu->output = FALSE;
+		cpu->output = false;
 		if (cpu->input) {
-			cpu->input = FALSE;
+			cpu->input = false;
 			//this is set so that the sign flag will be properly set to indicate an error
 			cpu->bus = 0x80;
 		}
@@ -240,10 +240,10 @@ void LCD_command(CPU_t *cpu, device_t *dev) {
 				lcd->contrast = CRD_DATA(SCE);
 				break;
 		}
-		cpu->output = FALSE;
+		cpu->output = false;
 	} else if (cpu->input) {
 		cpu->bus = (lcd->word_len << 6) | (lcd->active << 5) | lcd->cursor_mode;
-		cpu->input = FALSE;
+		cpu->input = false;
 	}
 }
 
@@ -259,19 +259,19 @@ void LCD_data(CPU_t *cpu, device_t *dev) {
 
 	//int min_wait = MICROSECONDS(lcd->lcd_delay);
 	if (lcd->lcd_delay > (tc_tstates(cpu->timer_c) - lcd->last_tstate)) {
-		cpu->output = FALSE;
-		cpu->input = FALSE;
+		cpu->output = false;
+		cpu->input = false;
 		return;
 	}
 
 	// Get a pointer to the byte referenced by the CRD cursor
-	u_int shift = 0;
+	uint32_t shift = 0;
 	uint8_t *cursor;
 	if (lcd->word_len) {
 		int temp =  LCD_OFFSET(lcd->y, lcd->x, 0);
 		cursor = &lcd->display[temp];
 	} else {
-		u_int new_y = lcd->y * 6;
+		uint32_t new_y = lcd->y * 6;
 		shift = 10 - (new_y % 8);
 		
 		cursor = &lcd->display[ LCD_OFFSET(new_y / 8, lcd->x, 0) ];
@@ -326,7 +326,7 @@ void LCD_data(CPU_t *cpu, device_t *dev) {
 		}
 		
 		LCD_advance_cursor(lcd);
-		cpu->output = FALSE;
+		cpu->output = false;
 	} else if (cpu->input) {
 		cpu->bus = lcd->last_read;
 
@@ -339,7 +339,7 @@ void LCD_data(CPU_t *cpu, device_t *dev) {
 		}
 		
 		LCD_advance_cursor(lcd);
-		cpu->input = FALSE;
+		cpu->input = false;
 	}
 	
 	// Make sure timers are valid
@@ -379,8 +379,8 @@ static void LCD_advance_cursor(LCD_t *lcd) {
 		case Y_UP:
 			{
 				lcd->y++;
-				u_int bound = lcd->word_len ? 15 : 19;
-				if (((u_int) lcd->y) >= bound) lcd->y = 0;
+				uint32_t bound = lcd->word_len ? 15 : 19;
+				if (((uint32_t) lcd->y) >= bound) lcd->y = 0;
 				break;
 			}
 		case Y_DOWN:
@@ -437,14 +437,14 @@ uint8_t *LCD_update_image(LCD_t *lcd) {
 		level = (12 - level) * (255 - base) / lcd->shades / 12;
 	}
 
-	u_int row, col;
+	uint32_t row, col;
 	for (row = 0; row < LCD_HEIGHT; row++) {
 		for (col = 0; col < LCD_MEM_WIDTH; col++) {
-			u_int p0 = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0;
-			u_int i;
+			uint32_t p0 = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0;
+			uint32_t i;
 			
 			for (i = 0; i < lcd->shades; i++) {
-				u_int u = lcd->queue[i][row * 16 + col];
+				uint32_t u = lcd->queue[i][row * 16 + col];
 				p7 += u & 1; u >>= 1;
 				p6 += u & 1; u >>= 1;
 				p5 += u & 1; u >>= 1;

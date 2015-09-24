@@ -1,9 +1,6 @@
 #include "var.hpp"
-#include "../hardware/calc.hpp"
+#include "../interface/calc.hpp"
 #include "fileutilities.hpp"
-#ifdef _WINDOWS
-#include "miniunz.h"
-#endif
 
 const char self_test[] = "Self Test?";
 const char catalog[] = "CATALOG";
@@ -16,12 +13,12 @@ const char txt86[] = "Already Installed";
 	if (tmp == EOF) { \
 		fclose(fp); \
 		FreeTiFile(tifile); \
-		return NULL; \
+		return nullptr; \
 	}
 
 
 int CmpStringCase(const char *str1, unsigned char *str2) {
-	return _strnicmp(str1, (char *) str2, strlen(str1));
+	return strncasecmp(str1, (char *) str2, strlen(str1));
 }
 
 int FindRomVersion(int calc, char *string, unsigned char *rom, int size) {
@@ -169,8 +166,8 @@ int FindRomVersion(int calc, char *string, unsigned char *rom, int size) {
 }
 
 int ReadIntelHex(FILE *ifile, INTELHEX_t *ihex) {
-	BYTE str[600];
-	DWORD i, size, addr, type, byte;
+	uint8_t str[600];
+	uint32_t i, size, addr, type, byte;
 	memset(str, 0x00, ARRAYSIZE(str));
 	if (!fgets((char*) str, 580, ifile))
 		return 0;
@@ -205,15 +202,15 @@ int ReadIntelHex(FILE *ifile, INTELHEX_t *ihex) {
 }
 
 #ifdef _WINDOWS
-TIFILE_t* ImportZipFile(LPCTSTR filePath, TIFILE_t *tifile) {
+TIFILE_t* ImportZipFile(const char * filePath, TIFILE_t *tifile) {
 	unzFile uf;
-	TCHAR path[MAX_PATH];
+	char path[PATH_MAX];
 	uf = unzOpen(filePath);
 	GetAppDataString(path, sizeof(path));
-	StringCbCat(path, sizeof(path), _T("\\Zip"));
+	StringCbCat(path, sizeof(path), ("\\Zip"));
 	int err = extract_zip(uf, path);
 	unzClose(uf);
-	return err ? NULL: tifile;
+	return err ? nullptr: tifile;
 }
 #endif
 
@@ -221,7 +218,7 @@ TIFILE_t* ImportFlashFile(FILE *infile, TIFILE_t *tifile) {
 	int i;
 	for(i = 0; i < 256; i++) {
 		tifile->flash->pagesize[i]	= 0;
-		tifile->flash->data[i]		= NULL;
+		tifile->flash->data[i]		= nullptr;
 	}
 
 	INTELHEX_t record;
@@ -236,15 +233,15 @@ TIFILE_t* ImportFlashFile(FILE *infile, TIFILE_t *tifile) {
 		do {
 			if (!ReadIntelHex(infile, &record)) {
 				FreeTiFile(tifile);
-				return NULL;
+				return nullptr;
 			}
 		} while (record.Type != 0x02 || record.DataSize != 2);
 		CurrentPage = ((record.Data[0] << 8) | record.Data[1]) & 0x7F;
 		if (tifile->flash->data[CurrentPage] == 0) {
 			tifile->flash->data[CurrentPage] = (unsigned char *) malloc(PAGE_SIZE);
-			if (tifile->flash->data[CurrentPage] == NULL) {
+			if (tifile->flash->data[CurrentPage] == nullptr) {
 				FreeTiFile(tifile);
-				return NULL;
+				return nullptr;
 			}
 			memset(tifile->flash->data[CurrentPage], 0, PAGE_SIZE);	//THIS IS IMPORTANT FOR LINKING, APPS FOR NOW
 		}
@@ -269,7 +266,7 @@ TIFILE_t* ImportFlashFile(FILE *infile, TIFILE_t *tifile) {
 				if (CurrentPage == -1) {
 					printf("invalid current page\n");
 					FreeTiFile(tifile);
-					return NULL;
+					return nullptr;
 				}
 				TotalSize += (HighestAddress - PAGE_SIZE);
 				tifile->flash->pagesize[CurrentPage] = (HighestAddress - PAGE_SIZE);
@@ -284,9 +281,9 @@ TIFILE_t* ImportFlashFile(FILE *infile, TIFILE_t *tifile) {
 				CurrentPage = ((record.Data[0] << 8) | record.Data[1]) & 0x7F;
 				if (tifile->flash->data[CurrentPage] == 0) {
 					tifile->flash->data[CurrentPage] = (unsigned char *) malloc(PAGE_SIZE);
-					if (tifile->flash->data[CurrentPage] == NULL) {
+					if (tifile->flash->data[CurrentPage] == nullptr) {
 						FreeTiFile(tifile);
-						return NULL;
+						return nullptr;
 					}
 					memset(tifile->flash->data[CurrentPage], 0, PAGE_SIZE);	//THIS IS IMPORTANT FOR LINKING, APPS FOR NOW
 				}
@@ -295,7 +292,7 @@ TIFILE_t* ImportFlashFile(FILE *infile, TIFILE_t *tifile) {
 			default:
 				printf("unknown record\n");
 				FreeTiFile(tifile);
-				return NULL;
+				return nullptr;
 		}
 	}
 
@@ -305,7 +302,7 @@ TIFILE_t* ImportFlashFile(FILE *infile, TIFILE_t *tifile) {
 		tifile->model = TI_83P;
 	} else {
 		FreeTiFile(tifile);
-		return NULL;
+		return nullptr;
 	}
 	return tifile;
 }
@@ -329,12 +326,12 @@ TIFILE_t* ImportROMFile(FILE *infile, TIFILE_t *tifile) {
 	}
 
 	tifile->rom = (ROM_t *) malloc(sizeof(ROM_t));
-	if (tifile->rom == NULL) {
+	if (tifile->rom == nullptr) {
 		return FreeTiFile(tifile);
 	}
 
 	tifile->rom->data = (unsigned char *) malloc(size);
-	if (tifile->rom->data == NULL)
+	if (tifile->rom->data == nullptr)
 		return FreeTiFile(tifile);
 
 	for(i = 0; i < size && !feof(infile); i++) {
@@ -352,9 +349,9 @@ TIFILE_t* ImportROMFile(FILE *infile, TIFILE_t *tifile) {
 
 TIFILE_t* ImportBackup(FILE *infile, TIFILE_t *tifile) {
 	int i, tmp;
-	tifile->backup->data1 = NULL;
-	tifile->backup->data2 = NULL;
-	tifile->backup->data3 = NULL;
+	tifile->backup->data1 = nullptr;
+	tifile->backup->data2 = nullptr;
+	tifile->backup->data3 = nullptr;
 
 	tmpread(infile);
 	tifile->backup->length2 = tmp;
@@ -377,7 +374,7 @@ TIFILE_t* ImportBackup(FILE *infile, TIFILE_t *tifile) {
 	tifile->backup->length1a += tmp << 8;
 
 	tifile->backup->data1 = (unsigned char *) malloc(tifile->backup->length1);
-	if (tifile->backup->data1 == NULL)
+	if (tifile->backup->data1 == nullptr)
 		return FreeTiFile(tifile);
 	for(i = 0; i < tifile->backup->length1 && !feof(infile); i++) {
 		tmpread(infile);
@@ -391,7 +388,7 @@ TIFILE_t* ImportBackup(FILE *infile, TIFILE_t *tifile) {
 	tifile->backup->length2a += tmp << 8;
 
 	tifile->backup->data2 = (unsigned char *) malloc(tifile->backup->length2);
-	if (tifile->backup->data2 == NULL)
+	if (tifile->backup->data2 == nullptr)
 		return FreeTiFile(tifile);
 	for(i = 0; i < tifile->backup->length2 && !feof(infile); i++) {
 		tmpread(infile);
@@ -404,7 +401,7 @@ TIFILE_t* ImportBackup(FILE *infile, TIFILE_t *tifile) {
 	tifile->backup->length3a += tmp << 8;
 
 	tifile->backup->data3 = (unsigned char *) malloc(tifile->backup->length3);
-	if (tifile->backup->data3 == NULL)
+	if (tifile->backup->data3 == nullptr)
 		return FreeTiFile(tifile);
 	for(i=0; i<tifile->backup->length3 && !feof(infile); i++) {
 		tmpread(infile);
@@ -418,19 +415,19 @@ TIFILE_t* ImportBackup(FILE *infile, TIFILE_t *tifile) {
 }
 
 void NullTiFile(TIFILE_t* tifile) {
-	tifile->var = NULL;				//make sure its null. mostly for freeing later
+	tifile->var = nullptr;				//make sure its null. mostly for freeing later
 	memset(tifile->vars, 0, sizeof(tifile->vars));
-	tifile->flash = NULL;
-	tifile->rom = NULL;
-	tifile->save = NULL;
-	tifile->backup = NULL;
+	tifile->flash = nullptr;
+	tifile->rom = nullptr;
+	tifile->save = nullptr;
+	tifile->backup = nullptr;
 	tifile->type = VAR_TYPE;
 }
 
 TIFILE_t* InitTiFile() {
 	TIFILE_t *tifile = (TIFILE_t*) malloc(sizeof(TIFILE_t));
-	if (tifile == NULL)
-		return NULL;
+	if (tifile == nullptr)
+		return nullptr;
 	NullTiFile(tifile);
 	return tifile;
 }
@@ -442,17 +439,17 @@ void ReadTiFileHeader(FILE *infile, TIFILE_t *tifile) {
 	fread(headerString, 1, 8, infile);
 	rewind(infile);
 	
-	if (!_strnicmp(headerString, DETECT_STR, 8) ||
-		!_strnicmp(headerString, DETECT_CMP_STR, 8)) {
+	if (!strncasecmp(headerString, DETECT_STR, 8) ||
+		!strncasecmp(headerString, DETECT_CMP_STR, 8)) {
 		tifile->type = SAV_TYPE;
 		return;
 	}
 
-	if (!_strnicmp(headerString, FLASH_HEADER, 8)) {
+	if (!strncasecmp(headerString, FLASH_HEADER, 8)) {
 		tifile->type = FLASH_TYPE;
 		tifile->flash = (TIFLASH_t*) malloc(sizeof(TIFLASH_t));
 		ZeroMemory(tifile->flash, sizeof(TIFLASH_t));
-		if (tifile->flash == NULL) {
+		if (tifile->flash == nullptr) {
 			FreeTiFile(tifile);
 			return;
 		}
@@ -471,12 +468,12 @@ void ReadTiFileHeader(FILE *infile, TIFILE_t *tifile) {
 	}
 
 	/* It maybe a rom if it doesn't have the Standard header */
-	if (_strnicmp(headerString, "**TI73**", 8) &&
-		_strnicmp(headerString, "**TI82**", 8) &&
-		_strnicmp(headerString, "**TI83**", 8) &&
-		_strnicmp(headerString, "**TI83F*", 8) &&
-		_strnicmp(headerString, "**TI85**", 8) &&
-		_strnicmp(headerString, "**TI86**", 8)) {
+	if (strncasecmp(headerString, "**TI73**", 8) &&
+		strncasecmp(headerString, "**TI82**", 8) &&
+		strncasecmp(headerString, "**TI83**", 8) &&
+		strncasecmp(headerString, "**TI83F*", 8) &&
+		strncasecmp(headerString, "**TI85**", 8) &&
+		strncasecmp(headerString, "**TI86**", 8)) {
 		tifile->type = ROM_TYPE;
 		return;
 	}
@@ -492,12 +489,12 @@ void ReadTiFileHeader(FILE *infile, TIFILE_t *tifile) {
 		ptr[i] = tmp;
 	}
 
-	if (!_strnicmp((char *) tifile->sig, "**TI73**", 8)) tifile->model = TI_73;
-	else if (!_strnicmp((char *) tifile->sig, "**TI82**", 8)) tifile->model = TI_82;
-	else if (!_strnicmp((char *) tifile->sig, "**TI83**", 8)) tifile->model = TI_83;
-	else if (!_strnicmp((char *) tifile->sig, "**TI83F*", 8)) tifile->model = TI_83P;
-	else if (!_strnicmp((char *) tifile->sig, "**TI85**", 8)) tifile->model = TI_85;
-	else if (!_strnicmp((char *) tifile->sig, "**TI86**", 8)) tifile->model = TI_86;
+	if (!strncasecmp((char *) tifile->sig, "**TI73**", 8)) tifile->model = TI_73;
+	else if (!strncasecmp((char *) tifile->sig, "**TI82**", 8)) tifile->model = TI_82;
+	else if (!strncasecmp((char *) tifile->sig, "**TI83**", 8)) tifile->model = TI_83;
+	else if (!strncasecmp((char *) tifile->sig, "**TI83F*", 8)) tifile->model = TI_83P;
+	else if (!strncasecmp((char *) tifile->sig, "**TI85**", 8)) tifile->model = TI_85;
+	else if (!strncasecmp((char *) tifile->sig, "**TI86**", 8)) tifile->model = TI_86;
 	else {
 		FreeTiFile(tifile);
 		return;
@@ -549,7 +546,7 @@ TIFILE_t* ImportVarData(FILE *infile, TIFILE_t *tifile, int varNumber) {
 		(tifile->model == TI_82 && vartype == 0x0F) ||
 		(tifile->model == TI_85 && vartype == 0x1D)) {
 		tifile->backup = (TIBACKUP_t *) malloc(sizeof(TIBACKUP_t));
-		if (tifile->backup == NULL)
+		if (tifile->backup == nullptr)
 			return FreeTiFile(tifile);
 		tifile->backup->headersize	= headersize;
 		tifile->backup->length1		= length;
@@ -566,7 +563,7 @@ TIFILE_t* ImportVarData(FILE *infile, TIFILE_t *tifile, int varNumber) {
 
 	tifile->var = (TIVAR_t *) malloc(sizeof(TIVAR_t));
 	tifile->vars[varNumber] = tifile->var;
-	if (tifile->var == NULL)
+	if (tifile->var == nullptr)
 		return FreeTiFile(tifile);
 
 	char name_length = 8;
@@ -592,7 +589,7 @@ TIFILE_t* ImportVarData(FILE *infile, TIFILE_t *tifile, int varNumber) {
 		if (tmp == EOF) {
 			fclose(infile);
 			FreeTiFile(tifile);
-			return NULL;
+			return nullptr;
 		}
 		ptr[i++] = tmp;
 		tmp = fgetc(infile);
@@ -613,7 +610,7 @@ TIFILE_t* ImportVarData(FILE *infile, TIFILE_t *tifile, int varNumber) {
 	ptr[i++] = tmp;
 
 	tifile->var->data = (unsigned char *) malloc(tifile->var->length);
-	if (tifile->var->data == NULL)
+	if (tifile->var->data == nullptr)
 		return FreeTiFile(tifile);
 
 	i = 0;
@@ -628,7 +625,7 @@ TIFILE_t* ImportVarData(FILE *infile, TIFILE_t *tifile, int varNumber) {
 	if (tifile->type == GROUP_TYPE) {
 		if (varNumber != 0)
 			return tifile;
-		while (tifile != NULL) {
+		while (tifile != nullptr) {
 			length2 -= tifile->var->length + tifile->var->headersize;
 			if (length2 < 0)
 				break;
@@ -640,37 +637,33 @@ TIFILE_t* ImportVarData(FILE *infile, TIFILE_t *tifile, int varNumber) {
 	return tifile;
 }
 
-TIFILE_t* newimportvar(LPCTSTR filePath, bool only_check_header) {
-	FILE *infile = NULL;
+TIFILE_t* newimportvar(const char * filePath, bool only_check_header) {
+	FILE *infile = nullptr;
 	TIFILE_t *tifile;
 	
-	TCHAR extension[5] = _T("");
-	const TCHAR *pext = _tcsrchr(filePath, '.');
-	if (pext != NULL)
+	char extension[5] = ("");
+	const char *pext = _tcsrchr(filePath, '.');
+	if (pext != nullptr)
 	{
-#ifdef _WINDOWS
-		StringCbCopy(extension, sizeof(extension), pext);
-#else
-		_tcscpy(extension, pext);
-#endif
+		strcpy(extension, pext);
 	}
 
 	tifile = InitTiFile();
-	if (tifile == NULL)
-		return NULL;
+	if (tifile == nullptr)
+		return nullptr;
 
-	if (!_tcsicmp(extension, _T(".lab"))) {
+	if (!strcasecmp(extension, (".lab"))) {
 		tifile->type = LABEL_TYPE;
 		return tifile;
 	}
 
-	if (!_tcsicmp(extension, _T(".brk"))) {
+	if (!strcasecmp(extension, (".brk"))) {
 		tifile->type = BREAKPOINT_TYPE;
 		return tifile;
 	}
 
 #ifdef _WINDOWS
-	if (!_tcsicmp(extension, _T(".tig")) || !_tcsicmp(extension, _T(".zip")) ) {
+	if (!strcasecmp(extension, (".tig")) || !strcasecmp(extension, (".zip")) ) {
 		tifile->type = ZIP_TYPE;
 		if (!only_check_header) {
 			ImportZipFile(filePath, tifile);
@@ -678,12 +671,8 @@ TIFILE_t* newimportvar(LPCTSTR filePath, bool only_check_header) {
 		return tifile;
 	}
 #endif
-#ifdef WINVER
-	_tfopen_s(&infile, filePath, _T("rb"));
-#else
-	infile = fopen(wxFNCONV(filePath), "rb");
-#endif
-	if (infile == NULL) 
+	infile = fopen(filePath, "rb");
+	if (infile == nullptr) 
 		return FreeTiFile(tifile);
 
 	ReadTiFileHeader(infile, tifile);
@@ -702,14 +691,14 @@ TIFILE_t* newimportvar(LPCTSTR filePath, bool only_check_header) {
 }
 
 TIFILE_t* FreeTiFile(TIFILE_t * tifile) {
-	if (!tifile) return NULL;
+	if (!tifile) return nullptr;
 	if (tifile->save) FreeSave(tifile->save);
 
 	int i = 0;
-	while(tifile->vars[i] != NULL) {
+	while(tifile->vars[i] != nullptr) {
 		if (tifile->vars[i]->data) free(tifile->vars[i]->data);
 		free(tifile->vars[i]);
-		tifile->vars[i] = NULL;
+		tifile->vars[i] = nullptr;
 		i++;
 	}
 	if (tifile->flash) {
@@ -724,5 +713,5 @@ TIFILE_t* FreeTiFile(TIFILE_t * tifile) {
 		free(tifile->rom);
 	}
 	free(tifile);
-	return NULL;
+	return nullptr;
 }

@@ -14,119 +14,119 @@
 // %c - condition
 // %l - label string
 Z80_com_t da_opcode[256] = {
-{_T("  nop"), 				4, 	0},
-{_T("  ex %r,%r"),			4, 	0},
-{_T("  djnz %g"),			13,	8},
-{_T("  jr %g"),				12, 0},
-{_T("  jr %c,%g"),			12,	7},
-{_T("  ld %r,%x"),			10, 0},
-{_T("  add %r,%r"),			11, 0},
-{_T("  ld (%r),%r"),		7,	0},
-{_T("  ld %r,(%r)"),		7,	0},
-{_T("  ld (%r),%r"),		7,	0},
-{_T("  ld %r,(%r)"),		7,	0},
-{_T("  ld (%a),%r"),		16,	0},
-{_T("  ld %r,(%a)"),		16,	0},
-{_T("  ld (%a),%r"),		13,	0},
-{_T("  ld %r,(%a)"),		13,	0},
-{_T("  inc %r"),			6,	0},
-{_T("  dec %r"),			6,	0},
-{_T("  inc %r"),			4,	0},
-{_T("  dec %r"),			4,	0},
-{_T("  ld %r,%x"),			7,	0},
-{_T("  rlca"),				4,	0},
-{_T("  rrca"),				4,	0},
-{_T("  rla"),				4,	0},
-{_T("  rra"),				4,	0},
-{_T("  daa"),				4,	0},
-{_T("  cpl"),				4,	0},
-{_T("  scf"),				4,	0},
-{_T("  ccf"),				4,	0},
-{_T("  ld %r,%r"),			4,	0},
-{_T("  halt"),				4,	0},
-{_T("  %s %r"),			4,	0},
-{_T("  %s %r,%r"),			4,	0},
-{_T("  ret %c"),		11,	5},
-{_T("  pop %r"),		10,	0},
-{_T("  ret"),			10, 0},
-{_T("  exx"),			4,	0},
-{_T("  jp (%r)"),		4,	0},
-{_T("  ld %r,%r"),		6,	0},
-{_T("  jp %c,%a"),		10,	0},
-{_T("  jp %a"),			10,	0},
-{_T("  out (%x),%r"),	11,	0},
-{_T("  in %r,(%x)"),		11, 0},
-{_T("  ex (%r),%r"),	19, 0},
-{_T("  ex %r,%r"),		4,	0},
-{_T("  di"),			4,	0},
-{_T("  ei"),			4,	0},
-{_T("  call %c,%a"),	17,	10},
-{_T("  push %r"),		11,	0},
-{_T("  call %a"),		17,	0},
-{_T("  %s %d"),			4,	0},
-{_T("  %s %r,%d"),		4,	0},
-{_T("  rst %xh"),		11,	0},
-{_T("  %s %s"),			-1,	0},
-{_T("  bit %d,%r"),		8,	0},
-{_T("  res %d,%r"),		8,	0},
-{_T("  set %d,%r"),		8,	0},
-{_T("  in %r,(%r)"),	12,	0},
-{_T("  out (%r),%r"),	12,	0},
-{_T("  sbc %r,%r"),		15,	0},
-{_T("  adc %r,%r"),		15,	0},
-{_T("  ld (%a),%r"),	20,	0},
-{_T("  ld %r,(%a)"),	20,	0},
-{_T("  neg"),			8,	0},
-{_T("  retn"),			14,	0},
-{_T("  reti"),			14,	0},
-{_T("  im %s"),			8,	0},
-{_T("  ld i,a"),		9,	0},
-{_T("  ld r,a"),		9,	0},
-{_T("  ld a,i"),		9,	0},
-{_T("  ld a,r"),		9,	0},
-{_T("  rrd"),			18,	0},
-{_T("  rld"),			18, 0},
-{_T("  nop"),			8,	0},
-{_T("  %s"),			21,	16},
-{_T("  %s (%r%h)->%r"),	23,	0},
-{_T("  bit %d,(%r%h)->%r"),	23,	0},
-{_T("  res %d,(%r%h)->%r"),	23,	0},
-{_T("  set %d,(%r%h)->%r"),	23,	0},
-{_T("  %s (%s%h)"),		23,	0},
-{_T("  bit %d,(%r%h)"),	20,	0},
-{_T("  res %d,(%r%h)"),	20,	0},
-{_T("  set %d,(%r%h)"),	20,	0},
-{_T("  add %r,%r"),		15,	0},
-{_T("  ld %r,(%a)"),	20,	0},
-{_T("  ld (%a),%r"),	20,	0},
-{_T("  inc (%r%h)"),	23,	0},
-{_T("  dec (%r%h)"),	23,	0},
-{_T("  ld (%r%h),%x"),	19,	0},
-{_T("  ld (%r%h),%r"),	19,	0},
-{_T("  ld %r,(%r%h)"),	19,	0},
-{_T("  %s (%r%h)"),		19,	0},
-{_T("  %s %r,(%r%h)"),	19, 0},
-{_T("  jp %s"),			6,	0},
-{_T("  ld %r,%r"),		10, 0},
-{_T("  ex (sp),%s"),	23,	0},
-{_T("%l:"),				-1, 0},
-{_T("  bcall(%l)"),		-1,	0},
-{_T("  bcall(%a)"),		-1,	0},
-{_T("  bit %l,(%r+%l)->%r"),	23,	0},
-{_T("  res %l,(%r+%l)->%r"),	23,	0},
-{_T("  set %l,(%r+%l)->%r"),	23,	0},
-{_T("  bit %l,(%r+%l)"),	20,	0},
-{_T("  res %l,(%r+%l)"),	20,	0},
-{_T("  set %l,(%r+%l)"),	20,	0},
-{_T("  bjump(%l)"),			-1,	0},
-{_T("  bjump(%a)"),			-1,	0},
-{_T("  ld %r,%x"),			10,	0},
-{_T("  ld %r,%r"),			7,	0},
-{_T("  inc %r"),			11,	0},
-{_T("  dec %r"),			11,	0},
-{_T("  bit %d,%r"),			12,	0},
-{_T("  res %d,%r"),			15,	0},
-{_T("  set %d,%r"),			15,	0},
+{("  nop"), 				4, 	0},
+{("  ex %r,%r"),			4, 	0},
+{("  djnz %g"),			13,	8},
+{("  jr %g"),				12, 0},
+{("  jr %c,%g"),			12,	7},
+{("  ld %r,%x"),			10, 0},
+{("  add %r,%r"),			11, 0},
+{("  ld (%r),%r"),		7,	0},
+{("  ld %r,(%r)"),		7,	0},
+{("  ld (%r),%r"),		7,	0},
+{("  ld %r,(%r)"),		7,	0},
+{("  ld (%a),%r"),		16,	0},
+{("  ld %r,(%a)"),		16,	0},
+{("  ld (%a),%r"),		13,	0},
+{("  ld %r,(%a)"),		13,	0},
+{("  inc %r"),			6,	0},
+{("  dec %r"),			6,	0},
+{("  inc %r"),			4,	0},
+{("  dec %r"),			4,	0},
+{("  ld %r,%x"),			7,	0},
+{("  rlca"),				4,	0},
+{("  rrca"),				4,	0},
+{("  rla"),				4,	0},
+{("  rra"),				4,	0},
+{("  daa"),				4,	0},
+{("  cpl"),				4,	0},
+{("  scf"),				4,	0},
+{("  ccf"),				4,	0},
+{("  ld %r,%r"),			4,	0},
+{("  halt"),				4,	0},
+{("  %s %r"),			4,	0},
+{("  %s %r,%r"),			4,	0},
+{("  ret %c"),		11,	5},
+{("  pop %r"),		10,	0},
+{("  ret"),			10, 0},
+{("  exx"),			4,	0},
+{("  jp (%r)"),		4,	0},
+{("  ld %r,%r"),		6,	0},
+{("  jp %c,%a"),		10,	0},
+{("  jp %a"),			10,	0},
+{("  out (%x),%r"),	11,	0},
+{("  in %r,(%x)"),		11, 0},
+{("  ex (%r),%r"),	19, 0},
+{("  ex %r,%r"),		4,	0},
+{("  di"),			4,	0},
+{("  ei"),			4,	0},
+{("  call %c,%a"),	17,	10},
+{("  push %r"),		11,	0},
+{("  call %a"),		17,	0},
+{("  %s %d"),			4,	0},
+{("  %s %r,%d"),		4,	0},
+{("  rst %xh"),		11,	0},
+{("  %s %s"),			-1,	0},
+{("  bit %d,%r"),		8,	0},
+{("  res %d,%r"),		8,	0},
+{("  set %d,%r"),		8,	0},
+{("  in %r,(%r)"),	12,	0},
+{("  out (%r),%r"),	12,	0},
+{("  sbc %r,%r"),		15,	0},
+{("  adc %r,%r"),		15,	0},
+{("  ld (%a),%r"),	20,	0},
+{("  ld %r,(%a)"),	20,	0},
+{("  neg"),			8,	0},
+{("  retn"),			14,	0},
+{("  reti"),			14,	0},
+{("  im %s"),			8,	0},
+{("  ld i,a"),		9,	0},
+{("  ld r,a"),		9,	0},
+{("  ld a,i"),		9,	0},
+{("  ld a,r"),		9,	0},
+{("  rrd"),			18,	0},
+{("  rld"),			18, 0},
+{("  nop"),			8,	0},
+{("  %s"),			21,	16},
+{("  %s (%r%h)->%r"),	23,	0},
+{("  bit %d,(%r%h)->%r"),	23,	0},
+{("  res %d,(%r%h)->%r"),	23,	0},
+{("  set %d,(%r%h)->%r"),	23,	0},
+{("  %s (%s%h)"),		23,	0},
+{("  bit %d,(%r%h)"),	20,	0},
+{("  res %d,(%r%h)"),	20,	0},
+{("  set %d,(%r%h)"),	20,	0},
+{("  add %r,%r"),		15,	0},
+{("  ld %r,(%a)"),	20,	0},
+{("  ld (%a),%r"),	20,	0},
+{("  inc (%r%h)"),	23,	0},
+{("  dec (%r%h)"),	23,	0},
+{("  ld (%r%h),%x"),	19,	0},
+{("  ld (%r%h),%r"),	19,	0},
+{("  ld %r,(%r%h)"),	19,	0},
+{("  %s (%r%h)"),		19,	0},
+{("  %s %r,(%r%h)"),	19, 0},
+{("  jp %s"),			6,	0},
+{("  ld %r,%r"),		10, 0},
+{("  ex (sp),%s"),	23,	0},
+{("%l:"),				-1, 0},
+{("  bcall(%l)"),		-1,	0},
+{("  bcall(%a)"),		-1,	0},
+{("  bit %l,(%r+%l)->%r"),	23,	0},
+{("  res %l,(%r+%l)->%r"),	23,	0},
+{("  set %l,(%r+%l)->%r"),	23,	0},
+{("  bit %l,(%r+%l)"),	20,	0},
+{("  res %l,(%r+%l)"),	20,	0},
+{("  set %l,(%r+%l)"),	20,	0},
+{("  bjump(%l)"),			-1,	0},
+{("  bjump(%a)"),			-1,	0},
+{("  ld %r,%x"),			10,	0},
+{("  ld %r,%r"),			7,	0},
+{("  inc %r"),			11,	0},
+{("  dec %r"),			11,	0},
+{("  bit %d,%r"),			12,	0},
+{("  res %d,%r"),			15,	0},
+{("  set %d,%r"),			15,	0},
 };
 
 #define R_B 0
@@ -138,29 +138,29 @@ Z80_com_t da_opcode[256] = {
 #define R__HL_ 6
 #define R_A 7
 #define R_F 8
-static TCHAR r[9][5]		= {_T("b"),_T("c"),_T("d"),_T("e"),_T("h"),_T("l"),_T("(hl)"),_T("a"),_T("f")};
-static TCHAR r8i[2][9][5]	= {
-{_T("b"),_T("c"),_T("d"),_T("e"),_T("ixh"),_T("ixl"),_T("ix"),_T("a"),_T("f")},
-{_T("b"),_T("c"),_T("d"),_T("e"),_T("iyh"),_T("iyl"),_T("iy"),_T("a"),_T("f")}};
+static char r[9][5]		= {("b"),("c"),("d"),("e"),("h"),("l"),("(hl)"),("a"),("f")};
+static char r8i[2][9][5]	= {
+{("b"),("c"),("d"),("e"),("ixh"),("ixl"),("ix"),("a"),("f")},
+{("b"),("c"),("d"),("e"),("iyh"),("iyl"),("iy"),("a"),("f")}};
 #define R_BC 0
 #define R_DE 1
 #define R_HL 2
 #define R_SP 3
 #define R_AF 3
-static TCHAR rp[4][4]		= {_T("bc"),_T("de"),_T("hl"),_T("sp")};
-static TCHAR rpi[2][4][4]	= {{_T("bc"),_T("de"),_T("ix"),_T("sp")},{_T("bc"),_T("de"),_T("iy"),_T("sp")}};
-static TCHAR rp2[4][4]		= {_T("bc"),_T("de"),_T("hl"),_T("af")};
-static TCHAR rp2i[2][4][4]	= {{_T("bc"),_T("de"),_T("ix"),_T("af")},{_T("bc"),_T("de"),_T("iy"),_T("af")}};
-static TCHAR ri[2][4]		= {_T("ix"),_T("iy")};
-static TCHAR cc[8][4]		= {_T("nz"),_T("z"),_T("nc"),_T("c"),_T("po"),_T("pe"),_T("p"),_T("m")};
-static TCHAR alu[8][4]		= {_T("add"),_T("adc"),_T("sub"),_T("sbc"),_T("and"),_T("xor"),_T("or"),_T("cp")};
-static TCHAR rot[8][4]		= {_T("rlc"),_T("rrc"),_T("rl"),_T("rr"),_T("sla"),_T("sra"),_T("sll"),_T("srl")};
-static TCHAR im[8][4]		= {_T("0"),_T("0/1"),_T("1"),_T("2"),_T("0"),_T("0/1"),_T("1"),_T("2")};
-static TCHAR bli[4][4][8]	= {
-{_T("ldi"), _T("cpi"), _T("ini"), _T("outi")},
-{_T("ldd"), _T("cpd"), _T("ind"), _T("outd")},
-{_T("ldir"),_T("cpir"),_T("inir"),_T("otir")},
-{_T("lddr"),_T("cpdr"),_T("indr"),_T("otdr")}};
+static char rp[4][4]		= {("bc"),("de"),("hl"),("sp")};
+static char rpi[2][4][4]	= {{("bc"),("de"),("ix"),("sp")},{("bc"),("de"),("iy"),("sp")}};
+static char rp2[4][4]		= {("bc"),("de"),("hl"),("af")};
+static char rp2i[2][4][4]	= {{("bc"),("de"),("ix"),("af")},{("bc"),("de"),("iy"),("af")}};
+static char ri[2][4]		= {("ix"),("iy")};
+static char cc[8][4]		= {("nz"),("z"),("nc"),("c"),("po"),("pe"),("p"),("m")};
+static char alu[8][4]		= {("add"),("adc"),("sub"),("sbc"),("and"),("xor"),("or"),("cp")};
+static char rot[8][4]		= {("rlc"),("rrc"),("rl"),("rr"),("sla"),("sra"),("sll"),("srl")};
+static char im[8][4]		= {("0"),("0/1"),("1"),("2"),("0"),("0/1"),("1"),("2")};
+static char bli[4][4][8]	= {
+{("ldi"), ("cpi"), ("ini"), ("outi")},
+{("ldd"), ("cpd"), ("ind"), ("outd")},
+{("ldir"),("cpir"),("inir"),("otir")},
+{("lddr"),("cpdr"),("indr"),("otdr")}};
 
 waddr_t GetNextAddr(memory_context_t *memc, ViewType type, waddr_t waddr) {
 	switch (type) {
@@ -206,11 +206,11 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 	for (i = 0; i < count; i++, result++, prefix = 0) {
 		waddr_t start_addr = result->waddr = waddr;
 
-		TCHAR *labelname = FindAddressLabel(lpCalc, waddr);
+		char *labelname = FindAddressLabel(lpCalc, waddr);
 
 		if (labelname) {
 			result->index = DA_LABEL;
-			result->a1 = (INT_PTR) labelname;
+			result->a1 = (uint32_t *) labelname;
 			result->size = 0;
 			result++;
 			result->waddr = waddr;
@@ -240,19 +240,19 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			int y = (data & 0x38) >> 3;
 			int z = (data & 0x07);
 			result->a1 = y;
-			result->a2 = (INT_PTR) r[z];
+			result->a2 = (uint32_t *) r[z];
 			
 			switch (x) {
 				case 0: /* X = 0 */
 					result->index = DA_ROT;
-					result->a1 = (INT_PTR) rot[y];
+					result->a1 = (uint32_t *) rot[y];
 					break;
-				case 1:	result->index = (result->a2 == (INT_PTR) r[R__HL_] && !prefix) ? DA_BIT__HL_ : DA_BIT; break; /* X = 1 */
-				case 2:	result->index = (result->a2 == (INT_PTR) r[R__HL_] && !prefix) ? DA_RES__HL_ : DA_RES; break; /* X = 2 */
-				case 3:	result->index = (result->a2 == (INT_PTR) r[R__HL_] && !prefix) ? DA_SET__HL_ : DA_SET; break; /* X = 3 */
+				case 1:	result->index = (result->a2 == (uint32_t *) r[R__HL_] && !prefix) ? DA_BIT__HL_ : DA_BIT; break; /* X = 1 */
+				case 2:	result->index = (result->a2 == (uint32_t *) r[R__HL_] && !prefix) ? DA_RES__HL_ : DA_RES; break; /* X = 2 */
+				case 3:	result->index = (result->a2 == (uint32_t *) r[R__HL_] && !prefix) ? DA_SET__HL_ : DA_SET; break; /* X = 3 */
 			}
 			if (prefix) {
-				TCHAR *flagname = NULL, *bitname = NULL;
+				char *flagname = nullptr, *bitname = nullptr;
 				FindFlags(offset, y, &flagname, &bitname);
 
 				/* Special IY flags*/
@@ -264,26 +264,26 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 					flagname && bitname) {
 					if (z == 6) {
 						result->index += (DA_BIT_IF - DA_BIT);
-						result->a1 = (INT_PTR) bitname;
-						result->a2 = (INT_PTR) _T("iy");
-						result->a3 = (INT_PTR) flagname;
+						result->a1 = (uint32_t *) bitname;
+						result->a2 = (uint32_t *) ("iy");
+						result->a3 = (uint32_t *) flagname;
 					} else {
 						result->index += (DA_BIT_RF - DA_BIT);
 						result->a4 = result->a2;	// old register target receives the result
-						result->a1 = (INT_PTR) bitname;
-						result->a2 = (INT_PTR) _T("iy");
-						result->a3 = (INT_PTR) flagname;
+						result->a1 = (uint32_t *) bitname;
+						result->a2 = (uint32_t *) ("iy");
+						result->a3 = (uint32_t *) flagname;
 					}
 				} else {
 					if (z == 6) {
 						result->index += (DA_ROT_I - DA_ROT);
-						result->a2 = (INT_PTR) ri[pi];
+						result->a2 = (uint32_t *) ri[pi];
 						result->a3 = offset;
 					} else {
 						result->index += (DA_ROT_R - DA_ROT);
 						result->a4 = result->a2;
 						result->a3 = offset;
-						result->a2 = (INT_PTR) ri[pi];
+						result->a2 = (uint32_t *) ri[pi];
 					}
 				}
 			}
@@ -301,28 +301,28 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 				if (z == 0) {
 					if (y == 6) y = 8;
 					result->index = DA_IN_R__C_;
-					result->a1 = (INT_PTR) r[y];
-					result->a2 = (INT_PTR) r[R_C];
+					result->a1 = (uint32_t *) r[y];
+					result->a2 = (uint32_t *) r[R_C];
 				} else if (z == 1) {
 					if (y == 6) y = 8;
 					result->index = DA_OUT__C__R;
-					result->a1 = (INT_PTR) r[R_C];
-					result->a2 = (INT_PTR) r[y];
+					result->a1 = (uint32_t *) r[R_C];
+					result->a2 = (uint32_t *) r[y];
 				} else if (z == 2) {
 					if (q == 0) result->index = DA_SBC_HL_RP;
 					else result->index = DA_ADC_HL_RP;
-					result->a1 = (INT_PTR) rp[R_HL];
-					result->a2 = (INT_PTR) rp[p];
+					result->a1 = (uint32_t *) rp[R_HL];
+					result->a2 = (uint32_t *) rp[p];
 				} else if (z == 3) {
 					if (q == 0) {
 						result->index = DA_LD__X__RP;
 						result->a1 = wmem_read16(memc, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
-						result->a2 = (INT_PTR) rp[p];
+						result->a2 = (uint32_t *) rp[p];
 					} else {
 						result->index = DA_LD_RP__X_;
-						result->a1 = (INT_PTR) rp[p];
+						result->a1 = (uint32_t *) rp[p];
 						result->a2 = wmem_read16(memc, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
@@ -337,7 +337,7 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 					}
 				} else if (z == 6) {
 					result->index = DA_IM_X;
-					result->a1 = (INT_PTR) im[y];
+					result->a1 = (uint32_t *) im[y];
 				} else if (z == 7) {
 					switch (y) {
 						case 0:	result->index = DA_LD_I_A; break;
@@ -355,7 +355,7 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			if (x == 2) {
 				if (y >= 4) {
 					result->index = DA_BLI;
-					result->a1 = (INT_PTR) bli[y-4][z];
+					result->a1 = (uint32_t *) bli[y-4][z];
 				} else {
 					result->index = DA_NOP_ED;
 				}
@@ -379,8 +379,8 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 					case 0: result->index = DA_NOP; break;
 					case 1: 
 						result->index = DA_EX_AF_AF_;
-						result->a1 = (INT_PTR) rp2[3];
-						result->a2 = (INT_PTR) _T("af'");
+						result->a1 = (uint32_t *) rp2[3];
+						result->a2 = (uint32_t *) ("af'");
 						break;
 					case 2: 
 						result->index = DA_DJNZ_X;
@@ -394,7 +394,7 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 						break;
 					default:
 						result->index = DA_JR_CC_X;
-						result->a1 = (INT_PTR) cc[y-4];
+						result->a1 = (uint32_t *) cc[y-4];
 						result->a2 = wmem_read(memc, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
 						break;
@@ -407,19 +407,19 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 					waddr = GetNextAddr(memc, type, waddr);
 					waddr = GetNextAddr(memc, type, waddr);
 					if (prefix && p == 2) {
-						result->a1 = (INT_PTR) ri[pi];
+						result->a1 = (uint32_t *) ri[pi];
 					} else {
-						result->a1 = (INT_PTR) rp[p];
+						result->a1 = (uint32_t *) rp[p];
 					}
 				} else {
 					if (prefix) {
 						result->index = DA_ADD_RI_RP;
-						result->a1 = (INT_PTR) ri[pi];
-						result->a2 = (INT_PTR) rpi[pi][p];
+						result->a1 = (uint32_t *) ri[pi];
+						result->a2 = (uint32_t *) rpi[pi][p];
 					} else {
 						result->index = DA_ADD_HL_RP;
-						result->a1 = (INT_PTR) rp[R_HL];
-						result->a2 = (INT_PTR) rp[p];
+						result->a1 = (uint32_t *) rp[R_HL];
+						result->a2 = (uint32_t *) rp[p];
 					}
 				}
 			} else
@@ -427,28 +427,28 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 				switch (y) {
 					case 0: 
 						result->index = DA_LD__BC__A; 
-						result->a1 = (INT_PTR) rp[R_BC];
-						result->a2 = (INT_PTR) r[R_A];
+						result->a1 = (uint32_t *) rp[R_BC];
+						result->a2 = (uint32_t *) r[R_A];
 						break;
 					case 1: 
 						result->index = DA_LD_A__BC_;
-						result->a1 = (INT_PTR) r[R_A];
-						result->a2 = (INT_PTR) rp[R_BC];
+						result->a1 = (uint32_t *) r[R_A];
+						result->a2 = (uint32_t *) rp[R_BC];
 						break;
 					case 2: 
 						result->index = DA_LD__DE__A; 
-						result->a1 = (INT_PTR) rp[R_DE];
-						result->a2 = (INT_PTR) r[R_A];
+						result->a1 = (uint32_t *) rp[R_DE];
+						result->a2 = (uint32_t *) r[R_A];
 						break;
 					case 3: 
 						result->index = DA_LD_A__DE_; 
-						result->a1 = (INT_PTR) r[R_A];
-						result->a2 = (INT_PTR) rp[R_DE];
+						result->a1 = (uint32_t *) r[R_A];
+						result->a2 = (uint32_t *) rp[R_DE];
 						break;
 					case 4: 
 						if (prefix) {
 							result->index = DA_LD__X__RI;
-							result->a2 = (INT_PTR) ri[pi];
+							result->a2 = (uint32_t *) ri[pi];
 							result->a1 = wmem_read16(memc, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
@@ -457,19 +457,19 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 							result->a1 = wmem_read16(memc, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
-							result->a2 = (INT_PTR) rp[R_HL];
+							result->a2 = (uint32_t *) rp[R_HL];
 						}
 						break;							
 					case 5:
 						if (prefix) {
 							result->index = DA_LD_RI__X_;
-							result->a1 = (INT_PTR) ri[pi];
+							result->a1 = (uint32_t *) ri[pi];
 							result->a2 = wmem_read16(memc, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 						} else {
 							result->index = DA_LD_HL__X_;
-							result->a1 = (INT_PTR) rp[R_HL];
+							result->a1 = (uint32_t *) rp[R_HL];
 							result->a2 = wmem_read16(memc, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
@@ -480,10 +480,10 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 							result->a1 = wmem_read16(memc, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
-							result->a2 = (INT_PTR) r[R_A];
+							result->a2 = (uint32_t *) r[R_A];
 							break;
 					case 7:	result->index = DA_LD_A__X_;
-							result->a1 = (INT_PTR) r[R_A];
+							result->a1 = (uint32_t *) r[R_A];
 							result->a2 = wmem_read16(memc, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
@@ -492,12 +492,12 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			} else
 			if (z == 3) {	/* ix, iy ready */
 				result->index = (q == 0) ? DA_INC_RP : DA_DEC_RP;
-				result->a1 = (INT_PTR) (prefix ? rpi[pi][p] : rp[p]);
+				result->a1 = (uint32_t *) (prefix ? rpi[pi][p] : rp[p]);
 			} else
 			if (z < 6) {	/* ix, iy ready */
 				result->index = (z == 4) ? DA_INC_R : DA_DEC_R;
-				result->a1 = (INT_PTR) (prefix ? r8i[pi][y] : r[y]);
-				if (result->a1 == (INT_PTR) r[R__HL_])
+				result->a1 = (uint32_t *) (prefix ? r8i[pi][y] : r[y]);
+				if (result->a1 == (uint32_t *) r[R__HL_])
 					result->index = (z == 4) ? DA_INC__HL_ : DA_DEC__HL_;
 				if (prefix && y == 6) {
 					result->index += (DA_INC_RI - DA_INC_R);
@@ -508,17 +508,17 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			} else
 			if (z == 6) {	/* ix, iy ready */
 				result->index = DA_LD_R_X;
-				result->a1 = (INT_PTR) (prefix ? r8i[pi][y] : r[y]);
-				if (result->a1 == (INT_PTR) r[R__HL_])
+				result->a1 = (uint32_t *) (prefix ? r8i[pi][y] : r[y]);
+				if (result->a1 == (uint32_t *) r[R__HL_])
 					result->index = DA_LD__HL__X;
 				if (prefix && y == 6) {
 					result->index = DA_LD_RI_X;
 					result->a2 = offset;
 					waddr = GetNextAddr(memc, type, waddr);
-					result->a3 = (INT_PTR) wmem_read(memc, waddr);
+					result->a3 = (uint32_t *) wmem_read(memc, waddr);
 					waddr = GetNextAddr(memc, type, waddr);
 				} else {
-					result->a2 = (INT_PTR) wmem_read(memc, waddr);
+					result->a2 = (uint32_t *) wmem_read(memc, waddr);
 					waddr = GetNextAddr(memc, type, waddr);
 				}
 			} else {	/* ix, iy ready */
@@ -542,23 +542,23 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 					result->index = DA_HALT;
 				} else {
 					result->index = DA_LD_R_R;
-					result->a1 = (INT_PTR) (prefix ? r8i[pi][y] : r[y]);
-					if (result->a1 == (INT_PTR) r[R__HL_])
+					result->a1 = (uint32_t *) (prefix ? r8i[pi][y] : r[y]);
+					if (result->a1 == (uint32_t *) r[R__HL_])
 						result->index = DA_LD__HL__R;
-					result->a2 = (INT_PTR) (prefix ? r8i[pi][z] : r[z]);
-					if (result->a2 == (INT_PTR) r[R__HL_])
+					result->a2 = (uint32_t *) (prefix ? r8i[pi][z] : r[z]);
+					if (result->a2 == (uint32_t *) r[R__HL_])
 						result->index = DA_LD_R__HL_;
 					if (prefix) {
 						if (y == 6) {
 							waddr = GetNextAddr(memc, type, waddr);
 							result->index = DA_LD_RI_R;
-							result->a1 = (INT_PTR) ri[pi];
-							result->a3 = (INT_PTR) r[z];
+							result->a1 = (uint32_t *) ri[pi];
+							result->a3 = (uint32_t *) r[z];
 							result->a2 = offset;
 						} else if (z == 6) {
 							waddr = GetNextAddr(memc, type, waddr);
-							result->a1 = (INT_PTR) r[y];
-							result->a2 = (INT_PTR) ri[pi];
+							result->a1 = (uint32_t *) r[y];
+							result->a2 = (uint32_t *) ri[pi];
 							result->index = DA_LD_R_RI;
 							result->a3 = offset;
 						}
@@ -567,15 +567,15 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			} else
 			/* FOR X = 2 */
 			if (x == 2) {	/* ix, iy ready */
-				INT_PTR *a = result->a;
-				*(a++) = (INT_PTR) alu[y];
+				uint32_t * *a = result->a;
+				*(a++) = (uint32_t *) alu[y];
 				if (y == 0 || y == 1 || y == 3) {
-					*(a++) = (INT_PTR) r[R_A];
+					*(a++) = (uint32_t *) r[R_A];
 					result->index = DA_ALU_A;
 				} else
 				result->index = DA_ALU;
 				
-				*(a++) = (INT_PTR) (prefix ? r8i[pi][z] : r[z]);
+				*(a++) = (uint32_t *) (prefix ? r8i[pi][z] : r[z]);
 				if (prefix && z == 6) {
 					result->index += (DA_ALU_RI - DA_ALU);
 					*(a++) = offset;
@@ -587,31 +587,31 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			/* FOR X = 3 */
 			if (z == 0) {
 				result->index = DA_RET_CC;
-				result->a1 = (INT_PTR) cc[y];
+				result->a1 = (uint32_t *) cc[y];
 			} else
 			if (z == 1) {
 				if (q == 0) {
 					result->index = DA_POP_RP;
-					result->a1 = (INT_PTR) (prefix ? rp2i[pi][p] : rp2[p]);
+					result->a1 = (uint32_t *) (prefix ? rp2i[pi][p] : rp2[p]);
 				} else {
 					switch (p) {
 						case 0:	result->index = DA_RET; break;
 						case 1: result->index = DA_EXX; break;
 						case 2:
 							result->index = prefix ? DA_JP_RI : DA_JP_HL;
-							result->a1 = (INT_PTR) (prefix ? ri[pi] : rp[R_HL]);
+							result->a1 = (uint32_t *) (prefix ? ri[pi] : rp[R_HL]);
 							break;
 						case 3: 
 							result->index = DA_LD_SP_HL;
-							result->a1 = (INT_PTR) rp[R_SP];
-							result->a2 = (INT_PTR) (prefix ? ri[pi] : rp[R_HL]);
+							result->a1 = (uint32_t *) rp[R_SP];
+							result->a2 = (uint32_t *) (prefix ? ri[pi] : rp[R_HL]);
 							break;
 					}
 				}
 			} else
 			if (z == 2) {
 				result->index = DA_JP_CC_X;
-				result->a1 = (INT_PTR) cc[y];
+				result->a1 = (uint32_t *) cc[y];
 				result->a2 = wmem_read16(memc, waddr);
 				waddr = GetNextAddr(memc, type, waddr);
 				waddr = GetNextAddr(memc, type, waddr);
@@ -628,23 +628,23 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 						result->index = DA_OUT__X__A;
 						result->a1 = wmem_read(memc, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
-						result->a2 = (INT_PTR) r[R_A];
+						result->a2 = (uint32_t *) r[R_A];
 						break;
 					case 3:
 						result->index = DA_IN_A__X_;
-						result->a1 = (INT_PTR) r[R_A];
+						result->a1 = (uint32_t *) r[R_A];
 						result->a2 = wmem_read(memc, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
 						break;
 					case 4:	
 						result->index = (prefix ? DA_EX__SP__RI : DA_EX__SP__HL);
-						result->a1 = (INT_PTR) rp[R_SP];
-						result->a2 = (INT_PTR) (prefix ? ri[pi] : rp[R_HL]);
+						result->a1 = (uint32_t *) rp[R_SP];
+						result->a2 = (uint32_t *) (prefix ? ri[pi] : rp[R_HL]);
 						break;
 					case 5: 
 						result->index = DA_EX_DE_HL; 
-						result->a1 = (INT_PTR) rp[R_DE];
-						result->a2 = (INT_PTR) rp[R_HL];
+						result->a1 = (uint32_t *) rp[R_DE];
+						result->a2 = (uint32_t *) rp[R_HL];
 						break;
 					case 6: result->index = DA_DI; break;
 					case 7: result->index = DA_EI; break;
@@ -652,7 +652,7 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			} else
 			if (z == 4) {
 				result->index = DA_CALL_CC_X;
-				result->a1 = (INT_PTR) cc[y];
+				result->a1 = (uint32_t *) cc[y];
 				result->a2 = wmem_read16(memc, waddr);
 				waddr = GetNextAddr(memc, type, waddr);
 				waddr = GetNextAddr(memc, type, waddr);
@@ -660,7 +660,7 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 			if (z == 5) {
 				if (q == 0) {
 					result->index = DA_PUSH_RP;
-					result->a1 = (INT_PTR) (prefix ? rp2i[pi][p] : rp2[p]);
+					result->a1 = (uint32_t *) (prefix ? rp2i[pi][p] : rp2[p]);
 				} else {
 					if (p == 0) {
 						result->index = DA_CALL_X;
@@ -673,11 +673,11 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 							result->a1 = wmem_read16(memc, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
 							waddr = GetNextAddr(memc, type, waddr);
-							TCHAR* Name = FindBcall((int) result->a1);
-							if (Name == NULL) {
+							char* Name = FindBcall((int) result->a1);
+							if (Name == nullptr) {
 								result->index = DA_BJUMP_N;
 							} else {
-								result->a1 = (INT_PTR) Name;
+								result->a1 = (uint32_t *) Name;
 							}
 						}
 
@@ -688,24 +688,24 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 				switch (y) {
 					case 0:
 						result->index = DA_ADD_HL_RP;
-						result->a1 = (INT_PTR) r[R_A];
+						result->a1 = (uint32_t *) r[R_A];
 						break;
 					case 1:
 						result->index = DA_ADC_HL_RP;
-						result->a1 = (INT_PTR) r[R_A];
+						result->a1 = (uint32_t *) r[R_A];
 						break;
 					case 3:
 						result->index = DA_SBC_HL_RP;
-						result->a1 = (INT_PTR) r[R_A];
+						result->a1 = (uint32_t *) r[R_A];
 						break;
 					default:
 						result->index = DA_ALU;
-						result->a1 = (INT_PTR) alu[y];
+						result->a1 = (uint32_t *) alu[y];
 						break;
 				}
 				result->index = DA_ALU_X;
-				result->a1 = (INT_PTR) alu[y];
-				result->a2 = (INT_PTR) wmem_read(memc, waddr);
+				result->a1 = (uint32_t *) alu[y];
+				result->a2 = (uint32_t *) wmem_read(memc, waddr);
 				waddr = GetNextAddr(memc, type, waddr);
 			} else
 			if (z == 7) {
@@ -714,12 +714,12 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 					int tmp = wmem_read16(memc, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
 						waddr = GetNextAddr(memc, type, waddr);
-					TCHAR* Name = FindBcall(tmp);
-					if (Name == NULL) {
+					char* Name = FindBcall(tmp);
+					if (Name == nullptr) {
 						result->index = DA_BCALL_N;
 						result->a1 = tmp;
 					} else {
-						result->a1 = (INT_PTR) Name;
+						result->a1 = (uint32_t *) Name;
 					}
 				} else {
 					result->index = DA_RST_X;
@@ -731,22 +731,22 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 		result->size = abs(((unsigned short)(waddr.addr - start_addr.addr)) & 0xFF);
 
 #ifndef WINVER
-		INT_PTR mod_a1 = result->a1;
-		INT_PTR mod_a2 = result->a2;
+		uint32_t * mod_a1 = result->a1;
+		uint32_t * mod_a2 = result->a2;
 
 		// Expand the format
-		TCHAR szFormat[32] = {0};
-		TCHAR *in = da_opcode[result->index].format;
-		TCHAR *out = szFormat;
+		char szFormat[32] = {0};
+		char *in = da_opcode[result->index].format;
+		char *out = szFormat;
 		int inOffset = 0;
 		int outOffset = 0;
-		while (in[inOffset] != _T('\0'))
+		while (in[inOffset] != ('\0'))
 		{
-			if (in[inOffset] == _T('%'))
+			if (in[inOffset] == ('%'))
 			{
 				switch (in[inOffset + 1])
 				{
-				case _T('g'):
+				case ('g'):
 					{
 						unsigned short addr = result->waddr.addr + 2;
 						if (result->index == DA_JR_CC_X)
@@ -755,49 +755,49 @@ int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info
 							mod_a1 = (addr + ((char) result->a1)) & 0xFFFF;
 						// Fall through
 					}
-				case _T('a'):
+				case ('a'):
 					{
-						LPCTSTR sz = _T("$%04X");
+						const char * sz = ("$%04X");
 						_tcscat(out, sz);
-						outOffset += _tcslen(sz);
+						outOffset += strlen(sz);
 						inOffset += 2;
 						break;
 					}
-				case _T('h'):
+				case ('h'):
 					{
-						LPCTSTR sz = _T("%+d");
+						const char * sz = ("%+d");
 						_tcscat(out, sz);
-						outOffset += _tcslen(sz);
+						outOffset += strlen(sz);
 						inOffset += 2;
 						break;
 					}
-				case _T('r'):
-				case _T('c'):
-				case _T('l'):
+				case ('r'):
+				case ('c'):
+				case ('l'):
 					{
 						out[outOffset++]  = in[inOffset++];
 #ifdef _UNICODE
-						out[outOffset] = _T('S');
+						out[outOffset] = ('S');
 #else
-						out[outOffset] = _T('s');
+						out[outOffset] = ('s');
 #endif
 						outOffset++;
 						inOffset++;
 						break;
 					}
-				case _T('x'):
+				case ('x'):
 					{
-						LPCTSTR sz = _T("$%02X");
+						const char * sz = ("$%02X");
 						_tcscat(out, sz);
-						outOffset += _tcslen(sz) ;
+						outOffset += strlen(sz) ;
 						inOffset += 2;
 						break;
 					}
-				case _T('s'):
+				case ('s'):
 					{
 						out[outOffset++] = in[inOffset++];
 #ifdef _UNICODE
-						out[outOffset++] = _T('S');
+						out[outOffset++] = ('S');
 						inOffset++;
 #else
 						out[outOffset++] = in[inOffset++];

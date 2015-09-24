@@ -199,7 +199,7 @@ void WabbitemuLCD::PaintLCD(wxWindow *window, wxPaintDC *wxDCDest)
 		wxBitmap bmpBuf(screenImage.Size(wxSize(lcd->width, 64), wxPoint(0, 0)).Scale(rc.GetWidth(), rc.GetHeight()));
 		wxMemDC.SelectObject(bmpBuf);
 		//draw drag panes
-		/*if (lpCalc->do_drag == TRUE) {
+		/*if (lpCalc->do_drag == true) {
 
 			hdcOverlay = DrawDragPanes(hwnd, hdcDest, 0);
 			BLENDFUNCTION bf;
@@ -209,7 +209,7 @@ void WabbitemuLCD::PaintLCD(wxWindow *window, wxPaintDC *wxDCDest)
 			bf.AlphaFormat = 0;
 			if (AlphaBlend(	hdc, 0, 0, rc.right, rc.bottom,
 						hdcOverlay, 0, 0, rc.right, rc.bottom,
-						bf ) == FALSE) printf("alpha blend 1 failed\n");
+						bf ) == false) printf("alpha blend 1 failed\n");
 
 			DeleteDC(hdcOverlay);
 
@@ -245,13 +245,13 @@ void WabbitemuLCD::PaintLCD(wxWindow *window, wxPaintDC *wxDCDest)
 		bf.SourceConstantAlpha = 160;
 		bf.AlphaFormat = 0;
 
-		if (lpCalc->do_drag == TRUE) {
+		if (lpCalc->do_drag == true) {
 
 			hdcOverlay = DrawDragPanes(hwnd, hdcDest, 0);
 
 			if (AlphaBlend(	hdc, 0, 0, rc.right, rc.bottom,
 						hdcOverlay, 0, 0, rc.right, rc.bottom,
-						bf ) == FALSE) printf("alpha blend 1 failed\n");
+						bf ) == false) printf("alpha blend 1 failed\n");
 
 			DeleteDC(hdcOverlay);
 

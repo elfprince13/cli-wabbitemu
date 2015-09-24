@@ -613,7 +613,7 @@ keypad_t *keypad_init(CPU_t *cpu) {
 	
 	keypad = (keypad_t *) malloc(sizeof(keypad_t));
 	if (!keypad) {
-		return NULL;
+		return nullptr;
 	}
 
 	memset(keypad->keys, 0, sizeof(keypad->keys));
@@ -657,12 +657,12 @@ void keypad(CPU_t *cpu, device_t *dev) {
 	
 
 		cpu->bus = ~result;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		unsigned char group = ~cpu->bus;
 		if (group != 0) keypad->group = group;
 		else keypad->group = 0;
-		cpu->output = FALSE;
+		cpu->output = false;
 	}	
 }
 
@@ -683,8 +683,8 @@ keyprog_t *keypad_key_press(CPU_t *cpu, unsigned int vk, bool *changed)
 	int i;
 	keypad_t *keypad = cpu->pio.keypad;
 
-	if (keypad == NULL) {
-		return NULL;
+	if (keypad == nullptr) {
+		return nullptr;
 	}
 	for(i = 0; i < NumElm(keygrps); i++)
 	{
@@ -707,7 +707,7 @@ keyprog_t *keypad_key_press(CPU_t *cpu, unsigned int vk, bool *changed)
 			return &keygrps[i];
 		}
 	}	
-	return NULL;
+	return nullptr;
 }
 
 void keypad_release(CPU_t *cpu, int group, int bit)
@@ -725,9 +725,9 @@ void keypad_release(CPU_t *cpu, int group, int bit)
 keyprog_t *keypad_key_release(CPU_t *cpu, unsigned int vk) {
 	keypad_t *keypad = cpu->pio.keypad;
 	
-	if (keypad == NULL)
+	if (keypad == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	for (int i = 0; i < NumElm(keygrps); i++)
@@ -738,7 +738,7 @@ keyprog_t *keypad_key_release(CPU_t *cpu, unsigned int vk) {
 			return &keygrps[i];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 #ifdef WINVER

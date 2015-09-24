@@ -62,22 +62,22 @@ typedef enum _LCD_MODE {
  */
 typedef struct LCD {
 	void (*free)(struct LCD*);		// Function to free this aux
-	bool active;					// TRUE = on, FALSE = off
-	u_int word_len;
+	bool active;					// true = on, false = off
+	uint32_t word_len;
 	int x, y, z;					/* LCD cursors */
 	int width;
-	u_int lcd_delay;				//delay in tstate required to write
+	uint32_t lcd_delay;				//delay in tstate required to write
 	
 	LCD_CURSOR_MODE cursor_mode;	/* Y_UP, Y_DOWN, X_UP, X_DOWN */
-	u_int last_read;				/* Buffer previous read */
-	u_int contrast;					/* 0 to 63 */
-	u_int base_level;				/* used in lcd level to handle contrast */
+	uint32_t last_read;				/* Buffer previous read */
+	uint32_t contrast;					/* 0 to 63 */
+	uint32_t base_level;				/* used in lcd level to handle contrast */
 	uint8_t display[DISPLAY_SIZE];	/* LCD display memory */
 	uint8_t screen[LCD_HEIGHT][LCD_WIDTH];
 	int front;
 	uint8_t queue[LCD_MAX_SHADES][DISPLAY_SIZE];/* holds previous buffers for grey */
 	uint8_t gif[LCD_HEIGHT*2][LCD_WIDTH*2];		/*for rendering limited color gifs*/
-	u_int shades;					/* number of shades of grey*/
+	uint32_t shades;					/* number of shades of grey*/
 	LCD_MODE mode;					/* Mode of LCD rendering */
 	double steady_frame;			/* Length of a steady frame in seconds */
 	double time;					/* Last lcd update in seconds*/

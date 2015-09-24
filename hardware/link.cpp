@@ -35,7 +35,7 @@ static void print_command_ID(uint8_t);
 int link_init(CPU_t *cpu) {
 	link_t *link = cpu->pio.link;
 
-	if (link == NULL)
+	if (link == nullptr)
 		return 1;
 
 	link->vout = 0;
@@ -53,14 +53,14 @@ int link_connect_hub(int slot, CPU_t *cpu) {
 }
 
 bool link_connected_hub(int slot) {
-	return link_hub[slot] != NULL;
+	return link_hub[slot] != nullptr;
 }
 
 int link_connect(CPU_t *cpu1, CPU_t *cpu2) {
 	link_t *link1 = cpu1->pio.link;
 	link_t *link2 = cpu2->pio.link;
 
-	if (link1 == NULL || link2 == NULL)
+	if (link1 == nullptr || link2 == nullptr)
 		return 1;
 
 	link1->client = &link2->host;
@@ -70,7 +70,7 @@ int link_connect(CPU_t *cpu1, CPU_t *cpu2) {
 }
 
 int link_disconnect(CPU_t *cpu) {
-	cpu->pio.link->client = NULL;
+	cpu->pio.link->client = nullptr;
 	return 0;
 }
 
@@ -88,16 +88,16 @@ static void link_wait(CPU_t *cpu, time_t tstates) {
 static void link_send(CPU_t *cpu, uint8_t byte) {
 	link_t *link = cpu->pio.link;
 
-	for (u_int bit = 0; bit < 8; bit++, byte >>= 1) {
+	for (uint32_t bit = 0; bit < 8; bit++, byte >>= 1) {
 		link->vout = (byte & 1) + 1;
 
-		for (u_int i = 0; i < LINK_TIMEOUT && vlink(link) != 0; i += LINK_STEP)
+		for (uint32_t i = 0; i < LINK_TIMEOUT && vlink(link) != 0; i += LINK_STEP)
 			link_wait(cpu, LINK_STEP);
 		if (vlink(link) != 0)
 			longjmp(exc_byte, LERR_TIMEOUT);
 
 		link->vout = 0;
-		for (u_int i = 0; i < LINK_TIMEOUT && vlink(link) != 3; i += LINK_STEP)
+		for (uint32_t i = 0; i < LINK_TIMEOUT && vlink(link) != 3; i += LINK_STEP)
 			link_wait(cpu, LINK_STEP);
 		if (vlink(link) != 3)
 			longjmp(exc_byte, LERR_TIMEOUT);
@@ -112,10 +112,10 @@ static uint8_t link_recv(CPU_t *cpu) {
 	link_t *link = cpu->pio.link;
 	uint8_t byte = 0;
 
-	for (u_int bit = 0; bit < 8; bit++) {
+	for (uint32_t bit = 0; bit < 8; bit++) {
 		byte >>= 1;
 
-		for (u_int i = 0; i < LINK_TIMEOUT && vlink(link) == 3; i += LINK_STEP)
+		for (uint32_t i = 0; i < LINK_TIMEOUT && vlink(link) == 3; i += LINK_STEP)
 			link_wait(cpu, LINK_STEP);
 
 		if (vlink(link) == 0)
@@ -127,7 +127,7 @@ static uint8_t link_recv(CPU_t *cpu) {
 		if (link->vout == 1)
 			byte |= 0x80;
 
-		for (u_int i = 0; i < LINK_TIMEOUT && vlink(link) == 0; i += LINK_STEP)
+		for (uint32_t i = 0; i < LINK_TIMEOUT && vlink(link) == 0; i += LINK_STEP)
 			link_wait(cpu, LINK_STEP);
 		if (vlink(link) == 0)
 			longjmp(exc_byte, LERR_TIMEOUT);
@@ -373,16 +373,16 @@ LINK_ERR link_send_backup(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 	// Turn it on by simulating pressing the 'ON' button
 	if (!cpu->pio.lcd->active) {
 		link_wait(cpu, MHZ_6);
-		cpu->pio.keypad->on_pressed |= KEY_FALSEPRESS;
+		cpu->pio.keypad->on_pressed |= KEY_falsePRESS;
 		link_wait(cpu, MHZ_6 / 2);
-		cpu->pio.keypad->on_pressed &= ~KEY_FALSEPRESS;
+		cpu->pio.keypad->on_pressed &= ~KEY_falsePRESS;
 		link_wait(cpu, MHZ_6);
 
 		if (!cpu->pio.lcd->active)
 			return LERR_LINK;
 	}
 
-	if (tifile->backup == NULL)
+	if (tifile->backup == nullptr)
 		return LERR_FILE;
 	TIBACKUP_t *backup = tifile->backup;
 	cpu->pio.link->vlink_size = backup->length1 + backup->length2 + backup->length3;
@@ -419,14 +419,14 @@ LINK_ERR link_send_backup(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 		if (rpkt.command_ID != CID_CTS) {
 			keypad_release(cpu, group, bit);
 			if (rpkt.command_ID == CID_EXIT) {
-				link_send_pkt(cpu, CID_ACK, NULL);
+				link_send_pkt(cpu, CID_ACK, nullptr);
 				return LERR_MEM;
 			} else
 				return LERR_LINK;
 		}
 
 		// Send the ACK
-		link_send_pkt(cpu, CID_ACK, NULL);
+		link_send_pkt(cpu, CID_ACK, nullptr);
 
 		// Send the single data packet containing the first data section
 		TI_DATA s_data = { backup->length1, backup->data1 };
@@ -465,7 +465,7 @@ LINK_ERR link_send_backup(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 
 		// Send the End of Transmission
 		if (cpu->pio.model != TI_82)
-			link_send_pkt(cpu, CID_EOT, NULL);
+			link_send_pkt(cpu, CID_EOT, nullptr);
 		keypad_release(cpu, group, bit);
 		break;
 	}
@@ -501,9 +501,9 @@ LINK_ERR link_send_var(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 	// Turn it on by simulating pressing the 'ON' button
 	if (!cpu->pio.lcd->active) {
 		link_wait(cpu, MHZ_6);
-		cpu->pio.keypad->on_pressed |= KEY_FALSEPRESS;
+		cpu->pio.keypad->on_pressed |= KEY_falsePRESS;
 		link_wait(cpu, MHZ_6/2);
-		cpu->pio.keypad->on_pressed &= ~KEY_FALSEPRESS;
+		cpu->pio.keypad->on_pressed &= ~KEY_falsePRESS;
 		link_wait(cpu, MHZ_6);
 
 		if (!cpu->pio.lcd->active)
@@ -522,12 +522,12 @@ LINK_ERR link_send_var(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 	}
 
 	// Make sure the TIFILE is well formed
-	if (tifile->var == NULL)
+	if (tifile->var == nullptr)
 		return LERR_FILE;
 
 	int i = 0;
 	TIVAR_t *var = tifile->vars[i];
-	while (var != NULL) {
+	while (var != nullptr) {
 		cpu->pio.link->vlink_size = var->length;
 
 		int err;
@@ -548,14 +548,14 @@ LINK_ERR link_send_var(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 			link_recv_pkt(cpu, &rpkt, data);
 			if (rpkt.command_ID != CID_CTS) {
 				if (rpkt.command_ID == CID_EXIT) {
-					link_send_pkt(cpu, CID_ACK, NULL);
+					link_send_pkt(cpu, CID_ACK, nullptr);
 					return LERR_MEM;
 				} else
 					return LERR_LINK;
 			}
 
 			// Send the ACK
-			link_send_pkt(cpu, CID_ACK, NULL);
+			link_send_pkt(cpu, CID_ACK, nullptr);
 
 			// Send the single data packet containing the whole file
 			TI_DATA s_data = { var->length, var->data };
@@ -568,7 +568,7 @@ LINK_ERR link_send_var(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 
 			// Send the End of Transmission
 			if (cpu->pio.model != TI_82 && cpu->pio.model != TI_85)
-				link_send_pkt(cpu, CID_EOT, NULL);
+				link_send_pkt(cpu, CID_EOT, nullptr);
 			break;
 		}
 		default:
@@ -579,7 +579,7 @@ LINK_ERR link_send_var(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 	if (cpu->pio.model == TI_85) {
 		TI_PKTHDR rpkt;
 		uint8_t data[64];
-		link_send_pkt(cpu, CID_EOT, NULL);
+		link_send_pkt(cpu, CID_EOT, nullptr);
 
 		// Receive the ACK
 		link_recv_pkt(cpu, &rpkt, data);
@@ -595,7 +595,7 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 	if (link_init(cpu) != 0)
 		return LERR_NOTINIT;
 
-	if (tifile->flash == NULL)
+	if (tifile->flash == nullptr)
 		return LERR_FILE;
 
 	// Get the size of the whole APP
@@ -611,7 +611,7 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 		uint8_t data[64];
 
 		// Send the version request
-		link_send_pkt(cpu, CID_VER, NULL);
+		link_send_pkt(cpu, CID_VER, nullptr);
 
 		// Receive the ACK
 		link_recv_pkt(cpu, &rpkt, data);
@@ -619,7 +619,7 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 			return LERR_LINK;
 
 		// Send the CTS
-		link_send_pkt(cpu, CID_CTS, NULL);
+		link_send_pkt(cpu, CID_CTS, nullptr);
 
 		// Receive the ACK
 		link_recv_pkt(cpu, &rpkt, data);
@@ -630,10 +630,10 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 		link_recv_pkt(cpu, &rpkt, data);
 
 		// Send the ACK
-		link_send_pkt(cpu, CID_ACK, NULL);
+		link_send_pkt(cpu, CID_ACK, nullptr);
 
 		// Send the ready request
-		link_send_pkt(cpu, CID_RDY, NULL);
+		link_send_pkt(cpu, CID_RDY, nullptr);
 
 		link_recv_pkt(cpu, &rpkt, data);
 		if (rpkt.command_ID != CID_ACK)
@@ -666,7 +666,7 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 				}
 
 				// Send the ACK
-				link_send_pkt(cpu, CID_ACK, NULL);
+				link_send_pkt(cpu, CID_ACK, nullptr);
 
 				// Send the data packet
 				TI_DATA s_data = { 0x0080, &tifile->flash->data[page][offset] };
@@ -679,7 +679,7 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 			}
 		}
 
-		link_send_pkt(cpu, CID_EOT, NULL);
+		link_send_pkt(cpu, CID_EOT, nullptr);
 
 		link_recv_pkt(cpu, &rpkt, data);
 		if (rpkt.command_ID != CID_ACK)
@@ -691,24 +691,24 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 	}
 }
 
-bool check_flashpage_empty(uint8_t (*dest)[PAGE_SIZE], u_int page, u_int num_pages) {
+bool check_flashpage_empty(uint8_t (*dest)[PAGE_SIZE], uint32_t page, uint32_t num_pages) {
 	uint8_t *space = &dest[page][PAGE_SIZE - 1];
-	u_int i;
+	uint32_t i;
 	// Make sure the subsequent pages are empty
 	for (i = 0; i < num_pages * PAGE_SIZE; i++, space--) {
 		if (*space != 0xFF) {
 			printf("Subsequent pages not empty\n");
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 /* Fixes the certificate page so that the app is no longer marked as a trial
  * cpu: cpu for the core the application is on
  * page: the page the application you want to mark is on
  */
-void fix_certificate(CPU_t *cpu, u_int page) {
+void fix_certificate(CPU_t *cpu, uint32_t page) {
 
 	uint8_t (*dest)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) cpu->mem_c->flash;
 	upages_t upages;
@@ -724,16 +724,16 @@ void fix_certificate(CPU_t *cpu, u_int page) {
 }
 
 LINK_ERR forceload_os(CPU_t *cpu, TIFILE_t *tifile) {
-	u_int i, page;
+	uint32_t i, page;
 	uint8_t (*dest)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) cpu->mem_c->flash;
-	if (dest == NULL)
+	if (dest == nullptr)
 		return LERR_MODEL;
 
-	if (tifile->flash == NULL)
+	if (tifile->flash == nullptr)
 		return LERR_FILE;
 
 	for (i = 0; i < ARRAYSIZE(tifile->flash->data); i++) {
-		if (tifile->flash->data[i] == NULL) {
+		if (tifile->flash->data[i] == nullptr) {
 				continue;
 		}
 		if (i > 0x10) {
@@ -751,7 +751,7 @@ LINK_ERR forceload_os(CPU_t *cpu, TIFILE_t *tifile) {
 		memset(dest[sector], 0xFF, size);
 	}
 	for (i = 0; i < ARRAYSIZE(tifile->flash->data); i++) {
-		if (tifile->flash->data[i] == NULL) {
+		if (tifile->flash->data[i] == nullptr) {
 				continue;
 		}
 		if (i > 0x10) {
@@ -785,10 +785,10 @@ int get_page_size(uint8_t (*dest)[PAGE_SIZE], int page) {
  * On error: Returns an error code */
 static LINK_ERR forceload_app(CPU_t *cpu, TIFILE_t *tifile) {
 	uint8_t (*dest)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) cpu->mem_c->flash;
-	if (dest == NULL)
+	if (dest == nullptr)
 		return LERR_MODEL;
 
-	if (tifile->flash == NULL)
+	if (tifile->flash == nullptr)
 		return LERR_FILE;
 
 	upages_t upages;
@@ -808,7 +808,7 @@ static LINK_ERR forceload_app(CPU_t *cpu, TIFILE_t *tifile) {
 				//there's probably some good reason Jim didn't write this code :|
 				int pageDiff = tifile->flash->pages - get_page_size(dest, page);
 				int currentPage = page - tifile->flash->pages;
-				u_int end_page = pageDiff > 0 ? currentPage : currentPage + pageDiff;
+				uint32_t end_page = pageDiff > 0 ? currentPage : currentPage + pageDiff;
 				while (!check_flashpage_empty(dest, end_page, 1) && end_page >= upages.end)
 					end_page -= get_page_size(dest, end_page);
 				if (end_page != currentPage) {
@@ -840,7 +840,7 @@ static LINK_ERR forceload_app(CPU_t *cpu, TIFILE_t *tifile) {
 				//fix page execution permissions
 				cpu->mem_c->flash_upper -= pageDiff;
 			}
-			u_int i;
+			uint32_t i;
 			for (i = 0; i < tifile->flash->pages; i++, page--) {
 				memcpy(dest[page], tifile->flash->data[i], PAGE_SIZE);
 			}
@@ -868,7 +868,7 @@ static LINK_ERR forceload_app(CPU_t *cpu, TIFILE_t *tifile) {
 	mem_write(cpu->mem_c, 0x9C87, 0x00);
 
 	//uint8_t *space = &dest[page][PAGE_SIZE - 1];
-	u_int i;
+	uint32_t i;
 	// Make sure the subsequent pages are empty
 	if (!check_flashpage_empty(dest, page, tifile->flash->pages))
 		return LERR_MEM;

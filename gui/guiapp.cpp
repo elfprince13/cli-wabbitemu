@@ -16,8 +16,8 @@ void WabbitemuApp::LoadSettings(LPCALC lpCalc)
 	settingsConfig = new wxConfig(wxT("Wabbitemu"));
 	wxString tempString;
 	settingsConfig->Read(wxT("/rom_path"), &tempString, wxEmptyString);
-	_tcscpy(lpCalc->rom_path, tempString.c_str());
-	settingsConfig->Read(wxT("/SkinEnabled"), &lpCalc->SkinEnabled, FALSE);
+	strcpy(lpCalc->rom_path, tempString.c_str());
+	settingsConfig->Read(wxT("/SkinEnabled"), &lpCalc->SkinEnabled, false);
 }
 
 bool WabbitemuApp::OnInit()
@@ -32,16 +32,16 @@ bool WabbitemuApp::OnInit()
 	
 	WabbitemuFrame *frame;
 	int result = rom_load(lpCalc, lpCalc->rom_path);
-	if (result == TRUE) {
+	if (result == true) {
 		frame = gui_frame(lpCalc);
 	} else {
 		calc_slot_free(lpCalc);
-		bool loadedRom = FALSE;
+		bool loadedRom = false;
 		if (parsedArgs.num_rom_files > 0) {
 			for (int i = 0; i < parsedArgs.num_rom_files; i++) {
 				if (rom_load(lpCalc, parsedArgs.rom_files[i])) {
 					gui_frame(lpCalc);
-					loadedRom = TRUE;
+					loadedRom = true;
 					break;
 				}
 			}
@@ -49,15 +49,15 @@ bool WabbitemuApp::OnInit()
 		if (!loadedRom) {
 			bool success = DoRomWizard();
 			if (!success) {
-				return FALSE;
+				return false;
 			}
 		}
 	}
-	LoadCommandlineFiles((INT_PTR) lpCalc, LoadToLPCALC);
+	LoadCommandlineFiles((uint32_t *) lpCalc, LoadToLPCALC);
 	timer = new wxTimer();
 	timer->Connect(wxEVT_TIMER, (wxObjectEventFunction) &WabbitemuApp::OnTimer);
 	timer->Start(TPF, false);
-	return TRUE;
+	return true;
 }
 
 void WabbitemuApp::SaveSettings(LPCALC lpCalc) {
@@ -76,22 +76,22 @@ int WabbitemuApp::OnExit() {
 	//load ROMs first
 	for (int i = 0; i < parsedArgs.num_rom_files; i++) {
 		free(parsedArgs.rom_files[i]);
-		parsedArgs.rom_files[i] = NULL;
+		parsedArgs.rom_files[i] = nullptr;
 	}
 	//then archived files
 	for (int i = 0; i < parsedArgs.num_archive_files; i++) {
 		free(parsedArgs.archive_files[i]);
-		parsedArgs.archive_files[i] = NULL;
+		parsedArgs.archive_files[i] = nullptr;
 	}
 	//then ram
 	for (int i = 0; i < parsedArgs.num_ram_files; i++) {
 		free(parsedArgs.ram_files[i]);
-		parsedArgs.ram_files[i] = NULL;
+		parsedArgs.ram_files[i] = nullptr;
 	}
 	//finally utility files (label, break, etc)
 	for (int i = 0; i < parsedArgs.num_utility_files; i++) {
 		free(parsedArgs.utility_files[i]);
-		parsedArgs.utility_files[i] = NULL;
+		parsedArgs.utility_files[i] = nullptr;
 	}
 	return 0;
 }
@@ -100,7 +100,7 @@ int WabbitemuApp::OnExit() {
 unsigned WabbitemuApp::GetTickCount()
 {
 		struct timeval tv;
-		if(gettimeofday(&tv, NULL) != 0)
+		if(gettimeofday(&tv, nullptr) != 0)
 			return 0;
 
 		return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
@@ -143,29 +143,29 @@ void WabbitemuApp::OnTimer(wxTimerEvent& event) {
 void WabbitemuApp::ParseCommandLineArgs()
 {
 	ZeroMemory(&parsedArgs, sizeof(ParsedCmdArgs));
-	TCHAR tmpstring[512];
+	char tmpstring[512];
 	SEND_FLAG ram = SEND_CUR;
 
 	if (argv && argc > 1) {
-		_tcscpy(tmpstring, argv[1]);
+		strcpy(tmpstring, argv[1]);
 		for(int i = 1; i < argc; i++) {
 			ZeroMemory(tmpstring, 512);
-			_tcscpy(tmpstring, argv[i]);
-			TCHAR secondChar = toupper(tmpstring[1]);
+			strcpy(tmpstring, argv[i]);
+			char secondChar = toupper(tmpstring[1]);
 			if (*tmpstring != '-' && *tmpstring != '/') {
-				TCHAR *temp = (TCHAR *) malloc(_tcslen(tmpstring) + 1);
-				_tcscpy(temp, tmpstring);
-				temp[_tcslen(tmpstring) + 1] = '\0';
-				TCHAR extension[5] = _T("");
-				const TCHAR *pext = _tcsrchr(tmpstring, _T('.'));
-				if (pext != NULL) {
-					_tcscpy(extension, pext);
+				char *temp = (char *) malloc(strlen(tmpstring) + 1);
+				strcpy(temp, tmpstring);
+				temp[strlen(tmpstring) + 1] = '\0';
+				char extension[5] = ("");
+				const char *pext = _tcsrchr(tmpstring, ('.'));
+				if (pext != nullptr) {
+					strcpy(extension, pext);
 				}
-				if (!_tcsicmp(extension, _T(".rom")) || !_tcsicmp(extension, _T(".sav")) || !_tcsicmp(extension, _T(".clc"))) {
+				if (!strcasecmp(extension, (".rom")) || !strcasecmp(extension, (".sav")) || !strcasecmp(extension, (".clc"))) {
 					parsedArgs.rom_files[parsedArgs.num_rom_files++] = temp;
 				}
-				else if (!_tcsicmp(extension, _T(".brk")) || !_tcsicmp(extension, _T(".lab")) 
-					|| !_tcsicmp(extension, _T(".zip")) || !_tcsicmp(extension, _T(".tig"))) {
+				else if (!strcasecmp(extension, (".brk")) || !strcasecmp(extension, (".lab")) 
+					|| !strcasecmp(extension, (".zip")) || !strcasecmp(extension, (".tig"))) {
 						parsedArgs.utility_files[parsedArgs.num_utility_files++] = temp;
 				}
 				else if (ram) {
@@ -178,11 +178,11 @@ void WabbitemuApp::ParseCommandLineArgs()
 			} else if (secondChar == 'A') {
 				ram = SEND_ARC;
 			} else if (secondChar == 'S') {
-				parsedArgs.silent_mode = TRUE;
+				parsedArgs.silent_mode = true;
 			} else if (secondChar == 'F') {
-				parsedArgs.force_focus = TRUE;
+				parsedArgs.force_focus = true;
 			} else if (secondChar == 'N') {
-				parsedArgs.force_new_instance = TRUE;
+				parsedArgs.force_new_instance = true;
 			}
 		}
 	}
@@ -196,24 +196,24 @@ void WabbitemuApp::ParseCommandLineArgs()
 	size_t strLen;
 	cds->lpData = filePath;
 	if (PathIsRelative(filePath)) {
-		TCHAR tempPath[MAX_PATH];
-		TCHAR *tempPath2 = (TCHAR *) malloc(MAX_PATH);
-		_tgetcwd(tempPath, MAX_PATH);
+		char tempPath[PATH_MAX];
+		char *tempPath2 = (char *) malloc(PATH_MAX);
+		_tgetcwd(tempPath, PATH_MAX);
 		PathCombine(tempPath2, tempPath, filePath);
 		cds->lpData = tempPath2;
 	}
 	StringCbLength(filePath, 512, &strLen);
 	cds->cbData = strLen;
-	SendMessage(hwnd, WM_COPYDATA, (WPARAM) NULL, (LPARAM) cds);
+	SendMessage(hwnd, WM_COPYDATA, (WPARAM) nullptr, (LPARAM) cds);
 }*/
 
-void LoadToLPCALC(INT_PTR lParam, LPTSTR filePath, SEND_FLAG sendLoc)
+void LoadToLPCALC(uint32_t * lParam, LPTSTR filePath, SEND_FLAG sendLoc)
 {
 	LPCALC lpCalc = (LPCALC) lParam;
 	SendFile(lpCalc, filePath, sendLoc);
 }
 
-void WabbitemuApp::LoadCommandlineFiles(INT_PTR lParam,  void (*load_callback)(INT_PTR, LPTSTR, SEND_FLAG))
+void WabbitemuApp::LoadCommandlineFiles(uint32_t * lParam,  void (*load_callback)(uint32_t *, LPTSTR, SEND_FLAG))
 {
 	//load ROMs first
 	for (int i = 0; i < parsedArgs.num_rom_files; i++) {

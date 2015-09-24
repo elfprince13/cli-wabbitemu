@@ -25,7 +25,7 @@ unsigned char mem_read(memc *mem, unsigned short addr) {
 	}
 	//handle missing ram pages
 	if (mem->ram_version == 2) {
-		if (mem->banks[mc_bank(addr)].ram == TRUE && mem->banks[mc_bank(addr)].page > 2) {
+		if (mem->banks[mc_bank(addr)].ram == true && mem->banks[mc_bank(addr)].page > 2) {
 			return mem->ram[2 * PAGE_SIZE + mc_base(addr)];
 		}
 	}
@@ -73,30 +73,30 @@ waddr_t addr_to_waddr(memc *mem_c, uint16_t addr) {
 
 bool check_break(memc *mem, waddr_t waddr) {
 	if (!(mem->breaks[waddr.is_ram][PAGE_SIZE * waddr.page + mc_base(waddr.addr)] & NORMAL_BREAK))
-		return FALSE;
+		return false;
 #ifdef WINVER
 	if (mem->breakpoint_manager_callback)
 		return mem->breakpoint_manager_callback(mem, NORMAL_BREAK, waddr);
 #endif
-	return TRUE;
+	return true;
 }
 bool check_mem_write_break(memc *mem, waddr_t waddr) {
 	if (!(mem->breaks[waddr.is_ram][PAGE_SIZE * waddr.page + mc_base(waddr.addr)] & MEM_WRITE_BREAK))
-		return FALSE;
+		return false;
 #ifdef WINVER
 	if (mem->breakpoint_manager_callback)
 		return mem->breakpoint_manager_callback(mem, MEM_WRITE_BREAK, waddr);
 #endif
-	return TRUE;
+	return true;
 }
 bool check_mem_read_break(memc *mem, waddr_t waddr) {
 	if (!(mem->breaks[waddr.is_ram][PAGE_SIZE * waddr.page + mc_base(waddr.addr)] & MEM_READ_BREAK))
-		return FALSE;
+		return false;
 #ifdef WINVER
 	if (mem->breakpoint_manager_callback)
 		return mem->breakpoint_manager_callback(mem, MEM_READ_BREAK, waddr);
 #endif
-	return TRUE;
+	return true;
 }
 
 extern void add_breakpoint(memc *mem, BREAK_TYPE type, waddr_t waddr);
@@ -210,7 +210,7 @@ bool is_priveleged_page(CPU_t *cpu) {
 	// TI 84+SE		= 6F, 7C, 7D, 7F
 	bank_state_t *bank = &cpu->mem_c->banks[mc_bank(cpu->pc)];
 	if (bank->ram) {
-		return FALSE;
+		return false;
 	}
 	int maxPages = cpu->mem_c->flash_pages;
 	int page = bank->page;
@@ -225,14 +225,14 @@ static bool is_allowed_exec(CPU_t *cpu) {
 		if (bank->ram) {
 			protected_val = cpu->mem_c->protected_page[3];
 			if ((protected_val & 0x01) && bank->page == 0)
-				return FALSE;
+				return false;
 			if ((protected_val & 0x20) && bank->page == 1)
-				return FALSE;
-			return TRUE;
+				return false;
+			return true;
 		} else if (bank->page < 0x08)
-			return TRUE;
+			return true;
 		else if (bank->page >= 0x1C)
-			return TRUE;
+			return true;
 		protected_val = cpu->mem_c->protected_page[(bank->page - 8) / 8];
 		//yay for awesome looking code :D
 		//basically this checks whether the bit corresponding to the page
@@ -246,7 +246,7 @@ static bool is_allowed_exec(CPU_t *cpu) {
 				is_priveleged_page(cpu);
 		}
 		if (bank->page & (2 >> (cpu->mem_c->prot_mode + 1)))
-			return TRUE;		//we know were in ram so lets check if the page is allowed in the mem protected mode
+			return true;		//we know were in ram so lets check if the page is allowed in the mem protected mode
 								//execution is allowed on 2^(mode+1)
 		//finally we check ports 25/26 to see if its ok to execute on this page
 		int global_addr = bank->page * PAGE_SIZE + (cpu->pc & 0x3FFF);
@@ -255,8 +255,8 @@ static bool is_allowed_exec(CPU_t *cpu) {
 		else if ((mem->port28_remap_count > 0) && !mem->boot_mapped && (mc_bank(cpu->pc) == 2) && (mc_base(cpu->pc) < 64*mem->port28_remap_count))
 			global_addr = 1*PAGE_SIZE + mc_base(cpu->pc);
 		if (global_addr < cpu->mem_c->ram_lower || global_addr > cpu->mem_c->ram_upper)
-			return FALSE;
-		return TRUE;
+			return false;
+		return true;
 	}
 }
 
@@ -265,13 +265,13 @@ void change_page(CPU_t *cpu, int bank, char page, bool ram) {
 	if (ram) {
 		cpu->mem_c->normal_banks[bank].page		= page;
 		cpu->mem_c->normal_banks[bank].addr		= cpu->mem_c->ram + (page * PAGE_SIZE);
-		cpu->mem_c->normal_banks[bank].read_only	= FALSE;
-		cpu->mem_c->normal_banks[bank].no_exec		= FALSE;
+		cpu->mem_c->normal_banks[bank].read_only	= false;
+		cpu->mem_c->normal_banks[bank].no_exec		= false;
 	} else {
 		cpu->mem_c->normal_banks[bank].page		= page;
 		cpu->mem_c->normal_banks[bank].addr		= cpu->mem_c->flash + (page * PAGE_SIZE);
 		cpu->mem_c->normal_banks[bank].read_only	= page == cpu->mem_c->flash_pages - 1;
-		cpu->mem_c->normal_banks[bank].no_exec		= FALSE;
+		cpu->mem_c->normal_banks[bank].no_exec		= false;
 	}
 	update_bootmap_pages(cpu->mem_c);
 }
@@ -281,20 +281,20 @@ void update_bootmap_pages(memc *mem_c) {
 
 	mem_c->bootmap_banks[1].page		= mem_c->normal_banks[1].page & 0xFE;
 	mem_c->bootmap_banks[1].addr		= (mem_c->normal_banks[1].ram ? mem_c->ram : mem_c->flash) + (mem_c->bootmap_banks[1].page * PAGE_SIZE);
-	mem_c->bootmap_banks[1].read_only	= FALSE;
-	mem_c->bootmap_banks[1].no_exec		= FALSE;
+	mem_c->bootmap_banks[1].read_only	= false;
+	mem_c->bootmap_banks[1].no_exec		= false;
 	mem_c->bootmap_banks[1].ram			= mem_c->normal_banks[1].ram;
 		
 	mem_c->bootmap_banks[2].page		= mem_c->normal_banks[1].page | (mem_c->flash_version != 1);
 	mem_c->bootmap_banks[2].addr		= (mem_c->normal_banks[1].ram ? mem_c->ram : mem_c->flash) + (mem_c->bootmap_banks[2].page * PAGE_SIZE);
-	mem_c->bootmap_banks[2].read_only	= FALSE;
-	mem_c->bootmap_banks[2].no_exec		= FALSE;
+	mem_c->bootmap_banks[2].read_only	= false;
+	mem_c->bootmap_banks[2].no_exec		= false;
 	mem_c->bootmap_banks[2].ram			= mem_c->normal_banks[1].ram;
 	
 	mem_c->bootmap_banks[3].page		= mem_c->normal_banks[2].page;
 	mem_c->bootmap_banks[3].addr		= (mem_c->normal_banks[2].ram ? mem_c->ram : mem_c->flash) + (mem_c->bootmap_banks[3].page * PAGE_SIZE);
-	mem_c->bootmap_banks[3].read_only	= FALSE;
-	mem_c->bootmap_banks[3].no_exec		= FALSE;
+	mem_c->bootmap_banks[3].read_only	= false;
+	mem_c->bootmap_banks[3].no_exec		= false;
 	mem_c->bootmap_banks[3].ram			= mem_c->normal_banks[2].ram;
 }
 
@@ -306,8 +306,8 @@ static int CPU_opcode_fetch(CPU_t *cpu) {
 	//then the page is changed to page 0. why? who the fuck knows
 	if (!cpu->mem_c->hasChangedPage0 && !bank->ram && (bank_num == 1 || (cpu->mem_c->boot_mapped && bank_num == 2)))
 	{
-		change_page(cpu, 0, 0, FALSE);
-		cpu->mem_c->hasChangedPage0 = TRUE;
+		change_page(cpu, 0, 0, false);
+		cpu->mem_c->hasChangedPage0 = true;
 	}
 	if (!is_allowed_exec(cpu)) {
 		if (break_on_exe_violation) {
@@ -615,7 +615,7 @@ int CPU_step_reverse(CPU_t* cpu) {
 		cpu->reverse_instr = ARRAYSIZE(cpu->prev_instruction_list) - 1;
 	}
 	cpu->prev_instruction = &cpu->prev_instruction_list[cpu->reverse_instr];
-	if (cpu->halt == FALSE) {
+	if (cpu->halt == false) {
 		if (cpu->bus == 0xDD || cpu->bus == 0xFD) {
 			cpu->prefix = cpu->bus;
 			CPU_opcode_fetch_reverse(cpu);
@@ -637,7 +637,7 @@ int CPU_step_reverse(CPU_t* cpu) {
 	}
 
 	//cpu->interrupt = 0;
-	//cpu->ei_block = FALSE;
+	//cpu->ei_block = false;
 	return 0;
 }
 
@@ -668,7 +668,7 @@ void CPU_add_prev_instr(CPU_t *cpu) {
 	cpu->prev_instruction->r = cpu->r;
 	if (++cpu->reverse_instr >= ARRAYSIZE(cpu->prev_instruction_list)) {
 		cpu->reverse_instr = 0;
-		cpu->reverse_wrap = TRUE;
+		cpu->reverse_wrap = true;
 	}
 	cpu->prev_instruction = &cpu->prev_instruction_list[cpu->reverse_instr];
 }
@@ -703,16 +703,16 @@ static void CPU_ED_opcode_run(CPU_t *cpu) {
 
 static void handle_interrupt(CPU_t *cpu) {
 	if (cpu->iff1) {
-		cpu->iff1 = FALSE;
-		cpu->iff2 = FALSE;
+		cpu->iff1 = false;
+		cpu->iff2 = false;
 		if (cpu->imode == 0) {
 			/* should execute whatever is on the bus...*/
-			cpu->halt = FALSE;
+			cpu->halt = false;
 			CPU_opcode_run(cpu);
 		} else if (cpu->imode == 1) {
 			//
 			tc_add(cpu->timer_c, 8);
-			cpu->halt = FALSE;
+			cpu->halt = false;
 			cpu->bus = 0xFF;
 #ifdef WITH_REVERSE
 			CPU_add_prev_instr(cpu);
@@ -720,7 +720,7 @@ static void handle_interrupt(CPU_t *cpu) {
 			CPU_opcode_run(cpu);
 		} else if (cpu->imode == 2) {
 			tc_add(cpu->timer_c, 19);
-			cpu->halt = FALSE;
+			cpu->halt = false;
 			unsigned short vector = (cpu->i << 8) + cpu->bus;
 			int reg = CPU_mem_read(cpu,vector++) + (CPU_mem_read(cpu,vector) << 8);
 			CPU_mem_write(cpu, --cpu->sp, (cpu->pc >> 8) & 0xFF);
@@ -743,11 +743,11 @@ bool is_link_instruction(CPU_t *cpu) {
 
 int CPU_connected_step(CPU_t *cpu) {
 	cpu->interrupt = 0;
-	cpu->ei_block = FALSE;
+	cpu->ei_block = false;
 
-	if (cpu->halt == FALSE) {
+	if (cpu->halt == false) {
 		if (is_link_instruction(cpu)) {// && cpu->linking_time + cpu->timer_c->freq / 25 < cpu->timer_c->tstates) {
-			cpu->is_link_instruction = TRUE;
+			cpu->is_link_instruction = true;
 			cpu->linking_time = cpu->timer_c->tstates;
 			return 2;
 		}
@@ -777,12 +777,12 @@ int CPU_connected_step(CPU_t *cpu) {
 
 int CPU_step(CPU_t* cpu) {
 	cpu->interrupt = 0;
-	cpu->ei_block = FALSE;
+	cpu->ei_block = false;
 
 #ifdef WITH_REVERSE
 	CPU_add_prev_instr(cpu);
 #endif
-	if (cpu->halt == FALSE) {
+	if (cpu->halt == false) {
 		CPU_opcode_fetch(cpu);
 		if (cpu->bus == 0xDD || cpu->bus == 0xFD) {
 			cpu->prefix = cpu->bus;

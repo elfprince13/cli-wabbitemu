@@ -44,7 +44,7 @@ void keypad_vk_release(HWND hwnd, int group, int bit);
 #define KEY_KEYBOARDPRESS	0x01
 #define KEY_MOUSEPRESS		0x02
 #define KEY_LOCKPRESS		0x04
-#define KEY_FALSEPRESS		0x08
+#define KEY_falsePRESS		0x08
 #define KEY_STATEDOWN		0x10
 
 #define KEYGROUP_ON			0x05

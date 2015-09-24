@@ -3,22 +3,12 @@
 
 #include "../core/coretypes.hpp"
 
-#ifdef WXVER
-#include <wx/frame.h>
-#endif
 #include "../core/core.hpp"
 #include "../hardware/lcd.hpp"
 #include "../hardware/keys.hpp"
 #include "../hardware/link.hpp"
 
-#ifdef _WINDOWS
-#include "Wabbitemu_h.h"
-#include "sound.h"
-#include "DropTarget.h"
-#include "dbbreakpoints.h"
-#endif
-
-#include "../utilities/label.h"
+#include "../utilities/label.hpp"
 
 typedef enum {
 	GDS_IDLE,
@@ -40,7 +30,7 @@ typedef struct profiler {
 
 #define KEY_STRING_SIZE 56
 struct key_string {
-	TCHAR *text;
+	char *text;
 	int group;
 	int bit;
 	int repeat;
@@ -48,16 +38,10 @@ struct key_string {
 };
 
 typedef struct tagCALC {
-#ifdef WINVER
-	HWND (*breakpoint_callback)(struct tagCALC *);
-#elif MACVER
-	void (*breakpoint_callback)(struct tagCALC *, void *);
-	void *breakpoint_owner;
-#else
 	void (*breakpoint_callback)(struct tagCALC *);
-#endif
 	int slot;
-	TCHAR rom_path[MAX_PATH];
+#define PATH_MAX 4097
+	char rom_path[PATH_MAX];
 	char rom_version[32];
 	int model;
 
@@ -67,79 +51,19 @@ typedef struct tagCALC {
 	CPU_t cpu;
 	memory_context_t mem_c;
 	timer_context_t timer_c;
-#ifdef WINVER
-	AUDIO_t *audio; // FIXME: Bad!
-#endif
-
-#ifdef WINVER
-	CDropTarget *pDropTarget;
-	HWND hwndFrame;
-	HWND hwndLCD;
-	HWND hwndDetachedFrame;
-	HWND hwndDetachedLCD;
-	HWND hwndStatusBar;
-	HWND hwndDebug;
-	HWND hwndSmallClose;
-	HWND hwndSmallMinimize;
-	HWND hwndKeyListDialog;
-	HWND hwndTeacherView;
-	HWND hwndTeacherViewScreen[3];
-
-	bool SkinEnabled;
-	DWORD scale;
-	bool bCutout;
-	HANDLE hdlThread;
-	
-	clock_t sb_refresh;
-
-	key_string *last_keypress_head;
-	int num_keypresses;
-
-	bool do_drag;
-	HDC hdcSkin;
-	HDC hdcButtons;
-	HDC hdcKeymap;
-#elif WXVER
-	wxImage calcSkin;
-	wxImage keymap;
-	int scale;
-	bool SkinEnabled;
-	bool bCutout;
-	wxSize SkinSize;
-	wxRect LCDRect;
-	clock_t sb_refresh;
-	bool bCustomSkin;
-	char skin_path[256];
-	char keymap_path[256];
-	bool bTIOSDebug;
-#endif
 
 	bool running;
 	bool auto_turn_on;
 	int speed;
-	BYTE breakpoints[0x10000];
+	uint8_t breakpoints[0x10000];
 	label_struct labels[6000];
 	profiler_t profiler;
 
-	TCHAR labelfn[256];
+	char labelfn[256];
 	applist_t applist;
 	apphdr_t *last_transferred_app;
 
 	gif_disp_states gif_disp_state;
-
-#ifdef WINVER
-	RECT rectSkin;
-	RECT rectLCD;
-	COLORREF FaceplateColor;
-	bool bCustomSkin;
-	bool bAlwaysOnTop;
-	bool bAlphaBlendLCD;
-	bool bTIOSDebug;
-	TCHAR skin_path[256];
-	TCHAR keymap_path[256];
-	IWabbitemu *pWabbitemu;
-	ICalcNotify *pCalcNotify;
-#endif
 
 } calc_t;
 
@@ -150,18 +74,14 @@ typedef struct DEBUG_STATE {
 } debugger_backup;
 #endif
 
-#ifdef QUICKLOOK
-#define MAX_CALCS	1
-#else
 #define MAX_CALCS	8
-#endif
 #define MAX_SPEED 100*50
 
 typedef struct tagCALC CALC, *LPCALC;
 
 void calc_turn_on(LPCALC);
 LPCALC calc_slot_new(void);
-u_int calc_count(void);
+uint32_t calc_count(void);
 int calc_reset(LPCALC);
 int CPU_reset(CPU_t *);
 int calc_run_frame(LPCALC);
@@ -179,7 +99,7 @@ void free_backups(LPCALC);
 void free_backup(debugger_backup *);
 #endif
 
-bool rom_load(LPCALC lpCalc, LPCTSTR FileName);
+bool rom_load(LPCALC lpCalc, const char * FileName);
 void calc_slot_free(LPCALC);
 
 void calc_unpause_linked();
@@ -219,7 +139,7 @@ GLOBAL HAVI recording_avi;
 GLOBAL bool is_recording;
 #endif
 
-GLOBAL u_int frame_counter;
+GLOBAL uint32_t frame_counter;
 GLOBAL int startX;
 GLOBAL int startY;
 GLOBAL bool exit_save_state;
@@ -233,20 +153,20 @@ GLOBAL link_t *link_hub[MAX_CALCS + 1];
 GLOBAL int link_hub_count;
 GLOBAL int calc_waiting_link;
 
-GLOBAL const TCHAR *CalcModelTxt[]
+GLOBAL const char *CalcModelTxt[]
 #ifdef CALC_C
 = {	//"???",
-	_T("TI-81"),
-	_T("TI-82"),
-	_T("TI-83"),
-	_T("TI-85"),
-	_T("TI-86"),
-	_T("TI-73"),
-	_T("TI-83+"),
-	_T("TI-83+SE"),
-	_T("TI-84+"),
-	_T("TI-84+SE"),
-	_T("???")}
+	("TI-81"),
+	("TI-82"),
+	("TI-83"),
+	("TI-85"),
+	("TI-86"),
+	("TI-73"),
+	("TI-83+"),
+	("TI-83+SE"),
+	("TI-84+"),
+	("TI-84+SE"),
+	("???")}
 #endif
 ;
 

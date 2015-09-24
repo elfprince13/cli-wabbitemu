@@ -188,10 +188,10 @@ void CPU_stepover(LPCALC lpCalc) {
 
 	if (cpu->halt) {
 		if (cpu->iff1) {
-			while ((tc_elapsed(cpu->timer_c) - time) < 15.0 && cpu->halt == TRUE )
+			while ((tc_elapsed(cpu->timer_c) - time) < 15.0 && cpu->halt == true )
 				CPU_step(cpu);
 		} else {
-			cpu->halt = FALSE;
+			cpu->halt = false;
 		}
 	} else if (zinflocal.index == DA_CALL_X || zinflocal.index == DA_CALL_CC_X) {
 		uint16_t old_stack = cpu->sp;
@@ -238,7 +238,7 @@ void WabbitemuDebugger::OnCollapsiblePaneChanged(wxCollapsiblePaneEvent & WXUNUS
 
 void WabbitemuDebugger::OnClose(wxCloseEvent& event) {
 	calc_unpause_linked();
-	lpCalc->running =TRUE;
+	lpCalc->running =true;
 	event.Skip();
 }
 
@@ -251,14 +251,14 @@ void WabbitemuDebugger::DebugUpdateWindow() {
 
 void WabbitemuDebugger::OnToolbarRun(wxCommandEvent & WXUNUSED(event)) {
 	if (lpCalc->running) {
-		lpCalc->running = FALSE;
+		lpCalc->running = false;
 		calc_pause_linked();
 		this->m_disasmView->Enable();
 		m_toolBar1->DeleteTool(ID_Toolbar_Run);
 		m_toolBar1->InsertTool(0, ID_Toolbar_Run, wxT("Run"), wxBitmap( wxT("./res/run.bmp"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Run the calculator"), wxEmptyString );
 		m_disasmView->GotoAddress(addr_to_waddr(&lpCalc->mem_c, lpCalc->cpu.pc));
 	} else {
-		lpCalc->running = TRUE;
+		lpCalc->running = true;
 		calc_unpause_linked();
 		m_disasmView->Disable();
 		m_toolBar1->DeleteTool(ID_Toolbar_Run);

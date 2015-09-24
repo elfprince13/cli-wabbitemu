@@ -1,6 +1,8 @@
 #ifndef SAVESTATE_H
 #define SAVESTATE_H
 
+#include "fileutilities.hpp"
+
 #include "../hardware/lcd.hpp"
 
 typedef struct {
@@ -17,8 +19,8 @@ typedef struct {
 	int version_build;
 	int model;
 	int chunk_count;
-	TCHAR author[32];
-	TCHAR comment[64];	
+	char author[32];
+	char comment[64];	
 	CHUNK_t* chunks[512];
 } SAVESTATE_t;
 
@@ -55,10 +57,10 @@ typedef struct {
 #define NUM_FLASH_BREAKS_tag	"NFBK"
 #define NUM_RAM_BREAKS_tag		"NRBK"
 
-void WriteSave(const TCHAR *, SAVESTATE_t *, int);
+void WriteSave(const char *, SAVESTATE_t *, int);
 void LoadSlot(SAVESTATE_t* , void *lpInput);
 SAVESTATE_t* SaveSlot(void *lpInput);
-SAVESTATE_t* CreateSave(const TCHAR *, const TCHAR *, int);
+SAVESTATE_t* CreateSave(const char *, const char *, int);
 SAVESTATE_t* ReadSave(FILE *ifile);
 void FreeSave(SAVESTATE_t *);
 char* GetRomOnly(SAVESTATE_t *save, int *);

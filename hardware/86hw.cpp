@@ -16,12 +16,12 @@ static void port10(CPU_t *, device_t *);
 static void port0(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = 0;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		dev->aux = (LPVOID) (0x100 * ((cpu->bus % 0x40) + 0xC0));
 		port10(cpu, dev);
 		cpu->pio.devices[0x10].aux = dev->aux;
-		cpu->output = FALSE;
+		cpu->output = false;
 		device_t lcd_dev;
 		lcd_dev.aux = cpu->pio.lcd;
 		LCD_data(cpu, &lcd_dev);
@@ -34,14 +34,14 @@ static void port0(CPU_t *cpu, device_t *dev) {
 static void port2(CPU_t *cpu, device_t *dev) {
 	LCD_t *lcd = (LCD_t *) dev->aux;
 	if (cpu->input) {
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		//lcd->contrast ranges from 24 - 64
 		//HACK: still not sure exactly how this works :P
 		lcd->contrast = lcd->base_level - 15 + cpu->bus;
 		if (lcd->contrast > 64)
 			lcd->contrast = 64;
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 	return;
 }
@@ -57,35 +57,35 @@ static void port3(CPU_t *cpu, device_t *dev) {
 		else result += 8;
 		
 		cpu->bus = result;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		if (cpu->bus & 0x08) {
-			cpu->pio.lcd->active = TRUE;		//I'm worried about this
+			cpu->pio.lcd->active = true;		//I'm worried about this
 		} else {
-			cpu->pio.lcd->active = FALSE;
+			cpu->pio.lcd->active = false;
 		}
 		
 		if ((cpu->bus & 0x01) == 0)
-			stdint->on_latch = FALSE;
+			stdint->on_latch = false;
 		
 		stdint->intactive = cpu->bus;
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 	
-	if (!(stdint->intactive & 0x04) && cpu->pio.lcd->active == TRUE) {
+	if (!(stdint->intactive & 0x04) && cpu->pio.lcd->active == true) {
 		if ((tc_elapsed(cpu->timer_c) - stdint->lastchk1) > stdint->timermax1) {
-			cpu->interrupt = TRUE;
+			cpu->interrupt = true;
 			while ((tc_elapsed(cpu->timer_c) - stdint->lastchk1) > stdint->timermax1)
 				stdint->lastchk1 += stdint->timermax1;
 		}
 	}
 
 	if ((stdint->intactive & 0x01) && (cpu->pio.keypad->on_pressed & KEY_VALUE_MASK) && (stdint->on_backup & KEY_VALUE_MASK) == 0)  {
-		stdint->on_latch = TRUE;
+		stdint->on_latch = true;
 	}
 	stdint->on_backup = cpu->pio.keypad->on_pressed;
 	if (stdint->on_latch)
-		cpu->interrupt = TRUE;
+		cpu->interrupt = true;
 }
 
 
@@ -94,7 +94,7 @@ static void port3(CPU_t *cpu, device_t *dev) {
 static void port4(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = 1;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		dev->aux = (void *) cpu->bus;
 		int freq = (cpu->bus >> 1) & 0x3;
@@ -108,7 +108,7 @@ static void port4(CPU_t *cpu, device_t *dev) {
 		}
 
 		
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
@@ -116,22 +116,22 @@ static void port4(CPU_t *cpu, device_t *dev) {
 static void port5(CPU_t *cpu, device_t *dev) {
 	if ( cpu->input ) {
 		cpu->bus = (cpu->mem_c->banks[1].ram << 6) + cpu->mem_c->banks[1].page;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		cpu->mem_c->banks[1].ram = (cpu->bus >> 6) & 1;
 		if (cpu->mem_c->banks[1].ram) {
 			cpu->mem_c->banks[1].page		= (cpu->bus & 0x1f) % cpu->mem_c->ram_pages;
 			cpu->mem_c->banks[1].addr		= cpu->mem_c->ram+(cpu->mem_c->banks[1].page * PAGE_SIZE);
-			cpu->mem_c->banks[1].read_only	= FALSE;
-			cpu->mem_c->banks[1].no_exec	= FALSE;
+			cpu->mem_c->banks[1].read_only	= false;
+			cpu->mem_c->banks[1].no_exec	= false;
 		} else {
 			cpu->mem_c->banks[1].page		= (cpu->bus & 0x1f) % cpu->mem_c->flash_pages;
 			cpu->mem_c->banks[1].addr		= cpu->mem_c->flash+(cpu->mem_c->banks[1].page * PAGE_SIZE);
-			cpu->mem_c->banks[1].read_only	= TRUE;
-			cpu->mem_c->banks[1].no_exec	= FALSE;
-			if (cpu->mem_c->banks[1].page == 0x1f) cpu->mem_c->banks[1].read_only = TRUE;
+			cpu->mem_c->banks[1].read_only	= true;
+			cpu->mem_c->banks[1].no_exec	= false;
+			if (cpu->mem_c->banks[1].page == 0x1f) cpu->mem_c->banks[1].read_only = true;
 		}
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
@@ -139,24 +139,24 @@ static void port5(CPU_t *cpu, device_t *dev) {
 static void port6(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = (cpu->mem_c->banks[2].ram << 6) + cpu->mem_c->banks[2].page;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		cpu->mem_c->banks[2].ram = (cpu->bus >> 6) & 1;
 		if (cpu->mem_c->banks[2].ram) {
 			cpu->mem_c->banks[2].page		= cpu->bus & 0x07;
 			cpu->mem_c->banks[2].addr		= cpu->mem_c->ram + (cpu->mem_c->banks[2].page * PAGE_SIZE);
-			cpu->mem_c->banks[2].read_only	= FALSE;
-			cpu->mem_c->banks[2].no_exec	= FALSE;
+			cpu->mem_c->banks[2].read_only	= false;
+			cpu->mem_c->banks[2].no_exec	= false;
 		} else {
 			cpu->mem_c->banks[2].page		= cpu->bus & 0x0f;
 			cpu->mem_c->banks[2].addr		= cpu->mem_c->flash + (cpu->mem_c->banks[2].page * PAGE_SIZE);
-			cpu->mem_c->banks[2].read_only	= TRUE;
-			cpu->mem_c->banks[2].no_exec	= FALSE;
+			cpu->mem_c->banks[2].read_only	= true;
+			cpu->mem_c->banks[2].no_exec	= false;
 			if (cpu->mem_c->banks[2].page == 0x1f) {
-				cpu->mem_c->banks[2].read_only = TRUE;
+				cpu->mem_c->banks[2].read_only = true;
 			}
 		}
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
@@ -164,10 +164,10 @@ static void port7(CPU_t *cpu, device_t *dev) {
 	link_t * link = (link_t *) dev->aux;
 	if (cpu->input) {
 		cpu->bus = (((link->host & 0x03) | (link->client[0] & 0x03)) ^ 0x03);
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		link->host = (cpu->bus >> 4) & 0x03;
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
@@ -192,7 +192,7 @@ static STDINT_t* INT86_init(CPU_t* cpu) {
 	STDINT_t * stdint = (STDINT_t *) malloc(sizeof(STDINT_t));
 	if (!stdint) {
 		printf("Couldn't allocate memory for standard interrupt\n");
-		return NULL;
+		return nullptr;
 	}
 	
 	memcpy(stdint->freq, timer_freq, sizeof(timer_freq));
@@ -200,7 +200,7 @@ static STDINT_t* INT86_init(CPU_t* cpu) {
 	stdint->timermax1 = stdint->freq[0];
 	stdint->lastchk1 = tc_elapsed(cpu->timer_c);
 	stdint->on_backup = 0;
-	stdint->on_latch = FALSE;
+	stdint->on_latch = false;
 	return stdint;
 }
 
@@ -225,45 +225,45 @@ int device_init_86(CPU_t *cpu) {
 	link_t * link = link_init(cpu);
 	LCD_t *lcd = LCD_init(cpu, TI_86);
 	
-	cpu->pio.devices[0x00].active = TRUE;
+	cpu->pio.devices[0x00].active = true;
 	cpu->pio.devices[0x00].aux = lcd;
 	cpu->pio.devices[0x00].code = (devp) &port0;
 
-	cpu->pio.devices[0x01].active = TRUE;
+	cpu->pio.devices[0x01].active = true;
 	cpu->pio.devices[0x01].aux = keyp;
 	cpu->pio.devices[0x01].code = (devp) &keypad;
 
-	cpu->pio.devices[0x02].active = TRUE;
+	cpu->pio.devices[0x02].active = true;
 	cpu->pio.devices[0x02].aux = lcd;
 	cpu->pio.devices[0x02].code = (devp) &port2;
 
-	cpu->pio.devices[0x03].active = TRUE;
+	cpu->pio.devices[0x03].active = true;
 	cpu->pio.devices[0x03].aux = stdint;
 	cpu->pio.devices[0x03].code = (devp) &port3;
 
-	cpu->pio.devices[0x04].active = TRUE;
+	cpu->pio.devices[0x04].active = true;
 	cpu->pio.devices[0x04].aux = 0;
 	cpu->pio.devices[0x04].code = (devp) &port4;
 
 	// ROM page swap
-	cpu->pio.devices[0x05].active = TRUE;
+	cpu->pio.devices[0x05].active = true;
 	cpu->pio.devices[0x05].aux = stdint;
 	cpu->pio.devices[0x05].code = (devp) &port5;
 
 	// RAM page swap
-	cpu->pio.devices[0x06].active = TRUE;
-	cpu->pio.devices[0x06].aux = NULL;
+	cpu->pio.devices[0x06].active = true;
+	cpu->pio.devices[0x06].aux = nullptr;
 	cpu->pio.devices[0x06].code = (devp) &port6;
 
-	cpu->pio.devices[0x07].active = TRUE;
+	cpu->pio.devices[0x07].active = true;
 	cpu->pio.devices[0x07].aux = link;
 	cpu->pio.devices[0x07].code = (devp) &port7;
 
-	cpu->pio.devices[0x10].active = TRUE;
+	cpu->pio.devices[0x10].active = true;
 	cpu->pio.devices[0x10].aux = (void *) 0xFC00;
 	cpu->pio.devices[0x10].code = (devp) &port10;
 
-	cpu->pio.devices[0x11].active = TRUE;
+	cpu->pio.devices[0x11].active = true;
 	cpu->pio.devices[0x11].aux = lcd;
 	cpu->pio.devices[0x11].code = (devp) &LCD_data;
 
@@ -271,7 +271,7 @@ int device_init_86(CPU_t *cpu) {
 	cpu->pio.keypad		= keyp;
 	cpu->pio.link		= link;
 	cpu->pio.stdint		= stdint;
-	cpu->pio.se_aux		= NULL;
+	cpu->pio.se_aux		= nullptr;
 	
 	cpu->pio.model		= TI_86;
 	
@@ -312,18 +312,18 @@ int memory_init_86(memc *mc) {
 		return 1;
 	}
 
-	mc->boot_mapped				= FALSE;
-	mc->flash_locked			= TRUE;
+	mc->boot_mapped				= false;
+	mc->flash_locked			= true;
 
 	/* Organize bank states here */
 	
 	/*	Address								page	write?	ram?	no exec?	*/
 	bank_state_t banks[5] = {
-		{mc->flash, 						0, 		FALSE,	FALSE, 	FALSE},
-		{mc->flash+0x0F*PAGE_SIZE,			0x0F, 	FALSE, 	FALSE, 	FALSE},
-		{mc->flash,							0, 		FALSE, 	FALSE, 	FALSE},
-		{mc->ram,							0,		FALSE,	TRUE,	FALSE},
-		{NULL,								0,		FALSE,	FALSE,	FALSE}
+		{mc->flash, 						0, 		false,	false, 	false},
+		{mc->flash+0x0F*PAGE_SIZE,			0x0F, 	false, 	false, 	false},
+		{mc->flash,							0, 		false, 	false, 	false},
+		{mc->ram,							0,		false,	true,	false},
+		{nullptr,								0,		false,	false,	false}
 	};
 
 	memcpy(mc->normal_banks, banks, sizeof(banks));

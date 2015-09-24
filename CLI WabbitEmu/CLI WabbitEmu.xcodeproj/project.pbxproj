@@ -35,7 +35,6 @@
 		E9947C1D1BB4607E00DEC14A /* print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E81BB395630090F49E /* print.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C1E1BB4607E00DEC14A /* savestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EA1BB395630090F49E /* savestate.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C1F1BB4607E00DEC14A /* sendfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EC1BB395630090F49E /* sendfile.cpp */; settings = {ASSET_TAGS = (); }; };
-		E9947C201BB4607E00DEC14A /* sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EE1BB395630090F49E /* sound.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C211BB4607E00DEC14A /* var.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F11BB395630090F49E /* var.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C221BB4607E00DEC14A /* zlibcmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F31BB395630090F49E /* zlibcmp.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -98,7 +97,7 @@
 		E90E24B91BB395630090F49E /* disassemblyview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = disassemblyview.h; sourceTree = "<group>"; };
 		E90E24BA1BB395630090F49E /* guidebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guidebug.cpp; sourceTree = "<group>"; };
 		E90E24BB1BB395630090F49E /* guidebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guidebug.h; sourceTree = "<group>"; };
-		E90E24BD1BB395630090F49E /* cpupane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cpupane.cpp; sourceTree = "<group>"; };
+		E90E24BD1BB395630090F49E /* cpupane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = cpupane.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		E90E24BE1BB395630090F49E /* cpupane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpupane.h; sourceTree = "<group>"; };
 		E90E24BF1BB395630090F49E /* flagspane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flagspane.cpp; sourceTree = "<group>"; };
 		E90E24C01BB395630090F49E /* flagspane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flagspane.h; sourceTree = "<group>"; };
@@ -116,7 +115,7 @@
 		E90E24CD1BB395630090F49E /* 86hw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = 86hw.hpp; sourceTree = "<group>"; };
 		E90E24CE1BB395630090F49E /* keys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keys.cpp; sourceTree = "<group>"; };
 		E90E24CF1BB395630090F49E /* keys.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = keys.hpp; sourceTree = "<group>"; };
-		E90E24D01BB395630090F49E /* lcd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lcd.cpp; sourceTree = "<group>"; };
+		E90E24D01BB395630090F49E /* lcd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = lcd.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		E90E24D11BB395630090F49E /* lcd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lcd.hpp; sourceTree = "<group>"; };
 		E90E24D21BB395630090F49E /* link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = link.cpp; sourceTree = "<group>"; };
 		E90E24D31BB395630090F49E /* link.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = link.hpp; sourceTree = "<group>"; };
@@ -126,7 +125,7 @@
 		E90E24D81BB395630090F49E /* state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = state.cpp; sourceTree = "<group>"; };
 		E90E24D91BB395630090F49E /* state.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state.hpp; sourceTree = "<group>"; };
 		E90E24DC1BB395630090F49E /* bcalls.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bcalls.hpp; sourceTree = "<group>"; };
-		E90E24DD1BB395630090F49E /* exportvar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exportvar.cpp; sourceTree = "<group>"; };
+		E90E24DD1BB395630090F49E /* exportvar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = exportvar.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		E90E24DE1BB395630090F49E /* exportvar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = exportvar.hpp; sourceTree = "<group>"; };
 		E90E24DF1BB395630090F49E /* fileutilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileutilities.cpp; sourceTree = "<group>"; };
 		E90E24E01BB395630090F49E /* fileutilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fileutilities.hpp; sourceTree = "<group>"; };
@@ -143,9 +142,8 @@
 		E90E24EB1BB395630090F49E /* savestate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = savestate.hpp; sourceTree = "<group>"; };
 		E90E24EC1BB395630090F49E /* sendfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sendfile.cpp; sourceTree = "<group>"; };
 		E90E24ED1BB395630090F49E /* sendfile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sendfile.hpp; sourceTree = "<group>"; };
-		E90E24EE1BB395630090F49E /* sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sound.cpp; sourceTree = "<group>"; };
+		E90E24EE1BB395630090F49E /* sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = sound.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		E90E24EF1BB395630090F49E /* sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sound.hpp; sourceTree = "<group>"; };
-		E90E24F01BB395630090F49E /* types.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = types.hpp; sourceTree = "<group>"; };
 		E90E24F11BB395630090F49E /* var.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = var.cpp; sourceTree = "<group>"; };
 		E90E24F21BB395630090F49E /* var.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = var.hpp; sourceTree = "<group>"; };
 		E90E24F31BB395630090F49E /* zlibcmp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zlibcmp.cpp; sourceTree = "<group>"; };
@@ -410,7 +408,6 @@
 				E90E24ED1BB395630090F49E /* sendfile.hpp */,
 				E90E24EE1BB395630090F49E /* sound.cpp */,
 				E90E24EF1BB395630090F49E /* sound.hpp */,
-				E90E24F01BB395630090F49E /* types.hpp */,
 				E90E24F11BB395630090F49E /* var.cpp */,
 				E90E24F21BB395630090F49E /* var.hpp */,
 				E90E24F31BB395630090F49E /* zlibcmp.cpp */,
@@ -741,7 +738,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9947C1B1BB4607E00DEC14A /* gifhandle.cpp in Sources */,
-				E9947C201BB4607E00DEC14A /* sound.cpp in Sources */,
 				E9947C1A1BB4607E00DEC14A /* gif.cpp in Sources */,
 				E9947C191BB4607E00DEC14A /* fileutilities.cpp in Sources */,
 				E9947C1E1BB4607E00DEC14A /* savestate.cpp in Sources */,

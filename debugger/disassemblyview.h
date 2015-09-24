@@ -18,11 +18,11 @@ public:
 	void DebugUpdateWindow();
 private:
 	LPCALC lpCalc;
-	void sprint_data(LPCALC lpCalc, const Z80_info_t *zinf, TCHAR *s) const;
-	void sprint_addr(LPCALC lpCalc, const Z80_info_t *zinf, TCHAR *s) const;
-	void sprint_command(LPCALC lpCalc, const Z80_info_t *zinf, TCHAR *s) const;
-	void sprint_size(LPCALC lpCalc, const Z80_info_t *zinf, TCHAR *s) const;
-	void sprint_clocks(LPCALC lpCalc, const Z80_info_t *zinf, TCHAR *s) const;
+	void sprint_data(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_addr(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_command(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_size(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_clocks(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
 	int FindLastItem();
 	Z80_info_t *zinf;
 };

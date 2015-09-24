@@ -11,19 +11,15 @@
 #endif
 
 
-TCHAR *generate_gif_name(TCHAR *fn, int num, TCHAR *dest) {
+char *generate_gif_name(char *fn, int num, char *dest) {
 	size_t i;
-	for (i = _tcslen(fn) - 1; i && fn[i] != '.'; i--);
+	for (i = strlen(fn) - 1; i && fn[i] != '.'; i--);
 	 	 
 	if (i) {
 		fn[i] = '\0';
 	}
 	
-#ifdef WINVER
-	StringCbPrintf(dest, _tcslen(dest) + 4, _T("%s%d.gif"), fn, num);
-#else
-	_tprintf_s(dest, _T("%s%d.gif"), fn, num);
-#endif
+	sprintf(dest, ("%s%d.gif"), fn, num);
 	
 	if (i)  {
 		fn[i] = '.';
@@ -31,52 +27,44 @@ TCHAR *generate_gif_name(TCHAR *fn, int num, TCHAR *dest) {
 	return dest;
 }
 
-static TCHAR gif_fn_backup[MAX_PATH];
+static char gif_fn_backup[PATH_MAX];
 /*
  * Gets where the next screenshot should be saved to.
  * Returns true if ready, false if user cancels
  */
 bool get_gif_filename() {
 	int i;
-#ifdef _WINDOWS
-	StringCbCopy(gif_fn_backup, sizeof(gif_fn_backup), gif_file_name);
-#else
-	_tcscpy_s(gif_fn_backup, gif_file_name);
-#endif
+	strcpy(gif_fn_backup, gif_file_name);
 	if (gif_autosave) {
 		/* do file save */
 		if (gif_use_increasing) {
-			FILE *test = NULL;
-			bool fileExists = FALSE;
+			FILE *test = nullptr;
+			bool fileExists = false;
 			i = 0;
 					
 			 do {
 				generate_gif_name(gif_fn_backup, i, gif_file_name);
-#ifdef _WINDOWS
-				_tfopen_s(&test, gif_file_name, _T("r"));
-#else
-				test = _tfopen_s(gif_file_name, "r");
-#endif
+				test = fopen(gif_file_name, "r");
 				i++;
 				if (test) {
 					fclose(test);
-					fileExists = TRUE;
+					fileExists = true;
 				} else {
-					fileExists = FALSE;
+					fileExists = false;
 				}
 			} while (fileExists);
 		}
 	} else {
 #ifdef _WINDOWS
 #ifndef _WINDLL
-		if (SaveFile(gif_file_name, _T("Graphics Interchange Format  (*.gif)\0*.gif\0All Files (*.*)\0*.*\0\0"),
-						_T("Wabbitemu GIF File Target"), _T("gif")))
+		if (SaveFile(gif_file_name, ("Graphics Interchange Format  (*.gif)\0*.gif\0All Files (*.*)\0*.*\0\0"),
+						("Wabbitemu GIF File Target"), ("gif")))
 			//if we cancel, mark the menu and set to idle
-			return FALSE;
+			return false;
 #endif
 #endif
 	}
-	return TRUE;
+	return true;
 }
 
 #ifdef HIGH_SHADE_GIF
@@ -91,14 +79,14 @@ unsigned char* GIFGREYLCD(LCD_t *lpLCD) {
 	if (level > 12) level = 0;
 	else level = (12 - level) * (255 - base) / lpLCD->shades / 12;
 
-	u_int row, col;
+	uint32_t row, col;
 	for (row = 0; row < LCD_HEIGHT; row++) {
 		for (col = 0; col < LCD_MEM_WIDTH; col++) {
 			double p0 = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0;
-			u_int i;
+			uint32_t i;
 			
 			for (i = 0; i < lpLCD->shades; i++) {
-				u_int u = lpLCD->queue[i][row * 16 + col];
+				uint32_t u = lpLCD->queue[i][row * 16 + col];
 				p7 += u & 1; u >>= 1;
 				p6 += u & 1; u >>= 1;
 				p5 += u & 1; u >>= 1;
@@ -158,7 +146,7 @@ void handle_screenshot() {
 	bool running_backup[MAX_CALCS];
 	for (i = 0; i < MAX_CALCS; i++) {
 		running_backup[i] = calcs[i].running;
-		calcs[i].running = FALSE;
+		calcs[i].running = false;
 		lcd = calcs[i].cpu.pio.lcd;
 		//find the calc with the highest number of shades and use that as our number for the gif
 		//since I'm to lazy to implement them individually :P
@@ -254,11 +242,7 @@ void handle_screenshot() {
 			//WriteRIFFIndex();
 			gif_newframe = 1;
 			gif_file_num++;
-#ifdef _WINDOWS
-			StringCbCopy(gif_file_name, sizeof(gif_file_name), gif_fn_backup);
-#else
-			_tcscpy_s(gif_file_name, gif_fn_backup);
-#endif
+			strcpy(gif_file_name, gif_fn_backup);
 			break;
 		}
 	}

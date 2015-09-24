@@ -61,7 +61,7 @@ wxCollapsiblePane(parent, wxID_ANY, wxT("CPU Status"), wxDefaultPosition, wxDefa
 
 void CPUPane::DebugUpdateWindow() {
 	m_haltCheck->SetValue(lpCalc->cpu.halt);
-	m_freqText->SetValue(wxString::Format(_T("%.2f"), lpCalc->timer_c.freq / 1000000.0));
+	m_freqText->SetValue(wxString::Format(("%.2f"), lpCalc->timer_c.freq / 1000000.0));
 	m_busText->SetValue(wxString::Format(wxT("%02X"), lpCalc->cpu.bus));
 }
 

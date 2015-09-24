@@ -2,7 +2,7 @@
 #include "savestate.hpp"
 #include "../hardware/lcd.hpp"
 #include "../hardware/link.hpp"
-#include "../hardware/calc.hpp"
+#include "../interface/calc.hpp"
 #include "../hardware/83psehw.hpp"
 #include "fileutilities.hpp"
 
@@ -12,9 +12,9 @@ extern int inf(FILE *, FILE *);
 bool cmpTags(const char *str1, const char *str2) {
 	int i;
 	for(i = 0; i < 4; i++) {
-		if (str1[i] != str2[i]) return FALSE;
+		if (str1[i] != str2[i]) return false;
 	}
-	return TRUE;
+	return true;
 }
 
 int fputi(unsigned int integer, FILE* stream) {
@@ -38,9 +38,9 @@ int fgeti(FILE* stream) {
 	return r;
 }
 
-SAVESTATE_t* CreateSave(const TCHAR *author, const TCHAR *comment , int model) {
+SAVESTATE_t* CreateSave(const char *author, const char *comment , int model) {
 	SAVESTATE_t* save = (SAVESTATE_t*) malloc(sizeof(SAVESTATE_t));
-	if (!save) return NULL;
+	if (!save) return nullptr;
 
 	save->version_major = CUR_MAJOR;
 	save->version_minor = CUR_MINOR;
@@ -48,27 +48,15 @@ SAVESTATE_t* CreateSave(const TCHAR *author, const TCHAR *comment , int model) {
 
 	memset(save->author, 0, sizeof(save->author));
 	memset(save->comment, 0, sizeof(save->comment));
-#ifdef WINVER
-#ifdef _UNICODE
-	char buffer[64];
-	size_t numConv;
-	wcstombs_s(&numConv, save->author, author, sizeof(save->author));
-	wcstombs_s(&numConv, save->comment, comment, sizeof(save->author));
-#else
-	StringCbCopy(save->author, sizeof(save->author), author);
-	StringCbCopy(save->comment, sizeof(save->comment), comment);
-#endif
-#else
-	_tcsncpy(save->author, author, sizeof(save->author));
-	_tcsncpy(save->comment, comment, sizeof(save->comment));
-#endif
+	strncpy(save->author, author, sizeof(save->author));
+	strncpy(save->comment, comment, sizeof(save->comment));
 	
 	save->model = model;
 	save->chunk_count = 0;
 	
-	u_int i;
+	uint32_t i;
 	for(i = 0; i < NumElm(save->chunks); i++) {
-		save->chunks[i] = NULL;
+		save->chunks[i] = nullptr;
 	}
 	return save;
 }
@@ -76,17 +64,17 @@ SAVESTATE_t* CreateSave(const TCHAR *author, const TCHAR *comment , int model) {
 void ClearSave(SAVESTATE_t* save) {
 	int i;
 	
-	if (save == NULL) return;
+	if (save == nullptr) return;
 
 	for(i = 0; i < save->chunk_count; i++) {
 		if (save->chunks[i]) {
 			if (save->chunks[i]->data) {
 				free(save->chunks[i]->data);
-				save->chunks[i]->data = NULL;
+				save->chunks[i]->data = nullptr;
 			}
 			free(save->chunks[i]);
 
-			save->chunks[i] = NULL;
+			save->chunks[i] = nullptr;
 		}
 	}
 
@@ -95,35 +83,35 @@ void ClearSave(SAVESTATE_t* save) {
 void FreeSave(SAVESTATE_t* save) {
 	ClearSave(save);
 	free(save);
-	save = NULL;
+	save = nullptr;
 }
 
 CHUNK_t* FindChunk(SAVESTATE_t* save, const char *tag) {
 	int i;
 	for(i = 0; i < save->chunk_count; i++) {
-		if (cmpTags(save->chunks[i]->tag, tag) == TRUE) {
+		if (cmpTags(save->chunks[i]->tag, tag) == true) {
 			save->chunks[i]->pnt = 0;
 			return save->chunks[i];
 		}
 	}	
-	return NULL;
+	return nullptr;
 }
 
 CHUNK_t* NewChunk(SAVESTATE_t* save, const char *tag) {
 	int chunk = save->chunk_count;
 
-	if (FindChunk(save, tag) != NULL) {
+	if (FindChunk(save, tag) != nullptr) {
 		printf("Error: chunk '%s' already exists", tag);
-		return NULL;
+		return nullptr;
 	}
 
-	if (save->chunks[chunk] != NULL) {
+	if (save->chunks[chunk] != nullptr) {
 		puts("Error new chunk was not null.");
 	}
 	save->chunks[chunk] = (CHUNK_t *) malloc(sizeof(CHUNK_t));
 	if (!save->chunks[chunk]) {
 		puts("Chunk could not be created");
-		return NULL;
+		return nullptr;
 	}
 
 	save->chunks[chunk]->tag[0]	= tag[0];
@@ -131,7 +119,7 @@ CHUNK_t* NewChunk(SAVESTATE_t* save, const char *tag) {
 	save->chunks[chunk]->tag[2]	= tag[2];
 	save->chunks[chunk]->tag[3]	= tag[3];
 	save->chunks[chunk]->size	= 0;
-	save->chunks[chunk]->data	= NULL;
+	save->chunks[chunk]->data	= nullptr;
 	save->chunks[chunk]->pnt	= 0;
 	save->chunk_count++;
 	return save->chunks[chunk];
@@ -140,38 +128,38 @@ CHUNK_t* NewChunk(SAVESTATE_t* save, const char *tag) {
 bool DelChunk(SAVESTATE_t *save, const char *tag) {
 	int i;
 	for(i = 0; i < save->chunk_count; i++) {
-		if (cmpTags(save->chunks[i]->tag, tag) == TRUE) {
+		if (cmpTags(save->chunks[i]->tag, tag) == true) {
 			if (save->chunks[i]->data) free(save->chunks[i]->data);
 			if (save->chunks[i]) free(save->chunks[i]);
 			for(; i < (save->chunk_count - 1); i++) {
 				save->chunks[i] = save->chunks[i+1];
 			}
-			save->chunks[i] = NULL;
+			save->chunks[i] = nullptr;
 			save->chunk_count--;
-			return TRUE;
+			return true;
 		}
 	}	
-	return FALSE;
+	return false;
 }
 
 
 bool CheckPNT(CHUNK_t* chunk) {
 	if (chunk->size < chunk->pnt) {
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 bool WriteChar(CHUNK_t* chunk, char value) {
 	unsigned char * tmppnt;
 	tmppnt = (unsigned char *) realloc(chunk->data, chunk->size + sizeof(char));
-	if (tmppnt == NULL) {
-		return FALSE;
+	if (tmppnt == nullptr) {
+		return false;
 	}
 	chunk->data = tmppnt;
 	chunk->data[chunk->size] = value;
 	chunk->size += sizeof(char);
-	return TRUE;
+	return true;
 }
 
 
@@ -180,8 +168,8 @@ bool WriteShort(CHUNK_t* chunk, uint16_t value) {
 	unsigned char  *tmppnt;
 	unsigned char  *pnt = (unsigned char *)(&value);
 	tmppnt = (unsigned char *) realloc(chunk->data,chunk->size + sizeof(value));
-	if (tmppnt == NULL) {
-		return FALSE;
+	if (tmppnt == nullptr) {
+		return false;
 	}
 	chunk->data = tmppnt;
 #ifdef __BIG_ENDIAN__
@@ -192,15 +180,15 @@ bool WriteShort(CHUNK_t* chunk, uint16_t value) {
 		chunk->data[i+chunk->size] = *pnt++;
 	}
 	chunk->size += sizeof(value);
-	return TRUE;
+	return true;
 }
 bool WriteInt(CHUNK_t* chunk, uint32_t value) {
 	int i;
 	unsigned char *tmppnt;
 	unsigned char *pnt = (unsigned char *)(&value);
 	tmppnt = (unsigned char *) realloc(chunk->data,chunk->size + sizeof(value));
-	if (tmppnt == NULL) {
-		return FALSE;
+	if (tmppnt == nullptr) {
+		return false;
 	}
 	chunk->data = tmppnt;
 #ifdef __BIG_ENDIAN__
@@ -211,7 +199,7 @@ bool WriteInt(CHUNK_t* chunk, uint32_t value) {
 		chunk->data[i+chunk->size] = *pnt++;
 	}
 	chunk->size += sizeof(uint32_t);
-	return TRUE;
+	return true;
 }
 
 bool WriteLong(CHUNK_t* chunk, uint64_t value) {
@@ -219,8 +207,8 @@ bool WriteLong(CHUNK_t* chunk, uint64_t value) {
 	unsigned char *tmppnt;
 	unsigned char *pnt = (unsigned char *)(&value);
 	tmppnt = (unsigned char  *) realloc(chunk->data, chunk->size + sizeof(value));
-	if (tmppnt == NULL) {
-		return FALSE;
+	if (tmppnt == nullptr) {
+		return false;
 	}
 	chunk->data = tmppnt;
 #ifdef __BIG_ENDIAN__
@@ -231,7 +219,7 @@ bool WriteLong(CHUNK_t* chunk, uint64_t value) {
 		chunk->data[i+chunk->size] = *pnt++;
 	}
 	chunk->size += sizeof(value);
-	return TRUE;
+	return true;
 }
 
 bool WriteFloat(CHUNK_t* chunk, float value) {
@@ -239,8 +227,8 @@ bool WriteFloat(CHUNK_t* chunk, float value) {
 	unsigned char *tmppnt;
 	unsigned char *pnt = (unsigned char *)(&value);
 	tmppnt = (unsigned char *) realloc(chunk->data,chunk->size + sizeof(value));
-	if (tmppnt == NULL) {
-		return FALSE;
+	if (tmppnt == nullptr) {
+		return false;
 	}
 	chunk->data = tmppnt;
 #ifdef __BIG_ENDIAN__
@@ -251,15 +239,15 @@ bool WriteFloat(CHUNK_t* chunk, float value) {
 		chunk->data[i+chunk->size] = *pnt++;
 	}
 	chunk->size += sizeof(value);
-	return TRUE;
+	return true;
 }	
 bool WriteDouble(CHUNK_t* chunk, double value) {
 	int i;
 	unsigned char *tmppnt;
 	unsigned char *pnt = (unsigned char *)(&value);
 	tmppnt = (unsigned char *) realloc(chunk->data,chunk->size + sizeof(value));
-	if (tmppnt == NULL) {
-		return FALSE;
+	if (tmppnt == nullptr) {
+		return false;
 	}
 	chunk->data = tmppnt;
 #ifdef __BIG_ENDIAN__
@@ -270,27 +258,27 @@ bool WriteDouble(CHUNK_t* chunk, double value) {
 		chunk->data[i+chunk->size] = *pnt++;
 	}
 	chunk->size += sizeof(value);
-	return TRUE;
+	return true;
 }
 
 bool WriteBlock(CHUNK_t* chunk, unsigned char *pnt, int length) {
 	int i;
 	unsigned char *tmppnt;
 	tmppnt = (unsigned char *) realloc(chunk->data,chunk->size+length);
-	if (tmppnt == NULL) {
-		return FALSE;
+	if (tmppnt == nullptr) {
+		return false;
 	}
 	chunk->data = tmppnt;
 	for(i = 0; i < length; i++) {
 		chunk->data[i+chunk->size] = pnt[i];
 	}
 	chunk->size += length;
-	return TRUE;
+	return true;
 }		
 	
 
 	
-unsigned char ReadChar(CHUNK_t* chunk, bool *valOK = NULL) {
+unsigned char ReadChar(CHUNK_t* chunk, bool *valOK = nullptr) {
 	unsigned char value;
 	value = chunk->data[chunk->pnt];
 	chunk->pnt += sizeof(unsigned char);
@@ -300,7 +288,7 @@ unsigned char ReadChar(CHUNK_t* chunk, bool *valOK = NULL) {
 	return value;
 }
 
-unsigned short ReadShort(CHUNK_t* chunk, bool *valOK = NULL) {
+unsigned short ReadShort(CHUNK_t* chunk, bool *valOK = nullptr) {
 	int i;
 	uint16_t value;
 	unsigned char *pnt = (unsigned char *)(&value);
@@ -318,7 +306,7 @@ unsigned short ReadShort(CHUNK_t* chunk, bool *valOK = NULL) {
 	return value;
 }
 
-unsigned int ReadInt(CHUNK_t* chunk, bool *valOK = NULL) {
+unsigned int ReadInt(CHUNK_t* chunk, bool *valOK = nullptr) {
 	int i;
 	uint32_t value;
 	unsigned char *pnt = (unsigned char *)(&value);
@@ -660,12 +648,12 @@ SAVESTATE_t* SaveSlot(void *lpInput) {
 	LPCALC lpCalc = (LPCALC) lpInput;
 	SAVESTATE_t* save;
 	bool runsave;
-	if (lpCalc->active == FALSE) return NULL;
+	if (lpCalc->active == false) return nullptr;
 
 	runsave = lpCalc->running;
-	lpCalc->running = FALSE;
+	lpCalc->running = false;
 	
-	save = CreateSave(_T("Revsoft"), _T("Test save"), lpCalc->model);
+	save = CreateSave(("Revsoft"), ("Test save"), lpCalc->model);
 
 	SaveCPU(save, &lpCalc->cpu);
 	SaveMEM(save, &lpCalc->mem_c);
@@ -814,7 +802,7 @@ void LoadMEM(SAVESTATE_t* save, memc* mem) {
 				waddr_t waddr;
 				waddr.addr = addr % PAGE_SIZE;
 				waddr.page = addr / PAGE_SIZE;
-				waddr.is_ram = FALSE;
+				waddr.is_ram = false;
 				BREAK_TYPE type = (BREAK_TYPE) ReadInt(chunk);
 				switch (type) {
 				case MEM_READ_BREAK:
@@ -844,7 +832,7 @@ void LoadMEM(SAVESTATE_t* save, memc* mem) {
 					waddr_t waddr;
 					waddr.addr = addr % PAGE_SIZE;
 					waddr.page = addr / PAGE_SIZE;
-					waddr.is_ram = TRUE;
+					waddr.is_ram = true;
 					BREAK_TYPE type = (BREAK_TYPE) ReadInt(chunk);
 					switch (type) {
 					case MEM_READ_BREAK:
@@ -1021,17 +1009,17 @@ void LoadSlot(SAVESTATE_t *save, void *lpInput) {
 	bool runsave;
 	LPCALC lpCalc = (LPCALC) lpInput;
 	
-	if (lpCalc->active == FALSE){
+	if (lpCalc->active == false){
 		puts("Slot was not active");
 		return;
 	}
-	if (save == NULL) {
+	if (save == nullptr) {
 		puts("Save was null");
 		return;
 	}
 	
 	runsave = lpCalc->running;
-	lpCalc->running = FALSE;
+	lpCalc->running = false;
 	
 	LoadCPU(save, &lpCalc->cpu);
 	LoadMEM(save, &lpCalc->mem_c);
@@ -1046,22 +1034,22 @@ void LoadSlot(SAVESTATE_t *save, void *lpInput) {
 char* GetRomOnly(SAVESTATE_t *save, int *size) {
 	CHUNK_t* chunk = FindChunk(save, ROM_tag);
 	*size = 0;
-	if (!chunk) return NULL;
+	if (!chunk) return nullptr;
 	*size = chunk->size;
 	return (char *) chunk->data;
 }
 
 
-void WriteSave(const TCHAR *fn, SAVESTATE_t* save, int compress) {
+void WriteSave(const char *fn, SAVESTATE_t* save, int compress) {
 	int i;
 	FILE* ofile;
 	FILE* cfile;
 #ifdef _WINDOWS
-	TCHAR tmpfn[L_tmpnam];
-	TCHAR temp_save[MAX_PATH];
+	char tmpfn[L_tmpnam];
+	char temp_save[PATH_MAX];
 #else
 	char tmpfn[L_tmpnam];
-	char temp_save[MAX_PATH];
+	char temp_save[PATH_MAX];
 #endif
 	
 	if (!save) {
@@ -1069,16 +1057,16 @@ void WriteSave(const TCHAR *fn, SAVESTATE_t* save, int compress) {
 	}
 	if (compress == 0) {
 #ifdef WINVER
-		_tfopen_s(&ofile, fn, _T("wb"));
+		fopen(&ofile, fn, ("wb"));
 #else
-		ofile = _tfopen_s(fn, "wb");
+		ofile = fopen(fn, "wb");
 #endif
 	} else {
 #ifdef WINVER
 		tmpnam_s(tmpfn, sizeof(tmpfn));
 		GetAppDataString(temp_save, sizeof(temp_save));
 		StringCbCat(temp_save, sizeof(temp_save), tmpfn);
-		_tfopen_s(&ofile, temp_save, _T("wb"));
+		fopen(&ofile, temp_save, ("wb"));
 #else
 		tmpnam(tmpfn);
 		strcpy(temp_save, getenv("appdata"));
@@ -1115,15 +1103,15 @@ void WriteSave(const TCHAR *fn, SAVESTATE_t* save, int compress) {
 	
 	if (compress) {
 #ifdef WINVER
-		_tfopen_s(&cfile, fn, _T("wb"));
+		fopen(&cfile, fn, ("wb"));
 #else
-		cfile = _tfopen_s(fn, "wb");
+		cfile = fopen(fn, "wb");
 #endif
 		if (!cfile) {
 			return;
 		}
 #ifdef WINVER
-		_tfopen_s(&ofile, temp_save, _T("rb"));
+		fopen(&ofile, temp_save, ("rb"));
 #else
 		ofile = fopen(temp_save,"rb");
 #endif
@@ -1157,15 +1145,15 @@ void WriteSave(const TCHAR *fn, SAVESTATE_t* save, int compress) {
 
 SAVESTATE_t* ReadSave(FILE *ifile) {
 	int i;
-	int compressed = FALSE;
+	int compressed = false;
 	int chunk_offset,chunk_count;
 	char string[128];
 #ifdef _WINDOWS
-	TCHAR tmpfn[L_tmpnam];
-	TCHAR temp_save[MAX_PATH];
+	char tmpfn[L_tmpnam];
+	char temp_save[PATH_MAX];
 #else
 	char tmpfn[L_tmpnam];
-	char temp_save[MAX_PATH];
+	char temp_save[PATH_MAX];
 #endif
 	SAVESTATE_t *save;
 	CHUNK_t *chunk;
@@ -1179,7 +1167,7 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 		_ttmpnam_s(tmpfn);
 		GetAppDataString(temp_save, sizeof(temp_save));
 		StringCbCat(temp_save, sizeof(temp_save), tmpfn);
-		_tfopen_s(&tmpfile, temp_save, _T("wb"));
+		fopen(&tmpfile, temp_save, ("wb"));
 #else
 		tmpnam(tmpfn);
 		strcpy(temp_save, getenv("appdata"));
@@ -1187,7 +1175,7 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 		tmpfile = fopen(temp_save,"wb");
 #endif
 		if (!tmpfile) {
-			return NULL;
+			return nullptr;
 		}
 		//int error;
 		switch(i) {
@@ -1205,34 +1193,34 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 #else
 				remove(tmpfn);
 #endif
-				return NULL;
+				return nullptr;
 		}
 		
 		fclose(tmpfile);
 #ifdef WINVER
-		_tfopen_s(&ifile, temp_save, _T("rb"));	//this is not a leak, file gets closed
+		fopen(&ifile, temp_save, ("rb"));	//this is not a leak, file gets closed
 											// outside of this routine.
 #else
 		ifile = fopen(temp_save,"rb");	//this is not a leak, file gets closed
 										// outside of this routine.
 #endif
 		if (!ifile) {
-			return NULL;
+			return nullptr;
 		}
-		compressed = TRUE;
+		compressed = true;
 		fread(string, 1, 8, ifile);
 	}
 		
 	if (strncmp(DETECT_STR, string, 8) != 0){
 
-		if (compressed == TRUE) fclose(ifile);
-		return NULL;
+		if (compressed == true) fclose(ifile);
+		return nullptr;
 	}		
 	
 	save = (SAVESTATE_t *) malloc(sizeof(SAVESTATE_t));
 	if (!save) {
-		if (compressed == TRUE) fclose(ifile);
-		return NULL;
+		if (compressed == true) fclose(ifile);
+		return nullptr;
 	}
 
 	chunk_offset = fgeti(ifile);
@@ -1245,7 +1233,7 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 	if (save->version_major != CUR_MAJOR) {
 		fclose(ifile);
 		free(save);
-		return NULL;
+		return nullptr;
 	}
 
 	save->model = fgeti(ifile);
@@ -1257,7 +1245,7 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 	fseek(ifile, chunk_offset + 8 + 4, SEEK_SET);
 	
 	for(i = 0; i < 512; i++) {
-		save->chunks[i] = NULL;
+		save->chunks[i] = nullptr;
 	}
 	save->chunk_count = 0;
 	for(i = 0; i < chunk_count; i++) {
@@ -1271,7 +1259,7 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 		chunk->data	= (unsigned char *) malloc(chunk->size);
 		fread(chunk->data,1,chunk->size,ifile);
 	}
-	if (compressed == TRUE) {
+	if (compressed == true) {
 		fclose(ifile);
 #ifdef _WINDOWS
 		_tremove(temp_save);

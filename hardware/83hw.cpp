@@ -43,7 +43,7 @@ void setpage83(CPU_t *cpu) {
 	int page	= (stdint->mem & 0x07) + ((stdint->xy & 0x10) >> 0x01) ;
 	int rpage	= page % cpu->mem_c->ram_pages;
 	int fpage	= page % cpu->mem_c->flash_pages;
-	int mem		= ((stdint->mem & 0x08) >> 3) + ((stdint->mem & 0x80) >> 6) + (ram << 2) + ((cpu->mem_c->boot_mapped == TRUE) ? 8 : 0);
+	int mem		= ((stdint->mem & 0x08) >> 3) + ((stdint->mem & 0x80) >> 6) + (ram << 2) + ((cpu->mem_c->boot_mapped == true) ? 8 : 0);
 	int i;
 	
 	for(i = 0; i < 4; i++) {
@@ -51,40 +51,40 @@ void setpage83(CPU_t *cpu) {
 			case ROM0: {
 				cpu->mem_c->banks[i].addr			= cpu->mem_c->flash;
 				cpu->mem_c->banks[i].page			= 0x00;
-				cpu->mem_c->banks[i].read_only		= FALSE;
-				cpu->mem_c->banks[i].ram			= FALSE;
-				cpu->mem_c->banks[i].no_exec		= FALSE;
+				cpu->mem_c->banks[i].read_only		= false;
+				cpu->mem_c->banks[i].ram			= false;
+				cpu->mem_c->banks[i].no_exec		= false;
 				break;
 			}
 			case RAM0: {
 				cpu->mem_c->banks[i].addr			= cpu->mem_c->ram;
 				cpu->mem_c->banks[i].page			= 0x00;
-				cpu->mem_c->banks[i].read_only		= FALSE;
-				cpu->mem_c->banks[i].ram			= TRUE;
-				cpu->mem_c->banks[i].no_exec		= FALSE;
+				cpu->mem_c->banks[i].read_only		= false;
+				cpu->mem_c->banks[i].ram			= true;
+				cpu->mem_c->banks[i].no_exec		= false;
 				break;
 			}
 			case RAM1: {
 				cpu->mem_c->banks[i].addr			= cpu->mem_c->ram + PAGE_SIZE;
 				cpu->mem_c->banks[i].page			= 0x01;
-				cpu->mem_c->banks[i].read_only		= FALSE;
-				cpu->mem_c->banks[i].ram			= TRUE;
-				cpu->mem_c->banks[i].no_exec		= FALSE;
+				cpu->mem_c->banks[i].read_only		= false;
+				cpu->mem_c->banks[i].ram			= true;
+				cpu->mem_c->banks[i].no_exec		= false;
 				break;
 			}
 			case ROM0_8: {
 				if (xy) {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->flash + 0x08 * PAGE_SIZE;
 					cpu->mem_c->banks[i].page			= 0x08;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= FALSE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= false;
+					cpu->mem_c->banks[i].no_exec		= false;
 				} else {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->flash;
 					cpu->mem_c->banks[i].page			= 0x00;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= FALSE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= false;
+					cpu->mem_c->banks[i].no_exec		= false;
 				}
 				break;
 			}
@@ -92,15 +92,15 @@ void setpage83(CPU_t *cpu) {
 				if (xy) {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->flash + 0x08 * PAGE_SIZE;
 					cpu->mem_c->banks[i].page			= 0x08;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= FALSE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= false;
+					cpu->mem_c->banks[i].no_exec		= false;
 				} else {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->flash + PAGE_SIZE;
 					cpu->mem_c->banks[i].page			= 0x01;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= FALSE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= false;
+					cpu->mem_c->banks[i].no_exec		= false;
 				}
 				break;
 			}
@@ -108,15 +108,15 @@ void setpage83(CPU_t *cpu) {
 				if (xy) {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->flash + 0x09 * PAGE_SIZE;
 					cpu->mem_c->banks[i].page			= 0x09;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= FALSE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= false;
+					cpu->mem_c->banks[i].no_exec		= false;
 				} else {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->flash + PAGE_SIZE;
 					cpu->mem_c->banks[i].page			= 0x01;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= FALSE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= false;
+					cpu->mem_c->banks[i].no_exec		= false;
 				}
 				break;
 			}
@@ -124,15 +124,15 @@ void setpage83(CPU_t *cpu) {
 				if (ram) {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->ram + rpage * PAGE_SIZE;
 					cpu->mem_c->banks[i].page			= rpage;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= TRUE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= true;
+					cpu->mem_c->banks[i].no_exec		= false;
 				} else {
 					cpu->mem_c->banks[i].addr			= cpu->mem_c->flash + fpage * PAGE_SIZE;
 					cpu->mem_c->banks[i].page			= fpage;
-					cpu->mem_c->banks[i].read_only		= FALSE;
-					cpu->mem_c->banks[i].ram			= FALSE;
-					cpu->mem_c->banks[i].no_exec		= FALSE;
+					cpu->mem_c->banks[i].read_only		= false;
+					cpu->mem_c->banks[i].ram			= false;
+					cpu->mem_c->banks[i].no_exec		= false;
 				}
 				break;
 			}
@@ -148,7 +148,7 @@ void port00_82(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = ((link->host & 0x03)) << 2;
 		cpu->bus += (((link->host & 0x03) | (link->client[0] & 0x03)) ^ 0x03);
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 #ifdef WINVER
 		if ((link->host & 0x01) != ((cpu->bus & 0x04) >> 2)) {
@@ -160,7 +160,7 @@ void port00_82(CPU_t *cpu, device_t *dev) {
 #endif
 		link->host = (cpu->bus & 0x0C) >> 2;
 //		setpage83(cpu);
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 #ifdef WINVER
 	if (link->audio.init && link->audio.enabled) nextsample(cpu);
@@ -175,7 +175,7 @@ void port00_83(CPU_t *cpu, device_t *dev) {
 		cpu->bus = (link->host & 0x03) ^ 0x03;
 		cpu->bus += (((link->host & 0x03) | (link->client[0] & 0x03)) ^ 0x03) << 2;
 		cpu->bus += stdint->xy;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 #ifdef WINVER
 		if ((link->host & 0x01) != (cpu->bus & 0x01)) {
@@ -188,7 +188,7 @@ void port00_83(CPU_t *cpu, device_t *dev) {
 		link->host = cpu->bus & 0x03;
 		stdint->xy = cpu->bus & 0x10;
 		setpage83(cpu);
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 #ifdef WINVER
 	nextsample(cpu);
@@ -199,10 +199,10 @@ void port02_83(CPU_t *cpu, device_t *dev) {
 	STDINT_t* mem83 = (STDINT_t *) dev->aux;
 	if (cpu->input) {
 		cpu->bus = mem83->mem;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		mem83->mem = cpu->bus;
-		cpu->output = FALSE;
+		cpu->output = false;
 		setpage83(cpu);
 	}
 }
@@ -224,10 +224,10 @@ void port03_83(CPU_t *cpu, device_t *dev) {
 			result += 8;
 		}
 		cpu->bus = result;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		if ( (!(stdint->intactive & 0x08)) && (cpu->bus & 0x08) ) {
-			cpu->pio.lcd->active = TRUE;		//I'm worried about this
+			cpu->pio.lcd->active = true;		//I'm worried about this
 			/*
 			Normally when the calc is set to a low power state and hits a halt
 			the LCD ram disconnects from the LCD.  It does not physically power
@@ -237,16 +237,16 @@ void port03_83(CPU_t *cpu, device_t *dev) {
 			*/
 		}
 		if ((cpu->bus & 0x01) == 0) {
-			stdint->on_latch = FALSE;
+			stdint->on_latch = false;
 		}
 		
 		stdint->intactive = cpu->bus;
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 	
 	/*Read note above*/
-	if (!(stdint->intactive & 0x08)  && (cpu->halt==TRUE)) {
-		cpu->pio.lcd->active = FALSE;
+	if (!(stdint->intactive & 0x08)  && (cpu->halt==true)) {
+		cpu->pio.lcd->active = false;
 	}
 
 /*
@@ -256,7 +256,7 @@ void port03_83(CPU_t *cpu, device_t *dev) {
 	does not generate an interrupt. */
 	if (stdint->intactive & 0x02) {
 		if ((tc_elapsed(cpu->timer_c) - stdint->lastchk1) > stdint->timermax1)
-			cpu->interrupt = TRUE;
+			cpu->interrupt = true;
 	} else {
 		while ((tc_elapsed(cpu->timer_c) - stdint->lastchk1) > stdint->timermax1)
 			stdint->lastchk1 += stdint->timermax1;
@@ -269,18 +269,18 @@ void port03_83(CPU_t *cpu, device_t *dev) {
 	does not generate an interrupt. */
 	if (stdint->intactive & 0x04) {
 		if ((tc_elapsed(cpu->timer_c) - stdint->lastchk2) > stdint->timermax2)
-			cpu->interrupt = TRUE;
+			cpu->interrupt = true;
 	} else {
 		while ((tc_elapsed(cpu->timer_c) - stdint->lastchk2) > stdint->timermax2)
 			stdint->lastchk2 += stdint->timermax2;
 	}
 	
 	if ((stdint->intactive & 0x01) && (cpu->pio.keypad->on_pressed & KEY_VALUE_MASK) && (stdint->on_backup & KEY_VALUE_MASK) == 0)  {
-		stdint->on_latch = TRUE;
+		stdint->on_latch = true;
 	}
 	stdint->on_backup = cpu->pio.keypad->on_pressed;
 	if (stdint->on_latch)
-		cpu->interrupt = TRUE;
+		cpu->interrupt = true;
 }
 
 void port04_83(CPU_t *cpu, device_t *dev) {
@@ -291,7 +291,7 @@ void port04_83(CPU_t *cpu, device_t *dev) {
 		cpu->bus = ((link->host&0x03)|(link->client[0]&0x03))^0x03;
 		cpu->bus += ((link->host&0x03)<<2);
 		cpu->bus += stdint->xy;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
 		/* I'm not sure if this is how the interrupts work. */
 		/* but for practicallity its close enough for now. */
@@ -301,12 +301,12 @@ void port04_83(CPU_t *cpu, device_t *dev) {
 		stdint->lastchk2  = stdint->lastchk1 + (stdint->freq[freq] / 4.0f);
 
 		if ((cpu->bus & 1) == 1) {
-			cpu->mem_c->boot_mapped = TRUE;
+			cpu->mem_c->boot_mapped = true;
 		} else {
-			cpu->mem_c->boot_mapped = FALSE;
+			cpu->mem_c->boot_mapped = false;
 		}
 		setpage83(cpu);
-		cpu->output = FALSE;
+		cpu->output = false;
 	}	
 }
 
@@ -314,9 +314,9 @@ void port04_83(CPU_t *cpu, device_t *dev) {
 void port14_83(CPU_t *cpu, device_t *dev) {
 	if (cpu->input) {
 		cpu->bus = 1;
-		cpu->input = FALSE;
+		cpu->input = false;
 	} else if (cpu->output) {
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 
@@ -371,7 +371,7 @@ int device_init_83(CPU_t *cpu, int bad82) {
 	ClearDevices(cpu);
 
 	link_t * link = link83_init(cpu);
-	cpu->pio.devices[0x00].active = TRUE;
+	cpu->pio.devices[0x00].active = true;
 	cpu->pio.devices[0x00].aux = link;
 	if (bad82 == 1) {
 		puts("82 port");
@@ -381,40 +381,40 @@ int device_init_83(CPU_t *cpu, int bad82) {
 		cpu->pio.devices[0x00].code = (devp) port00_83;
 	}
 	keypad_t *keyp = keypad_init(cpu);
-	cpu->pio.devices[0x01].active = TRUE;
+	cpu->pio.devices[0x01].active = true;
 	cpu->pio.devices[0x01].aux = keyp;
 	cpu->pio.devices[0x01].code = (devp) keypad;
 	
 	STDINT_t* stdint = INT83_init(cpu);
-	cpu->pio.devices[0x02].active = TRUE;
+	cpu->pio.devices[0x02].active = true;
 	cpu->pio.devices[0x02].aux = stdint;
 	cpu->pio.devices[0x02].code = (devp) port02_83;
 	
-	cpu->pio.devices[0x03].active = TRUE;
+	cpu->pio.devices[0x03].active = true;
 	cpu->pio.devices[0x03].aux = stdint;
 	cpu->pio.devices[0x03].code = (devp) port03_83;
 
-	cpu->pio.devices[0x04].active = TRUE;
+	cpu->pio.devices[0x04].active = true;
 	cpu->pio.devices[0x04].aux = stdint;
 	cpu->pio.devices[0x04].code = (devp) port04_83;
 
 	LCD_t *lcd = LCD_init(cpu, TI_83);
-	cpu->pio.devices[0x10].active = TRUE;
+	cpu->pio.devices[0x10].active = true;
 	cpu->pio.devices[0x10].aux = lcd;
 	cpu->pio.devices[0x10].code = (devp) LCD_command;
 
-	cpu->pio.devices[0x11].active = TRUE;
+	cpu->pio.devices[0x11].active = true;
 	cpu->pio.devices[0x11].aux = lcd;
 	cpu->pio.devices[0x11].code = (devp) LCD_data;
 
-	cpu->pio.devices[0x14].active = TRUE;
+	cpu->pio.devices[0x14].active = true;
 	cpu->pio.devices[0x14].code = (devp) port14_83;
 
 	cpu->pio.lcd		= lcd;
 	cpu->pio.keypad		= keyp;
 	cpu->pio.link		= link;
 	cpu->pio.stdint		= stdint;
-	cpu->pio.se_aux		= NULL;
+	cpu->pio.se_aux		= nullptr;
 	cpu->pio.model		= TI_83;
 
 	Append_interrupt_device(cpu, 0x00, 1);
@@ -451,16 +451,16 @@ int memory_init_83(memc *mc) {
 		return 1;
 	}
 	mc->flash_version = 0;
-	mc->boot_mapped				= FALSE;
-	mc->flash_locked			= TRUE;
+	mc->boot_mapped				= false;
+	mc->flash_locked			= true;
 
 	/* Organize bank states here */
 	bank_state_t banks[5] = {
-		{mc->flash, 						0, 		FALSE,	FALSE, 	FALSE},
-		{mc->flash+0x00*PAGE_SIZE, 			0x00, 	FALSE, 	FALSE, 	FALSE},
-		{mc->ram+0x01*PAGE_SIZE,		 	0x01, 	FALSE, 	TRUE, 	FALSE},
-		{mc->ram,							0,		FALSE,	TRUE,	FALSE},
-		{NULL,								0,		FALSE,	FALSE,	FALSE}
+		{mc->flash, 						0, 		false,	false, 	false},
+		{mc->flash+0x00*PAGE_SIZE, 			0x00, 	false, 	false, 	false},
+		{mc->ram+0x01*PAGE_SIZE,		 	0x01, 	false, 	true, 	false},
+		{mc->ram,							0,		false,	true,	false},
+		{nullptr,								0,		false,	false,	false}
 	};
 
 	memcpy(mc->normal_banks, banks, sizeof(banks));

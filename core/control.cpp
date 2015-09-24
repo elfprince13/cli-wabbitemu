@@ -430,27 +430,27 @@ void ret(CPU_t *cpu) {
 	cpu->pc |= CPU_mem_read(cpu, cpu->sp++) << 8;
 }
 void ret_condition(CPU_t *cpu) {
-	int succeed = FALSE;
+	int succeed = false;
 	tc_add(cpu->timer_c,5);
 	switch ((cpu->bus >> 3) & 0x07) {
-		case 0:	if (!(cpu->f & ZERO_MASK)) succeed = TRUE;
+		case 0:	if (!(cpu->f & ZERO_MASK)) succeed = true;
 				break;
-		case 1:	if ((cpu->f & ZERO_MASK)) succeed = TRUE;
+		case 1:	if ((cpu->f & ZERO_MASK)) succeed = true;
 				break;
-		case 2:	if (!(cpu->f & CARRY_MASK)) succeed = TRUE;
+		case 2:	if (!(cpu->f & CARRY_MASK)) succeed = true;
 				break;
-		case 3:	if ((cpu->f & CARRY_MASK)) succeed = TRUE;
+		case 3:	if ((cpu->f & CARRY_MASK)) succeed = true;
 				break;
-		case 4:	if (!(cpu->f & PV_MASK)) succeed = TRUE;
+		case 4:	if (!(cpu->f & PV_MASK)) succeed = true;
 				break;
-		case 5:	if ((cpu->f & PV_MASK)) succeed = TRUE;
+		case 5:	if ((cpu->f & PV_MASK)) succeed = true;
 				break;
-		case 6:	if (!(cpu->f & SIGN_MASK)) succeed = TRUE;
+		case 6:	if (!(cpu->f & SIGN_MASK)) succeed = true;
 				break;
-		case 7:	if ((cpu->f & SIGN_MASK)) succeed = TRUE;
+		case 7:	if ((cpu->f & SIGN_MASK)) succeed = true;
 				break;
 	}
-	if (succeed == TRUE) {
+	if (succeed == true) {
 		cpu->pc = CPU_mem_read(cpu,cpu->sp++);
 		cpu->pc |= CPU_mem_read(cpu, cpu->sp++) << 8;
 		tc_add(cpu->timer_c, 6);
@@ -467,27 +467,27 @@ void call(CPU_t *cpu) {
 }
 
 void call_condition(CPU_t *cpu) {
-	int succeed = FALSE;
+	int succeed = false;
 	int condition = (cpu->bus >> 3) & 0x07;
 	unsigned short address = CPU_mem_read(cpu, cpu->pc++);
 	address |= CPU_mem_read(cpu, cpu->pc++) << 8;
 	
 	switch (condition) {
-		case 0:	if (!(cpu->f & ZERO_MASK)) succeed = TRUE;
+		case 0:	if (!(cpu->f & ZERO_MASK)) succeed = true;
 				break;
-		case 1:	if ((cpu->f & ZERO_MASK)) succeed = TRUE;
+		case 1:	if ((cpu->f & ZERO_MASK)) succeed = true;
 				break;
-		case 2:	if (!(cpu->f & CARRY_MASK)) succeed = TRUE;
+		case 2:	if (!(cpu->f & CARRY_MASK)) succeed = true;
 				break;
-		case 3:	if ((cpu->f & CARRY_MASK)) succeed = TRUE;
+		case 3:	if ((cpu->f & CARRY_MASK)) succeed = true;
 				break;
-		case 4:	if (!(cpu->f & PV_MASK)) succeed = TRUE;
+		case 4:	if (!(cpu->f & PV_MASK)) succeed = true;
 				break;
-		case 5:	if ((cpu->f & PV_MASK)) succeed = TRUE;
+		case 5:	if ((cpu->f & PV_MASK)) succeed = true;
 				break;
-		case 6:	if (!(cpu->f & SIGN_MASK)) succeed = TRUE;
+		case 6:	if (!(cpu->f & SIGN_MASK)) succeed = true;
 				break;
-		case 7:	if ((cpu->f & SIGN_MASK)) succeed = TRUE;
+		case 7:	if ((cpu->f & SIGN_MASK)) succeed = true;
 				break;
 	}
 	tc_add(cpu->timer_c,10);
@@ -841,7 +841,7 @@ void ld_r_r(CPU_t *cpu) {
 
 void halt(CPU_t *cpu) {
 	tc_add(cpu->timer_c, 4);
-	cpu->halt = TRUE;
+	cpu->halt = true;
 //	cpu->pc--;			//I'll tell you later...just to sync up.
 }
 
@@ -1009,11 +1009,11 @@ void djnz(CPU_t *cpu) {
 
 void ei(CPU_t *cpu) {
 	tc_add(cpu->timer_c,4);
-	cpu->iff1 = cpu->iff2 = TRUE;
-	cpu->ei_block = TRUE;
+	cpu->iff1 = cpu->iff2 = true;
+	cpu->ei_block = true;
 }
 
 void di(CPU_t *cpu) {
 	tc_add(cpu->timer_c,4);
-	cpu->iff1 = cpu->iff2 = FALSE;
+	cpu->iff1 = cpu->iff2 = false;
 }

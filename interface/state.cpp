@@ -7,7 +7,7 @@
 #endif
 
 void state_userpages(CPU_t *, upages_t*);
-TCHAR *symbol_to_string(CPU_t *, symbol83P_t *, TCHAR *);
+char *symbol_to_string(CPU_t *, symbol83P_t *, char *);
 
 int find_header(uint8_t (*dest)[PAGE_SIZE], int page, int ident1, int ident2) {
 	int i;
@@ -23,12 +23,12 @@ int find_header(uint8_t (*dest)[PAGE_SIZE], int page, int ident1, int ident2) {
 void state_build_applist(CPU_t *cpu, applist_t *applist) {
 	applist->count = 0;
 	
-	if (cpu->mem_c == NULL)
+	if (cpu->mem_c == nullptr)
 	{
 		return;
 	}
 
-	if (cpu->mem_c->flash == NULL) return;
+	if (cpu->mem_c->flash == nullptr) return;
 	uint8_t (*flash)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) cpu->mem_c->flash;
 
 	// fetch the userpages for this model
@@ -38,7 +38,7 @@ void state_build_applist(CPU_t *cpu, applist_t *applist) {
 	
 	// Starting at the first userpage, search for all the apps
 	// As soon as page doesn't have one, you're done
-	u_int page, page_size;
+	uint32_t page, page_size;
 	for (	page = upages.start, applist->count = 0;
 			page >= upages.end &&
 			applist->count < ARRAYSIZE(applist->apps) &&
@@ -49,7 +49,7 @@ void state_build_applist(CPU_t *cpu, applist_t *applist) {
 			page -= page_size, applist->count++) {
 		
 		apphdr_t *ah = &applist->apps[applist->count];
-		u_int i;
+		uint32_t i;
 		for (i = 0; i < PAGE_SIZE; i++)
 			if (flash[page][i] == 0x80 && flash[page][i + 1] == 0x48)
 				break;
@@ -63,7 +63,7 @@ void state_build_applist(CPU_t *cpu, applist_t *applist) {
 
 symlist_t *state_build_symlist_86(CPU_t *cpu, symlist_t *symlist) {
 	if (cpu->pio.model != TI_86) {
-		return NULL;
+		return nullptr;
 	}
 
 	memc *mem = cpu->mem_c;
@@ -71,7 +71,7 @@ symlist_t *state_build_symlist_86(CPU_t *cpu, symlist_t *symlist) {
 	uint16_t end = mem_read16(mem, VAT_END_86) & 0x3FFF;
 	waddr_t stp;
 	stp.addr = 0x3FFF;
-	stp.is_ram = TRUE;
+	stp.is_ram = true;
 	stp.page = 7;
 
 
@@ -118,10 +118,10 @@ symlist_t* state_build_symlist_83P(CPU_t *cpu, symlist_t *symlist) {
 	stp = symTable;
 	
 	// Verify VAT integrity
-	if (cpu->pio.model < TI_83P) return NULL;
-	if (stp < end || stp < prog) return NULL;
-	if (end > prog || end < 0x9D95) return NULL;
-	if (prog < 0x9D95) return NULL;
+	if (cpu->pio.model < TI_83P) return nullptr;
+	if (stp < end || stp < prog) return nullptr;
+	if (end > prog || end < 0x9D95) return nullptr;
+	if (prog < 0x9D95) return nullptr;
 
 	symbol83P_t *sym;
 	// Loop through while stp is still in the symbol table
@@ -135,7 +135,7 @@ symlist_t* state_build_symlist_83P(CPU_t *cpu, symlist_t *symlist) {
 		sym->page			= mem_read(mem, stp--);
 		sym->length			= mem_read(mem, sym->address - 1) + (mem_read(mem, sym->address) << 8);
 		
-		u_int i;
+		uint32_t i;
 		// Variables, pics, etc
 		if (stp > prog) {
 			for (i = 0; i < 3; i++) sym->name[i] = mem_read(mem, stp--);
@@ -154,18 +154,18 @@ symlist_t* state_build_symlist_83P(CPU_t *cpu, symlist_t *symlist) {
 
 /* Find a symbol in a symlist.
  * Provide a name and name length and the symbol, if found is returned.
- * Otherwise, return NULL */
-symbol83P_t *search_symlist(symlist_t *symlist, const TCHAR *name, size_t name_len) {
+ * Otherwise, return nullptr */
+symbol83P_t *search_symlist(symlist_t *symlist, const char *name, size_t name_len) {
 	symbol83P_t *sym = symlist->symbols;
 	while (sym <= symlist->last && memcmp(sym->name, name, name_len)) sym++;
 	
-	if (sym > symlist->last) return NULL;
+	if (sym > symlist->last) return nullptr;
 	return sym;
 }
 
-TCHAR *App_Name_to_String(apphdr_t *app, TCHAR *buffer) {
+char *App_Name_to_String(apphdr_t *app, char *buffer) {
 #ifdef WINVER
-	StringCbCopy(buffer, _tcslen(app->name) + 1, app->name);
+	StringCbCopy(buffer, strlen(app->name) + 1, app->name);
 	return buffer;
 #else
 	return _tcscpy_s(buffer, app->name);
@@ -174,10 +174,10 @@ TCHAR *App_Name_to_String(apphdr_t *app, TCHAR *buffer) {
 
 
 #ifdef WINVER
-TCHAR *Symbol_Name_to_String(int model, symbol83P_t *sym, TCHAR *buffer) {
-	const TCHAR ans_name[] = {tAns, 0x00, 0x00};
+char *Symbol_Name_to_String(int model, symbol83P_t *sym, char *buffer) {
+	const char ans_name[] = {tAns, 0x00, 0x00};
 	if (memcmp(sym->name, ans_name, 3) == 0) {
-		StringCbCopy(buffer, 10, _T("Ans"));
+		StringCbCopy(buffer, 10, ("Ans"));
 		return buffer;
 	}
 	
@@ -194,81 +194,81 @@ TCHAR *Symbol_Name_to_String(int model, symbol83P_t *sym, TCHAR *buffer) {
 				return buffer;
 			}
 			case PictObj:
-				StringCbPrintf(buffer, 10, _T("Pic%d"), circ10(sym->name[1]));
+				StringCbPrintf(buffer, 10, ("Pic%d"), circ10(sym->name[1]));
 				return buffer;
 			case GDBObj:
-				StringCbPrintf(buffer, 10, _T("GDB%d"), circ10(sym->name[1]));
+				StringCbPrintf(buffer, 10, ("GDB%d"), circ10(sym->name[1]));
 				return buffer;
 			case StrngObj:
-				StringCbPrintf(buffer, 10, _T("Str%d"), circ10(sym->name[1]));
+				StringCbPrintf(buffer, 10, ("Str%d"), circ10(sym->name[1]));
 				return buffer;		
 			case RealObj:
 			case CplxObj:
-				StringCbPrintf(buffer, 10, _T("%c"), sym->name[0]);
+				StringCbPrintf(buffer, 10, ("%c"), sym->name[0]);
 				return buffer;
 			case ListObj:
 			case CListObj:
 				if ((uint8_t) sym->name[1] < 6) {
-					StringCbPrintf(buffer, 10, _T("L%d"), sym->name[1] + 1); //L1...L6
+					StringCbPrintf(buffer, 10, ("L%d"), sym->name[1] + 1); //L1...L6
 				} else {
-					StringCbPrintf(buffer, 10, _T("%s"), sym->name + 1); // No Little L
+					StringCbPrintf(buffer, 10, ("%s"), sym->name + 1); // No Little L
 				}
 				return buffer;
 			case MatObj:
 				if (sym->name[0] == 0x5C) {
-					StringCbPrintf(buffer, 10, _T("[%c]"), 'A' + sym->name[1]);
+					StringCbPrintf(buffer, 10, ("[%c]"), 'A' + sym->name[1]);
 					return buffer;
 				}
-				return NULL;
+				return nullptr;
 		//	case EquObj:
 		//	case NewEquObj:
 		//	case UnknownEquObj:
 			case EquObj_2:
 				{
 					if (sym->name[0] != 0x5E) {
-						return NULL;
+						return nullptr;
 					}
 			
 					uint8_t b = sym->name[1] & 0x0F;
 					switch(sym->name[1] & 0xF0) {
 						case 0x10: //Y1
-							StringCbPrintf(buffer, 10, _T("Y%d"),circ10(b));
+							StringCbPrintf(buffer, 10, ("Y%d"),circ10(b));
 							return buffer;
 						case 0x20: //X1t Y1t
-							StringCbPrintf(buffer, 10, _T("X%dT"), ((b/2)+1)%6);
+							StringCbPrintf(buffer, 10, ("X%dT"), ((b/2)+1)%6);
 							if (b % 2) {
 								buffer[0] = 'Y';
 							}
 							return buffer;
 						case 0x40: //r1
-							StringCbPrintf(buffer, 10, _T("R%d"),(b+1)%6);
+							StringCbPrintf(buffer, 10, ("R%d"),(b+1)%6);
 							return buffer;
 						case 0x80: //Y1
 							switch (b) {
 								case 0: 
-									StringCbCopy(buffer, 10, _T("Un"));
+									StringCbCopy(buffer, 10, ("Un"));
 									return buffer;
 								case 1: 
-									StringCbCopy(buffer, 10, _T("Vn"));
+									StringCbCopy(buffer, 10, ("Vn"));
 									return buffer;
 								case 2: 
-									StringCbCopy(buffer, 10, _T("Wn"));
+									StringCbCopy(buffer, 10, ("Wn"));
 									return buffer;
 							}
 						default: 
-							return NULL;
+							return nullptr;
 					}
 				}
 			default:
-				return NULL;
+				return nullptr;
 		}
 	}
 }
 #else
-TCHAR *Symbol_Name_to_String(int model, symbol83P_t *sym, TCHAR *buffer) {
-	const TCHAR ans_name[] = {tAns, 0x00, 0x00};
+char *Symbol_Name_to_String(int model, symbol83P_t *sym, char *buffer) {
+	const char ans_name[] = {tAns, 0x00, 0x00};
 	if (memcmp(sym->name, ans_name, 3) == 0) {
-		_tcscpy_s(buffer, _T("Ans"));
+		_tcscpy_s(buffer, ("Ans"));
 		return buffer;
 	}
 	
@@ -285,79 +285,79 @@ TCHAR *Symbol_Name_to_String(int model, symbol83P_t *sym, TCHAR *buffer) {
 				return buffer;
 			}
 			case PictObj:
-				_tprintf_s(buffer, _T("Pic%d"), circ10(sym->name[1]));
+				_tprintf_s(buffer, ("Pic%d"), circ10(sym->name[1]));
 				return buffer;
 			case GDBObj:
-				_tprintf_s(buffer, _T("GDB%d"), circ10(sym->name[1]));
+				_tprintf_s(buffer, ("GDB%d"), circ10(sym->name[1]));
 				return buffer;
 			case StrngObj:
-				_tprintf_s(buffer, _T("Str%d"), circ10(sym->name[1]));
+				_tprintf_s(buffer, ("Str%d"), circ10(sym->name[1]));
 				return buffer;		
 			case RealObj:
 			case CplxObj:
-				_tprintf_s(buffer, _T("%c"), sym->name[0]);
+				_tprintf_s(buffer, ("%c"), sym->name[0]);
 				return buffer;
 			case ListObj:
 			case CListObj:
 				if ((uint8_t) sym->name[1] < 6) {
-					_tprintf_s(buffer, _T("L%d"), sym->name[1] + 1); //L1...L6
+					_tprintf_s(buffer, ("L%d"), sym->name[1] + 1); //L1...L6
 				} else {
-					_tprintf_s(buffer, _T("%s"), sym->name + 1); // No Little L
+					_tprintf_s(buffer, ("%s"), sym->name + 1); // No Little L
 				}
 				return buffer;
 			case MatObj:
 				if (sym->name[0] == 0x5C) {
-					_tprintf_s(buffer, _T("[%c]"), 'A' + sym->name[1]);
+					_tprintf_s(buffer, ("[%c]"), 'A' + sym->name[1]);
 					return buffer;
 				}
-				return NULL;
+				return nullptr;
 		//	case EquObj:
 		//	case NewEquObj:
 		//	case UnknownEquObj:
 			case EquObj_2:
 				{
 					if (sym->name[0] != 0x5E) {
-						return NULL;
+						return nullptr;
 					}
 			
 					uint8_t b = sym->name[1] & 0x0F;
 					switch(sym->name[1] & 0xF0) {
 						case 0x10: //Y1
-							_tprintf_s(buffer, _T("Y%d"),circ10(b));
+							_tprintf_s(buffer, ("Y%d"),circ10(b));
 							return buffer;
 						case 0x20: //X1t Y1t
-							_tprintf_s(buffer, _T("X%dT"), ((b/2)+1)%6);
+							_tprintf_s(buffer, ("X%dT"), ((b/2)+1)%6);
 							if (b % 2) {
 								buffer[0] = 'Y';
 							}
 							return buffer;
 						case 0x40: //r1
-							_tprintf_s(buffer, _T("R%d"), (b+1)%6);
+							_tprintf_s(buffer, ("R%d"), (b+1)%6);
 							return buffer;
 						case 0x80: //Y1
 							switch (b) {
 								case 0: 
-									_tcscpy_s(buffer, _T("Un"));
+									_tcscpy_s(buffer, ("Un"));
 									return buffer;
 								case 1: 
-									_tcscpy_s(buffer, _T("Vn"));
+									_tcscpy_s(buffer, ("Vn"));
 									return buffer;
 								case 2: 
-									_tcscpy_s(buffer, _T("Wn"));
+									_tcscpy_s(buffer, ("Wn"));
 									return buffer;
 							}
 						default: 
-							return NULL;
+							return nullptr;
 					}
 				}
 			default:
-				return NULL;
+				return nullptr;
 		}
 	}
 }
 #endif
 
-void SetRealAns(CPU_t *cpu, TCHAR *text) {
+void SetRealAns(CPU_t *cpu, char *text) {
 	//here is our general strategy:
 	//1. save appbackupscreen
 	//2. 
@@ -368,18 +368,18 @@ void SetRealAns(CPU_t *cpu, TCHAR *text) {
 
 }
 
-TCHAR *GetRealAns(CPU_t *cpu) {
+char *GetRealAns(CPU_t *cpu) {
 	symlist_t symlist;
 	state_build_symlist_83P(cpu, &symlist);
 	
-	const TCHAR ans_name[] = {tAns, 0x00, 0x00};
+	const char ans_name[] = {tAns, 0x00, 0x00};
 	symbol83P_t *sym = search_symlist(&symlist, ans_name, 3);
-	if (sym == NULL) return NULL;
+	if (sym == nullptr) return nullptr;
 
 #ifdef WINVER
-	TCHAR *buffer = (TCHAR *) LocalAlloc(LMEM_FIXED, 2048);
+	char *buffer = (char *) LocalAlloc(LMEM_FIXED, 2048);
 #else
-	TCHAR *buffer = (TCHAR *) malloc(2048);
+	char *buffer = (char *) malloc(2048);
 #endif
 	
 	symbol_to_string(cpu, sym, buffer);
@@ -388,17 +388,17 @@ TCHAR *GetRealAns(CPU_t *cpu) {
 }
 
 /* Print a symbol's value to a string */
-TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
+char *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, char *buffer) {
 	switch (sym->type_ID) {
 	case CplxObj:
 	case RealObj: {
 		uint16_t ptr = sym->address;
-		TCHAR *p = buffer;
-		bool is_imaginary = FALSE;
+		char *p = buffer;
+		bool is_imaginary = false;
 	TI_num_extract:
 		;
 		uint8_t type = mem_read(cpu->mem_c, ptr++);
-		int exp = (TCHAR) (mem_read(cpu->mem_c, ptr++) ^ 0x80);
+		int exp = (char) (mem_read(cpu->mem_c, ptr++) ^ 0x80);
 		if (exp == -128) exp = 128;
 		
 		uint8_t FP[14];
@@ -419,11 +419,11 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 				if ((i + 1) < sigdigs && i == 0) *p++ = '.';
 			}
 #ifdef WINVER
-			StringCbPrintf(p, _tcslen(p), _T("*10^%d"), exp);
+			StringCbPrintf(p, strlen(p), ("*10^%d"), exp);
 #else
-			_tprintf_s(p, _T("*10^%d"), exp);
+			_tprintf_s(p, ("*10^%d"), exp);
 #endif
-			p += _tcslen(p);
+			p += strlen(p);
 		} else {
 			for (i = min(exp, 0); i < sigdigs || i < exp; i++) {
 				*p++ = (i >= 0 ? FP[i] : 0) + '0';
@@ -436,7 +436,7 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 		} else {
 			// Is this real part of a complex number?
 			if ((type & 0x0F) == 0x0C) {
-				is_imaginary = TRUE;
+				is_imaginary = true;
 				goto TI_num_extract;
 			}
 		}
@@ -452,8 +452,8 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 		elem.type_ID 	= sym->type_ID - 1;
 		elem.page 		= 0;
 		
-		u_int i, size = mem_read16(cpu->mem_c, sym->address);
-		TCHAR *p = buffer;
+		uint32_t i, size = mem_read16(cpu->mem_c, sym->address);
+		char *p = buffer;
 		*p++ = '{';
 		
 		uint16_t ptr;
@@ -461,7 +461,7 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 			if (i != 0) *p++ = ',';
 			elem.address = ptr;
 			symbol_to_string(cpu, &elem, p);
-			p += _tcslen(p);
+			p += strlen(p);
 			ptr += (elem.type_ID == RealObj) ? 9 : 18;
 		}
 		
@@ -475,10 +475,10 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 		elem.type_ID 	= RealObj;
 		elem.page 		= 0;
 		
-		u_int cols = mem_read(cpu->mem_c, sym->address);
-		u_int rows = mem_read(cpu->mem_c, sym->address + 1);
-		u_int i, j;
-		TCHAR *p = buffer;
+		uint32_t cols = mem_read(cpu->mem_c, sym->address);
+		uint32_t rows = mem_read(cpu->mem_c, sym->address + 1);
+		uint32_t i, j;
+		char *p = buffer;
 		
 		*p++ = '[';
 		uint16_t ptr = sym->address + 2;
@@ -490,7 +490,7 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 				if (i != 0) *p++ = ',';
 				elem.address = ptr;
 				symbol_to_string(cpu, &elem, p);
-				p += _tcslen(p);
+				p += strlen(p);
 			}
 			*p++ = ']';
 			if (j + 1 < rows) {
@@ -508,7 +508,7 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 		// There's a problem here with character set conversions
 		uint16_t ptr = sym->address;
 		uint16_t str_len = mem_read(cpu->mem_c, ptr++) + (mem_read(cpu->mem_c, ptr++) << 8);
-		u_int i;
+		uint32_t i;
 		for (i = 0; i < str_len; i++) buffer[i] = mem_read(cpu->mem_c, ptr++);
 		buffer[i] = '\0';
 		return buffer;
@@ -517,9 +517,9 @@ TCHAR *symbol_to_string(CPU_t *cpu, symbol83P_t *sym, TCHAR *buffer) {
 		
 	default:
 #ifdef WINVER
-		StringCbCopy(buffer, _tcslen(buffer), _T("unsupported"));
+		StringCbCopy(buffer, strlen(buffer), ("unsupported"));
 #else
-		_tcscpy_s(buffer, _T("unsupported"));
+		_tcscpy_s(buffer, ("unsupported"));
 #endif
 		return buffer;
 	}

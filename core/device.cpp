@@ -4,7 +4,7 @@
 void console_output(CPU_t *cpu, device_t *dev) {
 	if (cpu->output) {
 		printf("output byte: %d\n",cpu->bus);
-		cpu->output = FALSE;
+		cpu->output = false;
 	}
 }
 #endif
@@ -12,7 +12,7 @@ void console_output(CPU_t *cpu, device_t *dev) {
 void ClearDevices(CPU_t* cpu) {
 	int i;
 	for (i = 0; i < ARRAYSIZE(cpu->pio.interrupt); i++) {
-		cpu->pio.devices[i].active = FALSE;
+		cpu->pio.devices[i].active = false;
 		interrupt_t *intVal = &cpu->pio.interrupt[i];
 		intVal->interrupt_val = -1;
 		intVal->skip_factor = 1;
@@ -23,14 +23,14 @@ void ClearDevices(CPU_t* cpu) {
 
 int device_output(CPU_t *cpu, unsigned char dev) {
 	if (cpu->pio.devices[dev].active) {
-		cpu->output = TRUE;
+		cpu->output = true;
 		if (!cpu->pio.devices[dev].protected_port || !cpu->mem_c->flash_locked)
 			cpu->pio.devices[dev].code(cpu, &(cpu->pio.devices[dev]));
 		if (cpu->pio.devices[dev].breakpoint)
 			cpu->pio.breakpoint_callback(cpu, &(cpu->pio.devices[dev]));
 		if (cpu->output) {
 			/* Device is not responding */
-			cpu->output = FALSE;
+			cpu->output = false;
 			return 1;
 		}
 	}
@@ -39,13 +39,13 @@ int device_output(CPU_t *cpu, unsigned char dev) {
 
 int device_input(CPU_t *cpu, unsigned char dev) {
 	if (cpu->pio.devices[dev].active) {
-		cpu->input = TRUE;
+		cpu->input = true;
 		if (cpu->pio.devices[dev].breakpoint)
 			cpu->pio.breakpoint_callback(cpu, &(cpu->pio.devices[dev]));
 		cpu->pio.devices[dev].code(cpu, &(cpu->pio.devices[dev]));
 		if (cpu->input) {
 			/* Device is not responding */
-			cpu->input = FALSE;
+			cpu->input = false;
 			cpu->bus = 0xFF;
 			return 1;
 		}

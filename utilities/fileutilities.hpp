@@ -1,9 +1,11 @@
 #ifndef FILEUTILITIES_H
 #define FILEUTILITIES_H
 
-int BrowseFile(TCHAR *lpstrFile, const TCHAR *lpstrFilter, const TCHAR *lpstrTitle, const TCHAR *lpstrDefExt, unsigned int flags = 0);
-int SaveFile(TCHAR *lpstrFile, const TCHAR *lpstrFilter, const TCHAR *lpstrTitle, const TCHAR *lpstrDefExt, unsigned int flags = 0, unsigned int filterIndex = 0);
-bool ValidPath(TCHAR *lpstrFile);
-void GetAppDataString(TCHAR *buffer, int len);
+#include <stdio.h>
+
+int BrowseFile(char file, const char *filter, const char *title, const char *defExt, unsigned int flags = 0);
+int SaveFile(char *lpstrFile, const char *filter, const char *title, const char *defExt, unsigned int flags = 0, unsigned int filterIndex = 0);
+bool ValidPath(char *fileName);
+void GetAppDataString(char *buffer, int len);
 
 #endif	//FILEUTILITIES_H

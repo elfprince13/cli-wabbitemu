@@ -1,7 +1,7 @@
 #ifndef DBCOMMON_H
 #define DBCOMMON_H
 
-#include "calc.h"
+#include "../interface/calc.hpp"
 
 typedef enum {
 	HEX2,

@@ -8,9 +8,9 @@
 
 static void CALLBACK FillSoundBuffer(HWAVEOUT hWaveOut,
 									 UINT uMsg,
-									 DWORD dwInstance,
-									 DWORD dwParam1,
-									 DWORD dwParam2 ) {
+									 uint32_t dwInstance,
+									 uint32_t dwParam1,
+									 uint32_t dwParam2 ) {
 
 	WAVEHDR* waveheader = (WAVEHDR*) dwParam1;
 	//LPCALC lpCalc = (LPCALC) dwInstance;
@@ -138,13 +138,13 @@ int soundinit(AUDIO_t *audio) {
 	if( waveOutOpen(	&audio->hWaveOut, 
 						WAVE_MAPPER, 
 						&audio->wfx, 
-						(DWORD_PTR)FillSoundBuffer, 
-						(DWORD) audio, 
+						(uint32_t_PTR)FillSoundBuffer, 
+						(uint32_t) audio, 
 						CALLBACK_FUNCTION
 					) != MMSYSERR_NOERROR ) {
 
 		audio->enabled		= 0;
-	    MessageBox(NULL, _T("Unable to open audio device."), _T("Error"), MB_OK);
+	    MessageBox(nullptr, "Unable to open audio device.", "Error", MB_OK);
 	    return 1;
 	}
 	
@@ -164,14 +164,14 @@ int soundinit(AUDIO_t *audio) {
 }
 
 void KillSound(AUDIO_t* audio) {
-	if (audio == NULL)
+	if (audio == nullptr)
 	{
 		return;
 	}
 	if (audio->init) {
 		int i;
 		audio->endsnd = 0;
-		audio->enabled	= FALSE;
+		audio->enabled	= false;
 		audio->init = 0;
 		for(i = 0; audio->endsnd < BufferBanks && i < 200; i++) Sleep(5);
 		waveOutClose(audio->hWaveOut);

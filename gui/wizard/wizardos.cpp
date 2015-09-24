@@ -60,8 +60,8 @@ void WizardOSPage::OnRadioSelected(wxCommandEvent &event) {
 	}
 	if (m_browseOS->GetValue()) {
 		wxString path = m_filePicker2->GetPath();
-		TIFILE_t *tifile =  newimportvar(path.c_str(), TRUE);
-		if (tifile == NULL || tifile->type != FLASH_TYPE) {
+		TIFILE_t *tifile =  newimportvar(path.c_str(), true);
+		if (tifile == nullptr || tifile->type != FLASH_TYPE) {
 			//technically this allows apps as well. dont care
 			win->Enable(false);
 		}
@@ -78,7 +78,7 @@ wxWizardPage * WizardOSPage::GetPrev() const {
 
 wxWizardPage * WizardOSPage::GetNext() const {
 	if (creatingROM) {
-		return NULL;
+		return nullptr;
 	}
 	return next;
 }

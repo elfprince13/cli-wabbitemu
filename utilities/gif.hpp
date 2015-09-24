@@ -17,20 +17,20 @@
 
 extern int gif_write_state;
 extern int gif_file_size;
-extern TCHAR gif_file_name[256];
+extern char gif_file_name[256];
 extern bool gif_autosave;
 extern bool gif_use_increasing;
-extern WORD gif_base_delay;
+extern uint16_t gif_base_delay;
 extern int gif_xs;
 extern int gif_indiv_xs;
 extern int gif_ys;
-extern BYTE gif_frame[GIF_FRAME_MAX];
+extern uint8_t gif_frame[GIF_FRAME_MAX];
 extern int gif_time;
 extern int gif_newframe;
 extern int gif_colors;
 extern int gif_base_delay_start;
 extern int gif_file_num;
-extern u_int gif_size;
+extern uint32_t gif_size;
 extern bool gif_bw;
 
 void gif_writer(int shades);

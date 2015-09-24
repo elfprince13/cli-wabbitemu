@@ -63,8 +63,8 @@ typedef struct link {
 	#ifdef WINVER
 	AUDIO_t audio;
 	#endif
-	BYTE vout;
-	LPBYTE vin;						// Virtual Link data
+	uint8_t vout;
+	uint8_t * vin;						// Virtual Link data
 	bool hasChanged;				// if were connected to a hub, has the hub value changed
 	unsigned long long changedTime;	// when the data changed
 } link_t;

@@ -1,4 +1,4 @@
-#include "../hardware/calc.hpp"
+#include "../interface/calc.hpp"
 #include "../core/core.hpp"
 #include "../hardware/link.hpp"
 #include "exportvar.hpp"
@@ -11,61 +11,61 @@ const char flashheader[] = {
 	'*','*','T','I','F','L','*','*'} ;
 const char comment[42] = "File Exported by Wabbitemu.";
 
-TCHAR type_ext[][4] = {
-	_T("8xn"),
-	_T("8xl"),
-	_T("8xm"),
-	_T("8xy"),
-	_T("8xs"),
-	_T("8xp"),
-	_T("8xp"),
-	_T("8xi"),
-	_T("8xd"),
-	_T(""),
-	_T("8xy"),
-	_T("8xy"),
-	_T("8xc"),
-	_T("8xl"),
-	_T(""),
-	_T("8xw"),
-	_T("8xz"),
-	_T("8xt"),
-	_T(""),
-	_T("8xb"),
-	_T("8xk"),
-	_T("8xv"),
-	_T(""),
-	_T("8xg"),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T(""),
-	_T("8xy"),
-	_T(""),
-	_T(""),
-	_T("")
+char type_ext[][4] = {
+	("8xn"),
+	("8xl"),
+	("8xm"),
+	("8xy"),
+	("8xs"),
+	("8xp"),
+	("8xp"),
+	("8xi"),
+	("8xd"),
+	(""),
+	("8xy"),
+	("8xy"),
+	("8xc"),
+	("8xl"),
+	(""),
+	("8xw"),
+	("8xz"),
+	("8xt"),
+	(""),
+	("8xb"),
+	("8xk"),
+	("8xv"),
+	(""),
+	("8xg"),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	(""),
+	("8xy"),
+	(""),
+	(""),
+	("")
 };
 
-MFILE *mopen(const TCHAR *filename, const TCHAR * mode) {
+MFILE *mopen(const char *filename, const char * mode) {
 	MFILE* mf= (MFILE *) malloc(sizeof(MFILE));
 	memset(mf, 0, sizeof(MFILE));
 	if (filename) {
 #ifdef WINVER
 		fopen_s(&mf->stream, filename, mode);
 #else
-		mf->stream = _tfopen_s(filename, mode);
+		mf->stream = fopen(filename, mode);
 #endif
 		if (!mf->stream) {
 			free(mf);
-			return NULL;
+			return nullptr;
 		}
 	}
 	return mf;
@@ -123,24 +123,20 @@ int mputc(int c, MFILE* mf) {
 	}
 }
 
-int mprintf(MFILE* mf, const TCHAR *format, ...) {
+int mprintf(MFILE* mf, const char *format, ...) {
 	unsigned char *temp;
 	if (!mf) return EOF;
 	va_list list;
 	va_start(list, format);
 	if (mf->stream) {
-		int temp = _vftprintf(mf->stream, format, list);
+		int temp = vfprintf(mf->stream, format, list);
 		va_end(list);
 		return temp;
 	} else {
-		TCHAR buffer[1024];
+		char buffer[1024];
 		int i;
-#ifdef WINVER
-		vsprintf_s(buffer, format, list);
-#else
-		_vstprintf(buffer, format, list);
-#endif
-		size_t sz_length = _tcslen(buffer);
+		vsprintf(buffer, format, list);
+		size_t sz_length = strlen(buffer);
 		if (mf->pnt >= mf->size) {
 			temp = (unsigned char *) realloc(mf->data, mf->size+sz_length);
 			if (!temp) return EOF;
@@ -197,7 +193,7 @@ int VarRead(LPCALC lpCalc, int page, unsigned int address) {
 }
 
 
-MFILE *ExportApp(LPCALC lpCalc, TCHAR *fn, apphdr_t *app) {
+MFILE *ExportApp(LPCALC lpCalc, char *fn, apphdr_t *app) {
 	MFILE *outfile;
 	unsigned int tempnum;
 	int i, data_size = PAGE_SIZE * app->page_count;
@@ -209,7 +205,7 @@ MFILE *ExportApp(LPCALC lpCalc, TCHAR *fn, apphdr_t *app) {
 		memcpy(temp_point, &dest[tempnum], PAGE_SIZE);
 		temp_point += PAGE_SIZE;
 	}
-	outfile = mopen(fn, _T("wb"));
+	outfile = mopen(fn, ("wb"));
 	// Lots of pointless header crap 
 	for(i = 0; i < 8; i++) mputc(flashheader[i], outfile);
 	//version, major.minor
@@ -246,7 +242,7 @@ MFILE *ExportApp(LPCALC lpCalc, TCHAR *fn, apphdr_t *app) {
 	mputc(tempnum >> 24, outfile);
 	//data
 	intelhex(outfile, buffer, data_size);
-	mprintf(outfile, _T(":00000001FF"));
+	mprintf(outfile, (":00000001FF"));
 	//checksum
 	//TODO: this is the best checksum code I've ever seen...
 
@@ -259,8 +255,8 @@ MFILE *ExportApp(LPCALC lpCalc, TCHAR *fn, apphdr_t *app) {
  * Expects buffer to be a multiple of PAGE_SIZE
  * size defines the total size of the buffer
  */
-MFILE * ExportOS(TCHAR *lpszFile, unsigned char *buffer, int size) {
-	MFILE *file = mopen(lpszFile, _T("wb"));
+MFILE * ExportOS(char *lpszFile, unsigned char *buffer, int size) {
+	MFILE *file = mopen(lpszFile, ("wb"));
 	int i;
 	// Lots of pointless header crap 
 	for(i = 0; i < 8; i++) mputc(flashheader[i], file);
@@ -300,23 +296,23 @@ MFILE * ExportOS(TCHAR *lpszFile, unsigned char *buffer, int size) {
 	mputc((tempnum >> 16) & 0xFF, file);
 	mputc(tempnum >> 24, file);
 	*(buffer + 0x56) = 0xFF;
-	mprintf(file, _T("\r\n"));
+	mprintf(file, ("\r\n"));
 	//page 0 needs to start at 0x0000
 	intelhex(file, (const unsigned char *) buffer, PAGE_SIZE, 0, 0x0000);
 	if (size - PAGE_SIZE > 0) {
 		intelhex(file, (const unsigned char *) buffer + PAGE_SIZE, size - PAGE_SIZE, 1,  0x4000);
 	}
-	mprintf(file, _T(":00000001FF"));
+	mprintf(file, (":00000001FF"));
 	//TODO: checksum
 	return file;
 }
 
-MFILE * ExportRom(TCHAR *lpszFile, LPCALC lpCalc) {
-	MFILE *file = mopen(lpszFile, _T("wb"));
+MFILE * ExportRom(char *lpszFile, LPCALC lpCalc) {
+	MFILE *file = mopen(lpszFile, ("wb"));
 	char* rom = (char *) lpCalc->mem_c.flash;
 	int size = lpCalc->mem_c.flash_size;
-	if (size != 0 && rom != NULL && file !=NULL) {
-		u_int i;
+	if (size != 0 && rom != nullptr && file !=nullptr) {
+		uint32_t i;
 		for(i = 0; i < size; i++) {
 			mputc(rom[i], file);
 		}
@@ -330,7 +326,7 @@ MFILE * ExportRom(TCHAR *lpszFile, LPCALC lpCalc) {
  * stolen from spasm's export.c  to make my 1/2 hour deadline
  */
 void intelhex (MFILE* outfile, const unsigned char* buffer, int size, int page, int start_address) {
-	const TCHAR hexstr[] = _T("0123456789ABCDEF");
+	const char hexstr[] = ("0123456789ABCDEF");
 	int bpnt = 0;
 	unsigned int address, ci, temp, i;
 	unsigned char chksum;
@@ -339,7 +335,7 @@ void intelhex (MFILE* outfile, const unsigned char* buffer, int size, int page, 
 	//We are in binary mode, we must handle carriage return ourselves.
    
 	while (bpnt < size) {
-		mprintf(outfile, _T(":02000002%04X%02X\r\n"), page & 0x1F, (unsigned char) ((~(0x04 + page)) + 1));
+		mprintf(outfile, (":02000002%04X%02X\r\n"), page & 0x1F, (unsigned char) ((~(0x04 + page)) + 1));
 		page++;
 		address = start_address;   
 		for (i = 0; bpnt < size && i < 512; i++) {
@@ -352,14 +348,14 @@ void intelhex (MFILE* outfile, const unsigned char* buffer, int size, int page, 
 			}
 			outbuf[ci] = 0;
 			ci >>= 1;
-			mprintf(outfile, _T(":%02X%04X00%s%02X\r\n"), ci, address, outbuf, (unsigned char)(~(chksum + ci) + 1));
+			mprintf(outfile, (":%02X%04X00%s%02X\r\n"), ci, address, outbuf, (unsigned char)(~(chksum + ci) + 1));
 			address += 0x20;
 		}         
 	}
 }
 
 //Progs, List AppVar and Group
-MFILE *ExportVar(LPCALC lpCalc, TCHAR* fn, symbol83P_t* sym) {
+MFILE *ExportVar(LPCALC lpCalc, char* fn, symbol83P_t* sym) {
 	MFILE *outfile;
 	unsigned char mem[0x10020];
 	int i, b, size;
@@ -425,7 +421,7 @@ MFILE *ExportVar(LPCALC lpCalc, TCHAR* fn, symbol83P_t* sym) {
 			break;
 	}
 		
-	outfile = mopen(fn, _T("wb"));
+	outfile = mopen(fn, ("wb"));
 
 	// Lots of pointless header crap 
 	for(i = 0; i < 11; i++) mputc(fileheader[i],outfile);
