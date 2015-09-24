@@ -256,6 +256,7 @@
 		E9947C331BB4A15500DEC14A /* libform.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libform.tbd; path = usr/lib/libform.tbd; sourceTree = SDKROOT; };
 		E9947C3A1BB4A2AA00DEC14A /* crane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = crane.m; sourceTree = "<group>"; };
 		E9947C4A1BB4A32100DEC14A /* libcrane.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcrane.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9947C5B1BB4A6A400DEC14A /* crane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crane.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -582,6 +583,7 @@
 			isa = PBXGroup;
 			children = (
 				E9947C3A1BB4A2AA00DEC14A /* crane.m */,
+				E9947C5B1BB4A6A400DEC14A /* crane.h */,
 			);
 			name = libcrane;
 			path = ../libcrane;
@@ -1063,6 +1065,7 @@
 		E9947C511BB4A32100DEC14A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1071,6 +1074,7 @@
 		E9947C521BB4A32100DEC14A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1140,6 +1144,7 @@
 				E9947C521BB4A32100DEC14A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
