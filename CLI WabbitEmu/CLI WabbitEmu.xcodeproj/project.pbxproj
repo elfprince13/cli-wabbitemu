@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		E90E24FA1BB395630090F49E /* disassemble.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24B61BB395630090F49E /* disassemble.c */; settings = {ASSET_TAGS = (); }; };
 		E90E24FB1BB395630090F49E /* disassemblyview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24B81BB395630090F49E /* disassemblyview.cpp */; settings = {ASSET_TAGS = (); }; };
-		E90E250B1BB395630090F49E /* fileutilities.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24DF1BB395630090F49E /* fileutilities.c */; settings = {ASSET_TAGS = (); }; };
-		E90E250C1BB395630090F49E /* gif.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E21BB395630090F49E /* gif.c */; settings = {ASSET_TAGS = (); }; };
-		E90E250D1BB395630090F49E /* gifhandle.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E41BB395630090F49E /* gifhandle.c */; settings = {ASSET_TAGS = (); }; };
-		E90E250E1BB395630090F49E /* label.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E61BB395630090F49E /* label.c */; settings = {ASSET_TAGS = (); }; };
-		E90E250F1BB395630090F49E /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E81BB395630090F49E /* print.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25101BB395630090F49E /* savestate.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EA1BB395630090F49E /* savestate.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25111BB395630090F49E /* sendfile.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EC1BB395630090F49E /* sendfile.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25121BB395630090F49E /* sound.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EE1BB395630090F49E /* sound.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25131BB395630090F49E /* var.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F11BB395630090F49E /* var.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25141BB395630090F49E /* zlibcmp.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F31BB395630090F49E /* zlibcmp.c */; settings = {ASSET_TAGS = (); }; };
+		E90E250B1BB395630090F49E /* fileutilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24DF1BB395630090F49E /* fileutilities.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E250C1BB395630090F49E /* gif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E21BB395630090F49E /* gif.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E250D1BB395630090F49E /* gifhandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E41BB395630090F49E /* gifhandle.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E250E1BB395630090F49E /* label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E61BB395630090F49E /* label.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E250F1BB395630090F49E /* print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E81BB395630090F49E /* print.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E25101BB395630090F49E /* savestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EA1BB395630090F49E /* savestate.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E25111BB395630090F49E /* sendfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EC1BB395630090F49E /* sendfile.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E25121BB395630090F49E /* sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EE1BB395630090F49E /* sound.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E25131BB395630090F49E /* var.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F11BB395630090F49E /* var.cpp */; settings = {ASSET_TAGS = (); }; };
+		E90E25141BB395630090F49E /* zlibcmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F31BB395630090F49E /* zlibcmp.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947BE51BB39DEC00DEC14A /* calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D61BB395630090F49E /* calc.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947BE61BB39DF200DEC14A /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D81BB395630090F49E /* state.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947BEF1BB39E2700DEC14A /* alu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24A71BB395630090F49E /* alu.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -124,31 +124,31 @@
 		E90E24D71BB395630090F49E /* calc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = calc.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E90E24D81BB395630090F49E /* state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = state.cpp; sourceTree = "<group>"; };
 		E90E24D91BB395630090F49E /* state.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state.hpp; sourceTree = "<group>"; };
-		E90E24DC1BB395630090F49E /* bcalls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bcalls.h; sourceTree = "<group>"; };
-		E90E24DD1BB395630090F49E /* exportvar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = exportvar.c; sourceTree = "<group>"; };
-		E90E24DE1BB395630090F49E /* exportvar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exportvar.h; sourceTree = "<group>"; };
-		E90E24DF1BB395630090F49E /* fileutilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fileutilities.c; sourceTree = "<group>"; };
-		E90E24E01BB395630090F49E /* fileutilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileutilities.h; sourceTree = "<group>"; };
-		E90E24E11BB395630090F49E /* flags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flags.h; sourceTree = "<group>"; };
-		E90E24E21BB395630090F49E /* gif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gif.c; sourceTree = "<group>"; };
-		E90E24E31BB395630090F49E /* gif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gif.h; sourceTree = "<group>"; };
-		E90E24E41BB395630090F49E /* gifhandle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gifhandle.c; sourceTree = "<group>"; };
-		E90E24E51BB395630090F49E /* gifhandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gifhandle.h; sourceTree = "<group>"; };
-		E90E24E61BB395630090F49E /* label.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = label.c; sourceTree = "<group>"; };
-		E90E24E71BB395630090F49E /* label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = label.h; sourceTree = "<group>"; };
-		E90E24E81BB395630090F49E /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
-		E90E24E91BB395630090F49E /* print.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = print.h; sourceTree = "<group>"; };
-		E90E24EA1BB395630090F49E /* savestate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = savestate.c; sourceTree = "<group>"; };
-		E90E24EB1BB395630090F49E /* savestate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = savestate.h; sourceTree = "<group>"; };
-		E90E24EC1BB395630090F49E /* sendfile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sendfile.c; sourceTree = "<group>"; };
-		E90E24ED1BB395630090F49E /* sendfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sendfile.h; sourceTree = "<group>"; };
-		E90E24EE1BB395630090F49E /* sound.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sound.c; sourceTree = "<group>"; };
-		E90E24EF1BB395630090F49E /* sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sound.h; sourceTree = "<group>"; };
-		E90E24F01BB395630090F49E /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		E90E24F11BB395630090F49E /* var.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = var.c; sourceTree = "<group>"; };
-		E90E24F21BB395630090F49E /* var.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = var.h; sourceTree = "<group>"; };
-		E90E24F31BB395630090F49E /* zlibcmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zlibcmp.c; sourceTree = "<group>"; };
-		E90E24F41BB395630090F49E /* zlibcmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zlibcmp.h; sourceTree = "<group>"; };
+		E90E24DC1BB395630090F49E /* bcalls.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bcalls.hpp; sourceTree = "<group>"; };
+		E90E24DD1BB395630090F49E /* exportvar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exportvar.cpp; sourceTree = "<group>"; };
+		E90E24DE1BB395630090F49E /* exportvar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = exportvar.hpp; sourceTree = "<group>"; };
+		E90E24DF1BB395630090F49E /* fileutilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileutilities.cpp; sourceTree = "<group>"; };
+		E90E24E01BB395630090F49E /* fileutilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fileutilities.hpp; sourceTree = "<group>"; };
+		E90E24E11BB395630090F49E /* flags.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = flags.hpp; sourceTree = "<group>"; };
+		E90E24E21BB395630090F49E /* gif.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gif.cpp; sourceTree = "<group>"; };
+		E90E24E31BB395630090F49E /* gif.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gif.hpp; sourceTree = "<group>"; };
+		E90E24E41BB395630090F49E /* gifhandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gifhandle.cpp; sourceTree = "<group>"; };
+		E90E24E51BB395630090F49E /* gifhandle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gifhandle.hpp; sourceTree = "<group>"; };
+		E90E24E61BB395630090F49E /* label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = label.cpp; sourceTree = "<group>"; };
+		E90E24E71BB395630090F49E /* label.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = label.hpp; sourceTree = "<group>"; };
+		E90E24E81BB395630090F49E /* print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = print.cpp; sourceTree = "<group>"; };
+		E90E24E91BB395630090F49E /* print.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = print.hpp; sourceTree = "<group>"; };
+		E90E24EA1BB395630090F49E /* savestate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = savestate.cpp; sourceTree = "<group>"; };
+		E90E24EB1BB395630090F49E /* savestate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = savestate.hpp; sourceTree = "<group>"; };
+		E90E24EC1BB395630090F49E /* sendfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sendfile.cpp; sourceTree = "<group>"; };
+		E90E24ED1BB395630090F49E /* sendfile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sendfile.hpp; sourceTree = "<group>"; };
+		E90E24EE1BB395630090F49E /* sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sound.cpp; sourceTree = "<group>"; };
+		E90E24EF1BB395630090F49E /* sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sound.hpp; sourceTree = "<group>"; };
+		E90E24F01BB395630090F49E /* types.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = types.hpp; sourceTree = "<group>"; };
+		E90E24F11BB395630090F49E /* var.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = var.cpp; sourceTree = "<group>"; };
+		E90E24F21BB395630090F49E /* var.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = var.hpp; sourceTree = "<group>"; };
+		E90E24F31BB395630090F49E /* zlibcmp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zlibcmp.cpp; sourceTree = "<group>"; };
+		E90E24F41BB395630090F49E /* zlibcmp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = zlibcmp.hpp; sourceTree = "<group>"; };
 		E9947B881BB395D800DEC14A /* droptarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = droptarget.cpp; sourceTree = "<group>"; };
 		E9947B891BB395D800DEC14A /* droptarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = droptarget.h; sourceTree = "<group>"; };
 		E9947B8A1BB395D800DEC14A /* gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gui.cpp; sourceTree = "<group>"; };
@@ -380,31 +380,31 @@
 		E90E24DB1BB395630090F49E /* utilities */ = {
 			isa = PBXGroup;
 			children = (
-				E90E24DC1BB395630090F49E /* bcalls.h */,
-				E90E24DD1BB395630090F49E /* exportvar.c */,
-				E90E24DE1BB395630090F49E /* exportvar.h */,
-				E90E24DF1BB395630090F49E /* fileutilities.c */,
-				E90E24E01BB395630090F49E /* fileutilities.h */,
-				E90E24E11BB395630090F49E /* flags.h */,
-				E90E24E21BB395630090F49E /* gif.c */,
-				E90E24E31BB395630090F49E /* gif.h */,
-				E90E24E41BB395630090F49E /* gifhandle.c */,
-				E90E24E51BB395630090F49E /* gifhandle.h */,
-				E90E24E61BB395630090F49E /* label.c */,
-				E90E24E71BB395630090F49E /* label.h */,
-				E90E24E81BB395630090F49E /* print.c */,
-				E90E24E91BB395630090F49E /* print.h */,
-				E90E24EA1BB395630090F49E /* savestate.c */,
-				E90E24EB1BB395630090F49E /* savestate.h */,
-				E90E24EC1BB395630090F49E /* sendfile.c */,
-				E90E24ED1BB395630090F49E /* sendfile.h */,
-				E90E24EE1BB395630090F49E /* sound.c */,
-				E90E24EF1BB395630090F49E /* sound.h */,
-				E90E24F01BB395630090F49E /* types.h */,
-				E90E24F11BB395630090F49E /* var.c */,
-				E90E24F21BB395630090F49E /* var.h */,
-				E90E24F31BB395630090F49E /* zlibcmp.c */,
-				E90E24F41BB395630090F49E /* zlibcmp.h */,
+				E90E24DC1BB395630090F49E /* bcalls.hpp */,
+				E90E24DD1BB395630090F49E /* exportvar.cpp */,
+				E90E24DE1BB395630090F49E /* exportvar.hpp */,
+				E90E24DF1BB395630090F49E /* fileutilities.cpp */,
+				E90E24E01BB395630090F49E /* fileutilities.hpp */,
+				E90E24E11BB395630090F49E /* flags.hpp */,
+				E90E24E21BB395630090F49E /* gif.cpp */,
+				E90E24E31BB395630090F49E /* gif.hpp */,
+				E90E24E41BB395630090F49E /* gifhandle.cpp */,
+				E90E24E51BB395630090F49E /* gifhandle.hpp */,
+				E90E24E61BB395630090F49E /* label.cpp */,
+				E90E24E71BB395630090F49E /* label.hpp */,
+				E90E24E81BB395630090F49E /* print.cpp */,
+				E90E24E91BB395630090F49E /* print.hpp */,
+				E90E24EA1BB395630090F49E /* savestate.cpp */,
+				E90E24EB1BB395630090F49E /* savestate.hpp */,
+				E90E24EC1BB395630090F49E /* sendfile.cpp */,
+				E90E24ED1BB395630090F49E /* sendfile.hpp */,
+				E90E24EE1BB395630090F49E /* sound.cpp */,
+				E90E24EF1BB395630090F49E /* sound.hpp */,
+				E90E24F01BB395630090F49E /* types.hpp */,
+				E90E24F11BB395630090F49E /* var.cpp */,
+				E90E24F21BB395630090F49E /* var.hpp */,
+				E90E24F31BB395630090F49E /* zlibcmp.cpp */,
+				E90E24F41BB395630090F49E /* zlibcmp.hpp */,
 			);
 			name = utilities;
 			path = ../../utilities;
@@ -657,17 +657,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E90E250F1BB395630090F49E /* print.c in Sources */,
-				E90E250E1BB395630090F49E /* label.c in Sources */,
-				E90E25111BB395630090F49E /* sendfile.c in Sources */,
+				E90E250F1BB395630090F49E /* print.cpp in Sources */,
+				E90E250E1BB395630090F49E /* label.cpp in Sources */,
+				E90E25111BB395630090F49E /* sendfile.cpp in Sources */,
 				E90E24FA1BB395630090F49E /* disassemble.c in Sources */,
-				E90E25101BB395630090F49E /* savestate.c in Sources */,
-				E90E25141BB395630090F49E /* zlibcmp.c in Sources */,
-				E90E250D1BB395630090F49E /* gifhandle.c in Sources */,
-				E90E25121BB395630090F49E /* sound.c in Sources */,
-				E90E250C1BB395630090F49E /* gif.c in Sources */,
-				E90E25131BB395630090F49E /* var.c in Sources */,
-				E90E250B1BB395630090F49E /* fileutilities.c in Sources */,
+				E90E25101BB395630090F49E /* savestate.cpp in Sources */,
+				E90E25141BB395630090F49E /* zlibcmp.cpp in Sources */,
+				E90E250D1BB395630090F49E /* gifhandle.cpp in Sources */,
+				E90E25121BB395630090F49E /* sound.cpp in Sources */,
+				E90E250C1BB395630090F49E /* gif.cpp in Sources */,
+				E90E25131BB395630090F49E /* var.cpp in Sources */,
+				E90E250B1BB395630090F49E /* fileutilities.cpp in Sources */,
 				E90E24FB1BB395630090F49E /* disassemblyview.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
