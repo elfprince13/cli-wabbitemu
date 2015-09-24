@@ -13,7 +13,7 @@ static void port0(CPU_t *cpu, device_t *dev) {
 		cpu->bus = 0;
 		cpu->input = false;
 	} else if (cpu->output) {
-		dev->aux = (LPVOID) (0x100 * ((cpu->bus % 0x20) + 0xE0));
+		dev->aux = (void*) (0x100 * ((cpu->bus % 0x20) + 0xE0));
 		cpu->pio.devices[0x10].aux = dev->aux;
 		port10(cpu, dev);
 		cpu->output = false;

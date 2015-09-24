@@ -12,6 +12,7 @@
 #include <cstring>
 #include <strings.h>
 #include <ctime>
+#include <csetjmp>
 
 #define ARRAYSIZE(z) (sizeof(z)/sizeof((z)[0]))
 

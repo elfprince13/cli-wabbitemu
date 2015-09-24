@@ -1,6 +1,6 @@
 #include "lcd.hpp"
 #include "83psehw.hpp"
-#include "../utilties/gifhandle.hpp"
+#include "../utilities/gifhandle.hpp"
 #ifdef WINVER
 #include "registry.h"
 #endif
@@ -318,7 +318,7 @@ void LCD_data(CPU_t *cpu, device_t *dev) {
 		if (lcd->word_len) {
 			cursor[0] = cpu->bus;
 		} else {
-			u_short	data = cpu->bus << shift,
+			uint16_t	data = cpu->bus << shift,
 					mask = ~(0x003F << shift);
 
 			cursor[0] = (cursor[0] & (mask >> 8)) | (data >> 8);
