@@ -15,7 +15,7 @@ END_EVENT_TABLE()
 unsigned char redColors[MAX_SHADES+1];
 unsigned char greenColors[MAX_SHADES+1];
 unsigned char blueColors[MAX_SHADES+1];
-WabbitemuLCD::WabbitemuLCD(wxFrame *mainFrame, LPCALC lpCalc)
+WabbitemuLCD::WabbitemuLCD(wxFrame *mainFrame, CALC* lpCalc)
 	: wxWindow(mainFrame, ID_LCD, wxPoint(0,0), lpCalc->LCDRect.GetSize()) {
 	this->lpCalc = lpCalc;
 	this->mainFrame = mainFrame;

@@ -9,7 +9,7 @@ static bool calc_size = false;
 static size_t mspf_size = 0;
 static int mspf_break = 9999;
 
-void press_textA(char *szText, COLORREF zcolor, RECT *r, HDC hdc) {
+void press_textA(char *szText, uint32_t zcolor, RECT *r, HDC hdc) {
 	RECT tr;
 
 	tr.left = 0; tr.right = 1;
@@ -49,7 +49,7 @@ void press_textA(char *szText, COLORREF zcolor, RECT *r, HDC hdc) {
 }
 
 
-void MyDrawText(LPCALC lpCalc, HDC hdc, RECT *rc, Z80_info_t* zinf, ViewType type, const char *fmt, ...) {
+void MyDrawText(CALC* lpCalc, HDC hdc, RECT *rc, Z80_info_t* zinf, ViewType type, const char *fmt, ...) {
 	char *p;
 	va_list argp;
 	RECT r = *rc;
@@ -186,7 +186,7 @@ void MyDrawText(LPCALC lpCalc, HDC hdc, RECT *rc, Z80_info_t* zinf, ViewType typ
 	va_end(argp);
 }
 
-char* mysprintf(LPCALC lpCalc, Z80_info_t* zinf, ViewType type, const char *fmt, ...) {
+char* mysprintf(CALC* lpCalc, Z80_info_t* zinf, ViewType type, const char *fmt, ...) {
 	char *p;
 	static char end_buf[1024] = ("\0");
 	va_list argp;

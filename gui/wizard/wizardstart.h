@@ -25,7 +25,7 @@ public:
 	wxRadioButton* m_copyRadio;
 	wxFilePickerCtrl* m_filePicker1;	
 	wxWizardPage *next;
-	LPCALC lpCalc;
+	CALC* lpCalc;
 };
 
 #endif

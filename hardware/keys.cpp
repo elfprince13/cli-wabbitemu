@@ -747,7 +747,7 @@ void keypad_vk_release(HWND hwnd, int group, int bit) {
 		if (keygrps[i].group == group && keygrps[i].bit == bit) {	
 			//TODO: fix lparam
 			//this is sent as a message and not HandleKeyUp because
-			//i can't get an LPCALC in here. It would be nice
+			//i can't get an CALC* in here. It would be nice
 			//to somehow separate the skin logic from that but
 			//still update the skin somehow
 			SendMessage(hwnd, WM_KEYUP, keygrps[i].vk, 0);

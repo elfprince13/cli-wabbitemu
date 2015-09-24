@@ -200,7 +200,7 @@ waddr_t OffsetWaddr(memory_context_t *memc, ViewType type, waddr_t waddr, int of
 }
 
 /* returns number of bytes read */
-int disassemble(LPCALC lpCalc, ViewType type, waddr_t waddr, int count, Z80_info_t *result) {
+int disassemble(CALC* lpCalc, ViewType type, waddr_t waddr, int count, Z80_info_t *result) {
 	int i, prefix = 0, pi = 0;
 	memory_context_t *memc = &lpCalc->mem_c;
 	for (i = 0; i < count; i++, result++, prefix = 0) {

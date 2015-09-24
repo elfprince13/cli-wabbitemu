@@ -11,7 +11,7 @@ bool WabbitemuApp::DoRomWizard() {
 	return success;
 }
 
-void WabbitemuApp::LoadSettings(LPCALC lpCalc)
+void WabbitemuApp::LoadSettings(CALC* lpCalc)
 {
 	settingsConfig = new wxConfig(wxT("Wabbitemu"));
 	wxString tempString;
@@ -27,7 +27,7 @@ bool WabbitemuApp::OnInit()
 	ParseCommandLineArgs();
 
 	memset(frames, 0, sizeof(frames));
-	LPCALC lpCalc = calc_slot_new();
+	CALC* lpCalc = calc_slot_new();
 	LoadSettings(lpCalc);
 	
 	WabbitemuFrame *frame;
@@ -53,14 +53,14 @@ bool WabbitemuApp::OnInit()
 			}
 		}
 	}
-	LoadCommandlineFiles((uint32_t *) lpCalc, LoadToLPCALC);
+	LoadCommandlineFiles((uint32_t *) lpCalc, LoadToCALC*);
 	timer = new wxTimer();
 	timer->Connect(wxEVT_TIMER, (wxObjectEventFunction) &WabbitemuApp::OnTimer);
 	timer->Start(TPF, false);
 	return true;
 }
 
-void WabbitemuApp::SaveSettings(LPCALC lpCalc) {
+void WabbitemuApp::SaveSettings(CALC* lpCalc) {
 #ifdef _UNICODE
 	wxString rom_path(lpCalc->rom_path, wxConvUTF8);
 #else
@@ -157,7 +157,7 @@ void WabbitemuApp::ParseCommandLineArgs()
 				strcpy(temp, tmpstring);
 				temp[strlen(tmpstring) + 1] = '\0';
 				char extension[5] = ("");
-				const char *pext = _tcsrchr(tmpstring, ('.'));
+				const char *pext = strrchr(tmpstring, ('.'));
 				if (pext != nullptr) {
 					strcpy(extension, pext);
 				}
@@ -207,9 +207,9 @@ void WabbitemuApp::ParseCommandLineArgs()
 	SendMessage(hwnd, WM_COPYDATA, (WPARAM) nullptr, (LPARAM) cds);
 }*/
 
-void LoadToLPCALC(uint32_t * lParam, LPTSTR filePath, SEND_FLAG sendLoc)
+void LoadToCALC*(uint32_t * lParam, LPTSTR filePath, SEND_FLAG sendLoc)
 {
-	LPCALC lpCalc = (LPCALC) lParam;
+	CALC* lpCalc = (CALC*) lParam;
 	SendFile(lpCalc, filePath, sendLoc);
 }
 

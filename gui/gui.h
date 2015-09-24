@@ -28,7 +28,7 @@ enum
 class WabbitemuFrame: public wxFrame
 {
 public:
-    WabbitemuFrame(LPCALC);
+    WabbitemuFrame(CALC*);
    	wxWindow *wxLCD;
     
 	void OnKeyDown(wxKeyEvent& event);
@@ -71,7 +71,7 @@ private:
 	void OnPaint(wxPaintEvent& event);
 	// Resize
 	void OnResize(wxSizeEvent& event);
-	LPCALC lpCalc;
+	CALC* lpCalc;
 	
 	void OnLeftButtonDown(wxMouseEvent& event);
 	void OnLeftButtonUp(wxMouseEvent& event);
@@ -80,6 +80,6 @@ private:
 	void FinalizeButtons();
 };
 int SetGIFName();
-void gui_debug(LPCALC lpCalc);
-WabbitemuFrame* gui_frame(LPCALC lpCalc);
+void gui_debug(CALC* lpCalc);
+WabbitemuFrame* gui_frame(CALC* lpCalc);
 #endif

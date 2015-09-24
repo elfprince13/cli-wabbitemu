@@ -2,5 +2,5 @@
 #define GUIOPENFILE_H
 #include "gui.h"
 
-void GetOpenSendFileName(LPCALC, int defFilter);
+void GetOpenSendFileName(CALC*, int defFilter);
 #endif

@@ -645,7 +645,7 @@ void SaveLCD(SAVESTATE_t* save, LCD_t* lcd) {
 }
 
 SAVESTATE_t* SaveSlot(void *lpInput) {
-	LPCALC lpCalc = (LPCALC) lpInput;
+	CALC* lpCalc = (CALC*) lpInput;
 	SAVESTATE_t* save;
 	bool runsave;
 	if (lpCalc->active == false) return nullptr;
@@ -1007,7 +1007,7 @@ void LoadSE_AUX(SAVESTATE_t* save, SE_AUX_t *se_aux) {
 
 void LoadSlot(SAVESTATE_t *save, void *lpInput) {
 	bool runsave;
-	LPCALC lpCalc = (LPCALC) lpInput;
+	CALC* lpCalc = (CALC*) lpInput;
 	
 	if (lpCalc->active == false){
 		puts("Slot was not active");

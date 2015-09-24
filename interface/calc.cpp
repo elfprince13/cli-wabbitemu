@@ -65,7 +65,7 @@ uint32_t calc_count(void) {
 }
 
 /* 81 */
-int calc_init_81(LPCALC lpCalc, char *version) {
+int calc_init_81(CALC* lpCalc, char *version) {
 	/* INTIALIZE 81 */
 	//v2 is basically an 82
 	if (version[0] == '2') {
@@ -98,7 +98,7 @@ int calc_init_81(LPCALC lpCalc, char *version) {
 }
 
 /*  82 83 */
-static bool calc_init_83(LPCALC lpCalc, char *os) {
+static bool calc_init_83(CALC* lpCalc, char *os) {
 	/* INTIALIZE 83 */
 	memory_init_83(&lpCalc->mem_c);
 	tc_init(&lpCalc->timer_c, MHZ_6);
@@ -127,7 +127,7 @@ static bool calc_init_83(LPCALC lpCalc, char *os) {
 }
 
 /* 85 86 */
-static int calc_init_86(LPCALC lpCalc) {
+static int calc_init_86(CALC* lpCalc) {
 
 	/* INTIALIZE 86 */
 	memory_init_86(&lpCalc->mem_c);
@@ -149,7 +149,7 @@ static int calc_init_86(LPCALC lpCalc) {
 }
 
 /* 73 83+ */
-int calc_init_83p(LPCALC lpCalc) {
+int calc_init_83p(CALC* lpCalc) {
 	/* INTIALIZE 83+ */
 	memory_init_83p(&lpCalc->mem_c);
 	tc_init(&lpCalc->timer_c, MHZ_6);
@@ -170,7 +170,7 @@ int calc_init_83p(LPCALC lpCalc) {
 }
 
 /* 83+se 84+se */
-int calc_init_83pse(LPCALC lpCalc) {
+int calc_init_83pse(CALC* lpCalc) {
 	/* INTIALIZE 83+se */
 	memory_init_83pse(&lpCalc->mem_c);
 	tc_init(&lpCalc->timer_c, MHZ_6);
@@ -190,7 +190,7 @@ int calc_init_83pse(LPCALC lpCalc) {
 }
 
 /* 84+ */
-int calc_init_84p(LPCALC lpCalc) {
+int calc_init_84p(CALC* lpCalc) {
 	/* INTIALIZE 84+ */
 	memory_init_84p(&lpCalc->mem_c);
 	tc_init(&lpCalc->timer_c, MHZ_6);
@@ -226,7 +226,7 @@ void calc_erase_certificate(unsigned char *mem, int size) {
 }
 
 #define BOOTFREE_VER "11.246"
-void check_bootfree_and_update(LPCALC lpCalc) {
+void check_bootfree_and_update(CALC* lpCalc) {
 	uint8_t *bootFreeString = lpCalc->mem_c.flash + (lpCalc->mem_c.flash_pages - 1) * PAGE_SIZE + 0x0F;
 	if (*bootFreeString != '1') {
 		//not using bootfree
@@ -255,7 +255,7 @@ void check_bootfree_and_update(LPCALC lpCalc) {
 #endif
 }
 
-bool rom_load(LPCALC lpCalc, const char * FileName) {
+bool rom_load(CALC* lpCalc, const char * FileName) {
 	if (lpCalc == nullptr) {
 		return false;
 	}
@@ -400,7 +400,7 @@ extern keyprog_t keysti86[256];
 	return true;
 }
 
-void calc_slot_free(LPCALC lpCalc) {
+void calc_slot_free(CALC* lpCalc) {
 	if (lpCalc == nullptr)
 		return;
 
@@ -453,7 +453,7 @@ void calc_slot_free(LPCALC lpCalc) {
 	}
 }
 
-void calc_turn_on(LPCALC lpCalc)
+void calc_turn_on(CALC* lpCalc)
 {
 	bool running = lpCalc->running;
 	lpCalc->running = true;
@@ -467,7 +467,7 @@ void calc_turn_on(LPCALC lpCalc)
 	lpCalc->running = running;
 }
 
-int calc_reset(LPCALC lpCalc) {
+int calc_reset(CALC* lpCalc) {
 	CPU_reset(&lpCalc->cpu);
 	LCD_timer_refresh(&lpCalc->cpu);
 	//calc_turn_on(lpCalc);
@@ -594,7 +594,7 @@ int CPU_reset(CPU_t *lpCPU) {
 	return 0;
 }
 
-int calc_run_frame(LPCALC lpCalc) {
+int calc_run_frame(CALC* lpCalc) {
 	uint64_t end_time = lpCalc->timer_c.freq / FPS;
 	uint64_t cpu_sync = tc_tstates(&lpCalc->timer_c) + end_time - lpCalc->time_error;
 
@@ -610,7 +610,7 @@ int calc_run_frame(LPCALC lpCalc) {
 	return 0;
 }
 
-int calc_run_tstates(LPCALC lpCalc, time_t tstates) {
+int calc_run_tstates(CALC* lpCalc, time_t tstates) {
 	uint64_t time_end = tc_tstates(&lpCalc->timer_c) + tstates - lpCalc->time_error;
 
 	while (lpCalc->running) {
@@ -696,7 +696,7 @@ bool calc_start_screenshot(calc_t *calc, const char *filename)
 	}
 }
 
-void calc_stop_screenshot(LPCALC calc)
+void calc_stop_screenshot(CALC* calc)
 {
 	gif_write_state = GIF_END;
 }
@@ -793,7 +793,7 @@ void link_step(CPU_t *cpu) {
 void port_debug_callback(void *arg1, void *arg2) {
 	CPU_t *cpu = (CPU_t *) arg1;
 	//device_t *dev = (device_t *) arg2;
-	LPCALC lpCalc = calc_from_cpu(cpu);
+	CALC* lpCalc = calc_from_cpu(cpu);
 #ifdef MACVER
 	lpCalc->breakpoint_callback(lpCalc, lpCalc->breakpoint_owner);
 #else
@@ -803,7 +803,7 @@ void port_debug_callback(void *arg1, void *arg2) {
 
 void mem_debug_callback(void *arg1) {
 	CPU_t *cpu = (CPU_t *) arg1;
-	LPCALC lpCalc = calc_from_cpu(cpu);
+	CALC* lpCalc = calc_from_cpu(cpu);
 #ifdef MACVER
 	lpCalc->breakpoint_callback(lpCalc, lpCalc->breakpoint_owner);
 #else
@@ -812,7 +812,7 @@ void mem_debug_callback(void *arg1) {
 }
 
 #ifdef WITH_BACKUPS
-void do_backup(LPCALC lpCalc) {
+void do_backup(CALC* lpCalc) {
 	if (!lpCalc->running)
 		return;
 	int slot = lpCalc->slot;
@@ -832,7 +832,7 @@ void do_backup(LPCALC lpCalc) {
 	backups[slot] = backup;
 	number_backup++;
 }
-void restore_backup(int index, LPCALC lpCalc) {
+void restore_backup(int index, CALC* lpCalc) {
 	int slot = lpCalc->slot;
 	debugger_backup* backup = backups[slot];
 	while (index > 0) {
@@ -866,7 +866,7 @@ void free_backup(debugger_backup* backup) {
 /*
  * Frees all backups from memory
  */
-void free_backups(LPCALC lpCalc) {
+void free_backups(CALC* lpCalc) {
 	int slot = lpCalc->slot;
 	debugger_backup *backup_prev, *backup = backups[slot];
 	if (backup == nullptr)
@@ -881,14 +881,14 @@ void free_backups(LPCALC lpCalc) {
 }
 #endif
 
-int calc_run_seconds(LPCALC lpCalc, double seconds) {
+int calc_run_seconds(CALC* lpCalc, double seconds) {
 	time_t time = (time_t ) (seconds * 1000);
 	return calc_run_timed(lpCalc, time);
 }
 
 
 // ticks
-int calc_run_timed(LPCALC lpCalc, time_t time) {
+int calc_run_timed(CALC* lpCalc, time_t time) {
 	int frames = (int) time / TPF;
 
 	int speed_backup = lpCalc->speed;
@@ -900,7 +900,7 @@ int calc_run_timed(LPCALC lpCalc, time_t time) {
 	return 0;
 }
 
-LPCALC calc_from_cpu(CPU_t *cpu) {
+CALC* calc_from_cpu(CPU_t *cpu) {
 	int i;
 	for (i = 0; i < MAX_CALCS; i++) {
 		if (&calcs[i].cpu == cpu)
@@ -909,7 +909,7 @@ LPCALC calc_from_cpu(CPU_t *cpu) {
 	return nullptr;
 }
 
-LPCALC calc_from_memc(memc *memc) {
+CALC* calc_from_memc(memc *memc) {
 	for (int i = 0; i < MAX_CALCS; i++) {
 		if (calcs[i].cpu.mem_c == memc) {
 			return &calcs[i];
@@ -919,7 +919,7 @@ LPCALC calc_from_memc(memc *memc) {
 }
 
 #ifdef WINVER
-LPCALC calc_from_hwnd(HWND hwnd) {
+CALC* calc_from_hwnd(HWND hwnd) {
 	if (hwnd == nullptr)
 		return nullptr;
 

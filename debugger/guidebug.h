@@ -25,7 +25,7 @@
 class WabbitemuDebugger: public wxFrame, public DebuggerWindowClass
 {
 public:
-	WabbitemuDebugger(WabbitemuFrame *windowMain, LPCALC lpCalc);
+	WabbitemuDebugger(WabbitemuFrame *windowMain, CALC* lpCalc);
 	void DebugUpdateWindow();
 	DECLARE_EVENT_TABLE()
 protected:
@@ -54,7 +54,7 @@ protected:
 	wxCollapsiblePane* displayPane;
 	
 private:
-	LPCALC lpCalc;
+	CALC* lpCalc;
 	WabbitemuFrame *wabbitemuFrame;
 	
 	

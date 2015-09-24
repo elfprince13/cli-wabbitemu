@@ -448,7 +448,7 @@ void ReadTiFileHeader(FILE *infile, TIFILE_t *tifile) {
 	if (!strncasecmp(headerString, FLASH_HEADER, 8)) {
 		tifile->type = FLASH_TYPE;
 		tifile->flash = (TIFLASH_t*) malloc(sizeof(TIFLASH_t));
-		ZeroMemory(tifile->flash, sizeof(TIFLASH_t));
+		memset(tifile->flash, 0, sizeof(TIFLASH_t));
 		if (tifile->flash == nullptr) {
 			FreeTiFile(tifile);
 			return;
@@ -642,7 +642,7 @@ TIFILE_t* newimportvar(const char * filePath, bool only_check_header) {
 	TIFILE_t *tifile;
 	
 	char extension[5] = ("");
-	const char *pext = _tcsrchr(filePath, '.');
+	const char *pext = strrchr(filePath, '.');
 	if (pext != nullptr)
 	{
 		strcpy(extension, pext);

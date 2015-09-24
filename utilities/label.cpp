@@ -6,7 +6,7 @@
 #include "bcalls.hpp"
 #include "flags.hpp"
 
-label_struct *lookup_label(LPCALC lpCalc, char *label_name) {
+label_struct *lookup_label(CALC* lpCalc, char *label_name) {
 	int i;
 	for (i = 0; lpCalc->labels[i].name != nullptr; i++) {
 		if (strcasecmp(lpCalc->labels[i].name, label_name) == 0)
@@ -16,7 +16,7 @@ label_struct *lookup_label(LPCALC lpCalc, char *label_name) {
 }	
 	
 
-void VoidLabels(LPCALC lpCalc) {
+void VoidLabels(CALC* lpCalc) {
 	int i;
 	
 	for (i = 0; lpCalc->labels[i].name != nullptr; i++) {
@@ -25,7 +25,7 @@ void VoidLabels(LPCALC lpCalc) {
 	}
 }
 
-char* FindAddressLabel(LPCALC lpCalc, waddr_t waddr) {
+char* FindAddressLabel(CALC* lpCalc, waddr_t waddr) {
 	
 	for (int i = 0; lpCalc->labels[i].name != nullptr; i++) {
 		label_struct *label = &lpCalc->labels[i];
@@ -69,7 +69,7 @@ bool label_search_tios(char *label, int equate) {
 }
 	
 
-int labels_app_load(LPCALC lpCalc, const char * lpszFileName) {
+int labels_app_load(CALC* lpCalc, const char * lpszFileName) {
 	FILE *labelFile = nullptr;
 	int i, length;
 #ifdef _UNICODE

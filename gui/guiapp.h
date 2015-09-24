@@ -28,8 +28,8 @@ private:
 	virtual int OnExit();
 	void OnTimer(wxTimerEvent& event);
 	void getTimer(int slot);
-	void LoadSettings(LPCALC lpCalc);
-	void SaveSettings(LPCALC lpCalc);
+	void LoadSettings(CALC* lpCalc);
+	void SaveSettings(CALC* lpCalc);
 	wxConfigBase *settingsConfig;
 	wxTimer *timer;
 	unsigned GetTickCount();
@@ -41,4 +41,4 @@ public:
 	static bool DoRomWizard();
 };
 
-void LoadToLPCALC(uint32_t * lParam, LPTSTR filePath, SEND_FLAG sendLoc);
+void LoadToCALC*(uint32_t * lParam, LPTSTR filePath, SEND_FLAG sendLoc);

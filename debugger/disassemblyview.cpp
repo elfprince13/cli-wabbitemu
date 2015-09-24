@@ -18,7 +18,7 @@ int DisassemblyView::FindLastItem() {
 	return i;
 }
 
-DisassemblyView::DisassemblyView(wxWindow *parent, LPCALC lpCalc, ViewType type):
+DisassemblyView::DisassemblyView(wxWindow *parent, CALC* lpCalc, ViewType type):
 					wxListCtrl(parent,wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_VIRTUAL){
 	this->lpCalc = lpCalc;
 	this->viewType = type;
@@ -131,7 +131,7 @@ wxString DisassemblyView::OnGetItemText(long item, long column) const{
 	return wxString(s);
 }
 
-void DisassemblyView::sprint_addr(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const {
+void DisassemblyView::sprint_addr(CALC* lpCalc, const Z80_info_t *zinf, char *s) const {
 	int page = zinf->waddr.page;
 	if (zinf->waddr.is_ram) {
 		switch (lpCalc->cpu.pio.model) {
@@ -149,7 +149,7 @@ void DisassemblyView::sprint_addr(LPCALC lpCalc, const Z80_info_t *zinf, char *s
 	_tprintf(s, ("%02X %04X"), page, zinf->waddr.addr);
 }
 
-void DisassemblyView::sprint_data(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const {
+void DisassemblyView::sprint_data(CALC* lpCalc, const Z80_info_t *zinf, char *s) const {
 	int j;
 
 	if (zinf->size == 0) {
@@ -168,18 +168,18 @@ void DisassemblyView::sprint_data(LPCALC lpCalc, const Z80_info_t *zinf, char *s
 	}
 }
 
-void DisassemblyView::sprint_command(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const {
+void DisassemblyView::sprint_command(CALC* lpCalc, const Z80_info_t *zinf, char *s) const {
 	strcpy(s, zinf->expanded);
 }
 
-void DisassemblyView::sprint_size(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const {
+void DisassemblyView::sprint_size(CALC* lpCalc, const Z80_info_t *zinf, char *s) const {
 	if (zinf->size == 0) {
 		return;
 	}
 	_tprintf(s, ("%d"), zinf->size);
 }
 
-void DisassemblyView::sprint_clocks(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const {
+void DisassemblyView::sprint_clocks(CALC* lpCalc, const Z80_info_t *zinf, char *s) const {
 	if (da_opcode[zinf->index].clocks != -1) {
 		if (da_opcode[zinf->index].clocks_cond) {
 			_tprintf(s, ("%d/%d"), da_opcode[zinf->index].clocks, da_opcode[zinf->index].clocks_cond);

@@ -17,7 +17,7 @@ BEGIN_EVENT_TABLE(CPUPane, wxCollapsiblePane)
 	EVT_TEXT_ENTER(ID_Text_Bus, CPUPane::OnBusTextEnter)
 END_EVENT_TABLE()
 
-CPUPane::CPUPane(wxWindow *parent, DebuggerWindowClass *debugWindow, LPCALC lpCalc) :
+CPUPane::CPUPane(wxWindow *parent, DebuggerWindowClass *debugWindow, CALC* lpCalc) :
 wxCollapsiblePane(parent, wxID_ANY, wxT("CPU Status"), wxDefaultPosition, wxDefaultSize, wxCP_NO_TLW_RESIZE | wxCP_DEFAULT_STYLE)
 {
 	this->lpCalc = lpCalc;

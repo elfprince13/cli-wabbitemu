@@ -5,8 +5,8 @@
 #include "../interface/calc.hpp"
 #include "../debugger/dbcommon.h"
 
-void MyDrawText(LPCALC, HDC, RECT *, Z80_info_t *, ViewType, const char *, ...);
-char* mysprintf(LPCALC, Z80_info_t *, ViewType, const char *, ...);
+void MyDrawText(CALC*, HDC, RECT *, Z80_info_t *, ViewType, const char *, ...);
+char* mysprintf(CALC*, Z80_info_t *, ViewType, const char *, ...);
 
 #define DBCOLOR_BASE (RGB(4, 72, 117))
 //#define DBCOLOR_HILIGHT (RGB(112, 169, 168))

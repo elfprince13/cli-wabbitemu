@@ -71,7 +71,7 @@ void RomWizard::OnPageChanged(wxWizardEvent &event) {
 	}
 }
 
-void RomWizard::ModelInit(LPCALC lpCalc, int model)
+void RomWizard::ModelInit(CALC* lpCalc, int model)
 {
 	switch(model) {
 		case TI_73:
@@ -167,7 +167,7 @@ bool RomWizard::DownloadOS(wxString &osFilePath, int model, bool version)
 void RomWizard::OnFinish(wxWizardEvent &event) {
 	if (startPage->m_browseRadio->GetValue()) {
 		wxString path = startPage->m_filePicker1->GetPath();
-		LPCALC lpCalc = calc_slot_new();
+		CALC* lpCalc = calc_slot_new();
 		bool success = rom_load(lpCalc, path.c_str());
 		if (!success) {
 			//should never get here
@@ -191,7 +191,7 @@ void RomWizard::OnFinish(wxWizardEvent &event) {
 		} else {
 			osPath = osPage->m_filePicker2->GetPath();
 		}
-		LPCALC lpCalc = calc_slot_new();
+		CALC* lpCalc = calc_slot_new();
 		//ok yes i know this is retarded...but this way we can use Load_8xu
 		//outside this function...
 		wxString hexFile;

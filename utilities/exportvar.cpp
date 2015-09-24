@@ -173,7 +173,7 @@ void AddrOffset(int *page, unsigned int *address, int offset) {
 	
 
 //Page 0 is interpreted as ram.
-int VarRead(LPCALC lpCalc, int page, unsigned int address) {
+int VarRead(CALC* lpCalc, int page, unsigned int address) {
 	unsigned char mem;
 	if (address > 0xFFFF) return -1;
 	if (page) {
@@ -193,7 +193,7 @@ int VarRead(LPCALC lpCalc, int page, unsigned int address) {
 }
 
 
-MFILE *ExportApp(LPCALC lpCalc, char *fn, apphdr_t *app) {
+MFILE *ExportApp(CALC* lpCalc, char *fn, apphdr_t *app) {
 	MFILE *outfile;
 	unsigned int tempnum;
 	int i, data_size = PAGE_SIZE * app->page_count;
@@ -307,7 +307,7 @@ MFILE * ExportOS(char *lpszFile, unsigned char *buffer, int size) {
 	return file;
 }
 
-MFILE * ExportRom(char *lpszFile, LPCALC lpCalc) {
+MFILE * ExportRom(char *lpszFile, CALC* lpCalc) {
 	MFILE *file = mopen(lpszFile, ("wb"));
 	char* rom = (char *) lpCalc->mem_c.flash;
 	int size = lpCalc->mem_c.flash_size;
@@ -355,7 +355,7 @@ void intelhex (MFILE* outfile, const unsigned char* buffer, int size, int page, 
 }
 
 //Progs, List AppVar and Group
-MFILE *ExportVar(LPCALC lpCalc, char* fn, symbol83P_t* sym) {
+MFILE *ExportVar(CALC* lpCalc, char* fn, symbol83P_t* sym) {
 	MFILE *outfile;
 	unsigned char mem[0x10020];
 	int i, b, size;

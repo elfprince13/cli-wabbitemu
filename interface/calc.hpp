@@ -77,39 +77,39 @@ typedef struct DEBUG_STATE {
 #define MAX_CALCS	8
 #define MAX_SPEED 100*50
 
-typedef struct tagCALC CALC, *LPCALC;
+typedef struct tagCALC CALC;
 
-void calc_turn_on(LPCALC);
-LPCALC calc_slot_new(void);
+void calc_turn_on(CALC*);
+CALC* calc_slot_new(void);
 uint32_t calc_count(void);
-int calc_reset(LPCALC);
+int calc_reset(CALC*);
 int CPU_reset(CPU_t *);
-int calc_run_frame(LPCALC);
-int calc_run_seconds(LPCALC, double);
-int calc_run_timed(LPCALC, time_t);
+int calc_run_frame(CALC*);
+int calc_run_seconds(CALC*, double);
+int calc_run_timed(CALC*, time_t);
 int calc_run_all(void);
 bool calc_start_screenshot(calc_t *calc, const char *filename);
 void calc_stop_screenshot(calc_t *calc);
 
 #ifdef WITH_BACKUPS
-void do_backup(LPCALC);
-void restore_backup(int index, LPCALC);
+void do_backup(CALC*);
+void restore_backup(int index, CALC*);
 void init_backups();
-void free_backups(LPCALC);
+void free_backups(CALC*);
 void free_backup(debugger_backup *);
 #endif
 
-bool rom_load(LPCALC lpCalc, const char * FileName);
-void calc_slot_free(LPCALC);
+bool rom_load(CALC* lpCalc, const char * FileName);
+void calc_slot_free(CALC*);
 
 void calc_unpause_linked();
 void calc_pause_linked();
 
-int calc_init_83p(LPCALC);
-int calc_init_84p(LPCALC);
-int calc_init_83pse(LPCALC);
-LPCALC calc_from_cpu(CPU_t *);
-LPCALC calc_from_memc(memc *);
+int calc_init_83p(CALC*);
+int calc_init_84p(CALC*);
+int calc_init_83pse(CALC*);
+CALC* calc_from_cpu(CPU_t *);
+CALC* calc_from_memc(memc *);
 void calc_erase_certificate(unsigned char *, int);
 void port_debug_callback(void *, void *);
 void mem_debug_callback(void *);
@@ -121,7 +121,7 @@ void mem_debug_callback(void *);
 #endif
 
 GLOBAL calc_t calcs[MAX_CALCS];
-//GLOBAL LPCALC lpDebuggerCalc;
+//GLOBAL CALC* lpDebuggerCalc;
 
 #ifdef WITH_BACKUPS
 #define MAX_BACKUPS 10

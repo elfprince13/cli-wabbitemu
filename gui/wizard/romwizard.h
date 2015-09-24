@@ -14,7 +14,7 @@ private:
 	WizardOSPage *osPage;
 	void OnFinish(wxWizardEvent &);
 	void OnPageChanged(wxWizardEvent &);
-	void ModelInit(LPCALC lpCalc, int model);
+	void ModelInit(CALC* lpCalc, int model);
 	bool ExtractBootFree(wxString &bootfreePath, int model);
 	bool DownloadOS(wxString &osFilePath, int model, bool version);
 protected:

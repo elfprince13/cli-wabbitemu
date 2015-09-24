@@ -33,7 +33,7 @@ BEGIN_EVENT_TABLE(WabbitemuDebugger, wxFrame)
 	EVT_COLLAPSIBLEPANE_CHANGED(wxID_ANY, WabbitemuDebugger::OnCollapsiblePaneChanged)
 END_EVENT_TABLE()
 
-WabbitemuDebugger::WabbitemuDebugger(WabbitemuFrame *frame, LPCALC lpCalc) :
+WabbitemuDebugger::WabbitemuDebugger(WabbitemuFrame *frame, CALC* lpCalc) :
 	wxFrame(frame, wxDEBUGGERID, wxT("Debugger"), wxDefaultPosition, wxSize(800, 600))
 {
 	this->wabbitemuFrame = frame;
@@ -147,7 +147,7 @@ WabbitemuDebugger::WabbitemuDebugger(WabbitemuFrame *frame, LPCALC lpCalc) :
 }
 
 
-void CPU_stepout(LPCALC lpCalc) {
+void CPU_stepout(CALC* lpCalc) {
 	CPU_t *cpu = &lpCalc->cpu;
 	double time = tc_tstates(cpu->timer_c);
 	uint16_t old_sp = cpu->sp;
@@ -176,7 +176,7 @@ void CPU_stepout(LPCALC lpCalc) {
 /*
  * Repeatedly step until you get to the next command
  */
-void CPU_stepover(LPCALC lpCalc) {
+void CPU_stepover(CALC* lpCalc) {
 	const int usable_commands[] = { DA_BJUMP, DA_BJUMP_N, DA_BCALL_N, DA_BCALL,
 									DA_BLI, DA_CALL_X, DA_CALL_CC_X, DA_HALT, DA_RST_X};
 	int i;

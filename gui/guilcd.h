@@ -9,12 +9,12 @@
 #include "lcd.h"
 #include <stdlib.h>
 
-void SaveStateDialog(LPCALC lpCalc);
+void SaveStateDialog(CALC* lpCalc);
 #define MAX_SHADES 255
 class WabbitemuLCD: public wxWindow
 {
 public:
-    WabbitemuLCD(wxFrame *mainFrame, LPCALC lpCalc);
+    WabbitemuLCD(wxFrame *mainFrame, CALC* lpCalc);
 
 	void PaintNow();
 protected:
@@ -30,7 +30,7 @@ private:
 	void FinalizeButtons();
 
 	bool hasDrawnLCD;
-	LPCALC lpCalc;
+	CALC* lpCalc;
 	wxFrame *mainFrame;
 };
 

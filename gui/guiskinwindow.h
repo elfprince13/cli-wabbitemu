@@ -7,7 +7,7 @@
 class SkinWindow : public wxWindow
 {
 private:
-	LPCALC lpCalc;
+	CALC* lpCalc;
 	void OnPaint(wxPaintEvent &event);
 	void OnLeftButtonDown(wxMouseEvent& event);
 	void OnLeftButtonUp(wxMouseEvent& event);
@@ -17,7 +17,7 @@ private:
 protected:
 	DECLARE_EVENT_TABLE()
 public:
-	SkinWindow(wxFrame *parent, LPCALC lpCalc);
+	SkinWindow(wxFrame *parent, CALC* lpCalc);
 };
 
 #endif

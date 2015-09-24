@@ -9,7 +9,7 @@
 
 class FlagsPane : public wxCollapsiblePane, public DebuggerWindowClass {
 private:
-	LPCALC lpCalc;
+	CALC* lpCalc;
 	wxPanel* m_flagsPane;
 	wxCheckBox* m_zCheck;
 	wxCheckBox* m_cCheck;
@@ -23,7 +23,7 @@ private:
 protected:
 	DECLARE_EVENT_TABLE()
 public:
-	FlagsPane(wxWindow *parent, DebuggerWindowClass *debugWindow, LPCALC lpCalc);
+	FlagsPane(wxWindow *parent, DebuggerWindowClass *debugWindow, CALC* lpCalc);
 	void DebugUpdateWindow();
 };
 

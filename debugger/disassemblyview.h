@@ -7,7 +7,7 @@
 
 class DisassemblyView: public wxListCtrl, DebuggerWindowClass {
 public:
-	DisassemblyView(wxWindow *parent, LPCALC lpCalc, ViewType type);
+	DisassemblyView(wxWindow *parent, CALC* lpCalc, ViewType type);
 	wxString OnGetItemText(long item, long column) const;
 	wxListItemAttr * OnGetItemAttr(long item) const;
 	void GotoAddress(waddr_t waddr);
@@ -17,12 +17,12 @@ public:
 	
 	void DebugUpdateWindow();
 private:
-	LPCALC lpCalc;
-	void sprint_data(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
-	void sprint_addr(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
-	void sprint_command(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
-	void sprint_size(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
-	void sprint_clocks(LPCALC lpCalc, const Z80_info_t *zinf, char *s) const;
+	CALC* lpCalc;
+	void sprint_data(CALC* lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_addr(CALC* lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_command(CALC* lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_size(CALC* lpCalc, const Z80_info_t *zinf, char *s) const;
+	void sprint_clocks(CALC* lpCalc, const Z80_info_t *zinf, char *s) const;
 	int FindLastItem();
 	Z80_info_t *zinf;
 };

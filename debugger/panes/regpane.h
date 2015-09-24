@@ -21,14 +21,14 @@ private:
 	wxTextCtrl* m_iyText;
 	wxTextCtrl* m_pcText;
 	wxTextCtrl* m_spText;
-	LPCALC lpCalc;
+	CALC* lpCalc;
 	DebuggerWindowClass *debugWindow;
 	
 	void OnTextEntered(wxCommandEvent &event);
 protected:
 	DECLARE_EVENT_TABLE()
 public:
-	RegPane(wxWindow *parent, DebuggerWindowClass *debugWindow, LPCALC lpCalc);
+	RegPane(wxWindow *parent, DebuggerWindowClass *debugWindow, CALC* lpCalc);
 	void DebugUpdateWindow();
 };
 

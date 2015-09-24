@@ -9,7 +9,7 @@
 
 class CPUPane : public wxCollapsiblePane, public DebuggerWindowClass {
 private:
-	LPCALC lpCalc;
+	CALC* lpCalc;
 	wxCheckBox* m_haltCheck;
 	wxStaticText* m_staticText23;
 	wxTextCtrl* m_freqText;
@@ -23,7 +23,7 @@ private:
 protected:
 	DECLARE_EVENT_TABLE()
 public:
-	CPUPane(wxWindow *parent, DebuggerWindowClass *debugWindow, LPCALC lpCalc);
+	CPUPane(wxWindow *parent, DebuggerWindowClass *debugWindow, CALC* lpCalc);
 	void DebugUpdateWindow();
 };
 

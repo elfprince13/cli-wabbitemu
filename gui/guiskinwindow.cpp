@@ -9,7 +9,7 @@ BEGIN_EVENT_TABLE(SkinWindow, wxWindow)
 	EVT_KEY_UP(SkinWindow::OnKeyUp)
 END_EVENT_TABLE()
 
-SkinWindow::SkinWindow(wxFrame *parent, LPCALC lpCalc) : wxWindow(parent, wxID_ANY)
+SkinWindow::SkinWindow(wxFrame *parent, CALC* lpCalc) : wxWindow(parent, wxID_ANY)
 {
 	this->lpCalc = lpCalc;
 	this->SetDropTarget(new DnDFile(this, lpCalc));

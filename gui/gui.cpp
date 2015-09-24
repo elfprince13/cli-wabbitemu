@@ -123,7 +123,7 @@ inline wxBitmap wxGetBitmapFromMemory(const unsigned char *data, int length) {
    return wxBitmap(wxImage(is, wxBITMAP_TYPE_PNG, -1), -1);
 }
 
-void gui_debug(LPCALC lpCalc) {
+void gui_debug(CALC* lpCalc) {
 	wxWindow *oldDebugger = wxWindow::FindWindowById(wxDEBUGGERID);
 	if (oldDebugger) {
 		oldDebugger->Show();
@@ -151,7 +151,7 @@ int WabbitemuFrame::gui_draw() {
 }
 
 extern WabbitemuFrame *frames[MAX_CALCS];
-WabbitemuFrame * gui_frame(LPCALC lpCalc) {
+WabbitemuFrame * gui_frame(CALC* lpCalc) {
 	if (!lpCalc->scale) {
     	lpCalc->scale = 2; //Set original scale
 	}
@@ -298,7 +298,7 @@ void WabbitemuFrame::gui_frame_update() {
 	this->SendSizeEvent();
 }
 
-WabbitemuFrame::WabbitemuFrame(LPCALC lpCalc) : wxFrame(nullptr, wxID_ANY, wxT("Wabbitemu"))
+WabbitemuFrame::WabbitemuFrame(CALC* lpCalc) : wxFrame(nullptr, wxID_ANY, wxT("Wabbitemu"))
 {
 	this->lpCalc = lpCalc;
 	this->skinWindow = new SkinWindow(this, lpCalc);

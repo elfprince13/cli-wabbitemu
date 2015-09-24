@@ -32,7 +32,7 @@ BEGIN_EVENT_TABLE(RegPane, wxCollapsiblePane)
 	EVT_TEXT_ENTER(ID_Text_PC, RegPane::OnTextEntered)
 END_EVENT_TABLE()
 
-RegPane::RegPane(wxWindow *parent, DebuggerWindowClass *debugWindow, LPCALC lpCalc) :
+RegPane::RegPane(wxWindow *parent, DebuggerWindowClass *debugWindow, CALC* lpCalc) :
 wxCollapsiblePane(parent, wxID_ANY, wxT("Registers"), wxDefaultPosition, wxDefaultSize, wxCP_NO_TLW_RESIZE | wxCP_DEFAULT_STYLE)
 {
 	this->lpCalc = lpCalc;

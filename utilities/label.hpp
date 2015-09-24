@@ -17,14 +17,14 @@ typedef struct {
 
 #ifdef _HAS_CALC_H
 #define _LABEL_H_PROTOTYPES
-char* FindAddressLabel(LPCALC lpCalc, waddr_t waddr);
+char* FindAddressLabel(CALC* lpCalc, waddr_t waddr);
 //void ImportBcalls(char* fn);
 char* FindBcall(int address);
 void FindFlags(int flag, int bit, char **flagstring, char **bitstring);
 
-void VoidLabels(LPCALC lpCalc);
-label_struct *lookup_label(LPCALC lpCalc, char *label);
-int labels_app_load(LPCALC lpCalc, const char * lpszFileName);
+void VoidLabels(CALC* lpCalc);
+label_struct *lookup_label(CALC* lpCalc, char *label);
+int labels_app_load(CALC* lpCalc, const char * lpszFileName);
 #endif
 
 #endif

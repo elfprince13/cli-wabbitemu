@@ -13,7 +13,7 @@ static void CALLBACK FillSoundBuffer(HWAVEOUT hWaveOut,
 									 uint32_t dwParam2 ) {
 
 	WAVEHDR* waveheader = (WAVEHDR*) dwParam1;
-	//LPCALC lpCalc = (LPCALC) dwInstance;
+	//CALC* lpCalc = (CALC*) dwInstance;
 	AUDIO_t *audio = (AUDIO_t *) dwInstance;
 	int i;
 

@@ -8,7 +8,7 @@
 class WizardCalcTypePage : public wxWizardPage
 {
 private:
-	LPCALC lpCalc;
+	CALC* lpCalc;
 protected:
 	wxStaticText* m_staticText2;
 	wxRadioButton* m_calc73;

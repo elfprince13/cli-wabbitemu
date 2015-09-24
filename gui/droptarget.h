@@ -6,11 +6,11 @@
 class DnDFile : public wxFileDropTarget
 {
 public:
-    DnDFile(wxWindow *pOwner, LPCALC lpCalc) { m_pOwner = pOwner; this->lpCalc = lpCalc; }
+    DnDFile(wxWindow *pOwner, CALC* lpCalc) { m_pOwner = pOwner; this->lpCalc = lpCalc; }
 
     virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames);
 
 private:
-	LPCALC lpCalc;
+	CALC* lpCalc;
     wxWindow *m_pOwner;
 };
