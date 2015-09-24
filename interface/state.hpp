@@ -1,8 +1,8 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include "core.h"
-#include "var.h"		// TIFILE
+#include "core.hpp"
+#include "../utilities/var.hpp"		// TIFILE
 
 typedef struct apphdr {
 	TCHAR name[12];

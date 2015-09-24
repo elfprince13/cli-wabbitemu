@@ -1,6 +1,6 @@
 
-#include "state.h"
-#include "link.h"
+#include "state.hpp"
+#include "../hardware/link.hpp"
 
 #ifndef WINVER
 #define min(a, b) ((a) > (b) ? (b) : (a))

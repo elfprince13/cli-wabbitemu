@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #define CALC_C
 #include "calc.h"
 #include "core.h"

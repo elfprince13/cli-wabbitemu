@@ -9,14 +9,6 @@
 /* Begin PBXBuildFile section */
 		E90E24FA1BB395630090F49E /* disassemble.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24B61BB395630090F49E /* disassemble.c */; settings = {ASSET_TAGS = (); }; };
 		E90E24FB1BB395630090F49E /* disassemblyview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24B81BB395630090F49E /* disassemblyview.cpp */; settings = {ASSET_TAGS = (); }; };
-		E90E25001BB395630090F49E /* 81hw.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24C41BB395630090F49E /* 81hw.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25011BB395630090F49E /* 83hw.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24C61BB395630090F49E /* 83hw.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25021BB395630090F49E /* 83phw.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24C81BB395630090F49E /* 83phw.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25031BB395630090F49E /* 83psehw.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24CA1BB395630090F49E /* 83psehw.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25041BB395630090F49E /* 86hw.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24CC1BB395630090F49E /* 86hw.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25051BB395630090F49E /* keys.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24CE1BB395630090F49E /* keys.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25061BB395630090F49E /* lcd.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D01BB395630090F49E /* lcd.c */; settings = {ASSET_TAGS = (); }; };
-		E90E25071BB395630090F49E /* link.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D21BB395630090F49E /* link.c */; settings = {ASSET_TAGS = (); }; };
 		E90E250B1BB395630090F49E /* fileutilities.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24DF1BB395630090F49E /* fileutilities.c */; settings = {ASSET_TAGS = (); }; };
 		E90E250C1BB395630090F49E /* gif.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E21BB395630090F49E /* gif.c */; settings = {ASSET_TAGS = (); }; };
 		E90E250D1BB395630090F49E /* gifhandle.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E41BB395630090F49E /* gifhandle.c */; settings = {ASSET_TAGS = (); }; };
@@ -36,6 +28,14 @@
 		E9947BF31BB39E2700DEC14A /* indexcb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24B01BB395630090F49E /* indexcb.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947BF81BB39E6100DEC14A /* libwabbitcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947BEB1BB39E1B00DEC14A /* libwabbitcore.a */; };
 		E9947BF91BB39E6900DEC14A /* libwabbitinterface.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947BE11BB39DE200DEC14A /* libwabbitinterface.a */; };
+		E9947C041BB45BF800DEC14A /* 81hw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24C41BB395630090F49E /* 81hw.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C051BB45BF800DEC14A /* 83hw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24C61BB395630090F49E /* 83hw.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C061BB45BF800DEC14A /* 83phw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24C81BB395630090F49E /* 83phw.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C071BB45BF800DEC14A /* 83psehw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24CA1BB395630090F49E /* 83psehw.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C081BB45BF800DEC14A /* 86hw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24CC1BB395630090F49E /* 86hw.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C091BB45BF800DEC14A /* keys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24CE1BB395630090F49E /* keys.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C0A1BB45BF800DEC14A /* lcd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D01BB395630090F49E /* lcd.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C0B1BB45BF800DEC14A /* link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D21BB395630090F49E /* link.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,23 +102,23 @@
 		E90E24C01BB395630090F49E /* flagspane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flagspane.h; sourceTree = "<group>"; };
 		E90E24C11BB395630090F49E /* regpane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = regpane.cpp; sourceTree = "<group>"; };
 		E90E24C21BB395630090F49E /* regpane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regpane.h; sourceTree = "<group>"; };
-		E90E24C41BB395630090F49E /* 81hw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 81hw.c; sourceTree = "<group>"; };
-		E90E24C51BB395630090F49E /* 81hw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 81hw.h; sourceTree = "<group>"; };
-		E90E24C61BB395630090F49E /* 83hw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 83hw.c; sourceTree = "<group>"; };
-		E90E24C71BB395630090F49E /* 83hw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 83hw.h; sourceTree = "<group>"; };
-		E90E24C81BB395630090F49E /* 83phw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = 83phw.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		E90E24C91BB395630090F49E /* 83phw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 83phw.h; sourceTree = "<group>"; };
-		E90E24CA1BB395630090F49E /* 83psehw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = 83psehw.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		E90E24CB1BB395630090F49E /* 83psehw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = 83psehw.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		E90E24CC1BB395630090F49E /* 86hw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 86hw.c; sourceTree = "<group>"; };
-		E90E24CD1BB395630090F49E /* 86hw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 86hw.h; sourceTree = "<group>"; };
-		E90E24CE1BB395630090F49E /* keys.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = keys.c; sourceTree = "<group>"; };
-		E90E24CF1BB395630090F49E /* keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
-		E90E24D01BB395630090F49E /* lcd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lcd.c; sourceTree = "<group>"; };
-		E90E24D11BB395630090F49E /* lcd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcd.h; sourceTree = "<group>"; };
-		E90E24D21BB395630090F49E /* link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = link.c; sourceTree = "<group>"; };
-		E90E24D31BB395630090F49E /* link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = link.h; sourceTree = "<group>"; };
-		E90E24D41BB395630090F49E /* ti_stdint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ti_stdint.h; sourceTree = "<group>"; };
+		E90E24C41BB395630090F49E /* 81hw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = 81hw.cpp; sourceTree = "<group>"; };
+		E90E24C51BB395630090F49E /* 81hw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = 81hw.hpp; sourceTree = "<group>"; };
+		E90E24C61BB395630090F49E /* 83hw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = 83hw.cpp; sourceTree = "<group>"; };
+		E90E24C71BB395630090F49E /* 83hw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = 83hw.hpp; sourceTree = "<group>"; };
+		E90E24C81BB395630090F49E /* 83phw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = 83phw.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		E90E24C91BB395630090F49E /* 83phw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = 83phw.hpp; sourceTree = "<group>"; };
+		E90E24CA1BB395630090F49E /* 83psehw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = 83psehw.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		E90E24CB1BB395630090F49E /* 83psehw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = 83psehw.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		E90E24CC1BB395630090F49E /* 86hw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = 86hw.cpp; sourceTree = "<group>"; };
+		E90E24CD1BB395630090F49E /* 86hw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = 86hw.hpp; sourceTree = "<group>"; };
+		E90E24CE1BB395630090F49E /* keys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keys.cpp; sourceTree = "<group>"; };
+		E90E24CF1BB395630090F49E /* keys.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = keys.hpp; sourceTree = "<group>"; };
+		E90E24D01BB395630090F49E /* lcd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lcd.cpp; sourceTree = "<group>"; };
+		E90E24D11BB395630090F49E /* lcd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lcd.hpp; sourceTree = "<group>"; };
+		E90E24D21BB395630090F49E /* link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = link.cpp; sourceTree = "<group>"; };
+		E90E24D31BB395630090F49E /* link.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = link.hpp; sourceTree = "<group>"; };
+		E90E24D41BB395630090F49E /* ti_stdint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ti_stdint.hpp; sourceTree = "<group>"; };
 		E90E24D61BB395630090F49E /* calc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = calc.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		E90E24D71BB395630090F49E /* calc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = calc.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E90E24D81BB395630090F49E /* state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = state.cpp; sourceTree = "<group>"; };
@@ -219,6 +219,7 @@
 		E9947BCF1BB395D800DEC14A /* wizardstart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wizardstart.h; sourceTree = "<group>"; };
 		E9947BE11BB39DE200DEC14A /* libwabbitinterface.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwabbitinterface.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9947BEB1BB39E1B00DEC14A /* libwabbitcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwabbitcore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9947C001BB45BC600DEC14A /* libwabbithardware.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwabbithardware.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +246,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9947BFD1BB45BC600DEC14A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -262,6 +270,7 @@
 				E90E249C1BB395100090F49E /* wabbitemu */,
 				E9947BE11BB39DE200DEC14A /* libwabbitinterface.a */,
 				E9947BEB1BB39E1B00DEC14A /* libwabbitcore.a */,
+				E9947C001BB45BC600DEC14A /* libwabbithardware.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -332,23 +341,23 @@
 		E90E24C31BB395630090F49E /* hardware */ = {
 			isa = PBXGroup;
 			children = (
-				E90E24C41BB395630090F49E /* 81hw.c */,
-				E90E24C51BB395630090F49E /* 81hw.h */,
-				E90E24C61BB395630090F49E /* 83hw.c */,
-				E90E24C71BB395630090F49E /* 83hw.h */,
-				E90E24C81BB395630090F49E /* 83phw.c */,
-				E90E24C91BB395630090F49E /* 83phw.h */,
-				E90E24CA1BB395630090F49E /* 83psehw.c */,
-				E90E24CB1BB395630090F49E /* 83psehw.h */,
-				E90E24CC1BB395630090F49E /* 86hw.c */,
-				E90E24CD1BB395630090F49E /* 86hw.h */,
-				E90E24CE1BB395630090F49E /* keys.c */,
-				E90E24CF1BB395630090F49E /* keys.h */,
-				E90E24D01BB395630090F49E /* lcd.c */,
-				E90E24D11BB395630090F49E /* lcd.h */,
-				E90E24D21BB395630090F49E /* link.c */,
-				E90E24D31BB395630090F49E /* link.h */,
-				E90E24D41BB395630090F49E /* ti_stdint.h */,
+				E90E24C41BB395630090F49E /* 81hw.cpp */,
+				E90E24C51BB395630090F49E /* 81hw.hpp */,
+				E90E24C61BB395630090F49E /* 83hw.cpp */,
+				E90E24C71BB395630090F49E /* 83hw.hpp */,
+				E90E24C81BB395630090F49E /* 83phw.cpp */,
+				E90E24C91BB395630090F49E /* 83phw.hpp */,
+				E90E24CA1BB395630090F49E /* 83psehw.cpp */,
+				E90E24CB1BB395630090F49E /* 83psehw.hpp */,
+				E90E24CC1BB395630090F49E /* 86hw.cpp */,
+				E90E24CD1BB395630090F49E /* 86hw.hpp */,
+				E90E24CE1BB395630090F49E /* keys.cpp */,
+				E90E24CF1BB395630090F49E /* keys.hpp */,
+				E90E24D01BB395630090F49E /* lcd.cpp */,
+				E90E24D11BB395630090F49E /* lcd.hpp */,
+				E90E24D21BB395630090F49E /* link.cpp */,
+				E90E24D31BB395630090F49E /* link.hpp */,
+				E90E24D41BB395630090F49E /* ti_stdint.hpp */,
 			);
 			name = hardware;
 			path = ../../hardware;
@@ -517,6 +526,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9947BFE1BB45BC600DEC14A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -574,6 +590,23 @@
 			productReference = E9947BEB1BB39E1B00DEC14A /* libwabbitcore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		E9947BFF1BB45BC600DEC14A /* wabbithardware */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E9947C011BB45BC600DEC14A /* Build configuration list for PBXNativeTarget "wabbithardware" */;
+			buildPhases = (
+				E9947BFC1BB45BC600DEC14A /* Sources */,
+				E9947BFD1BB45BC600DEC14A /* Frameworks */,
+				E9947BFE1BB45BC600DEC14A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wabbithardware;
+			productName = wabbithardware;
+			productReference = E9947C001BB45BC600DEC14A /* libwabbithardware.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -590,6 +623,9 @@
 						CreatedOnToolsVersion = 7.0;
 					};
 					E9947BEA1BB39E1B00DEC14A = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					E9947BFF1BB45BC600DEC14A = {
 						CreatedOnToolsVersion = 7.0;
 					};
 				};
@@ -609,6 +645,7 @@
 				E90E249B1BB395100090F49E /* wabbitemu */,
 				E9947BE01BB39DE200DEC14A /* wabbitinterface */,
 				E9947BEA1BB39E1B00DEC14A /* wabbitcore */,
+				E9947BFF1BB45BC600DEC14A /* wabbithardware */,
 			);
 		};
 /* End PBXProject section */
@@ -621,23 +658,15 @@
 				E90E250F1BB395630090F49E /* print.c in Sources */,
 				E90E250E1BB395630090F49E /* label.c in Sources */,
 				E90E25111BB395630090F49E /* sendfile.c in Sources */,
-				E90E25021BB395630090F49E /* 83phw.c in Sources */,
-				E90E25011BB395630090F49E /* 83hw.c in Sources */,
-				E90E25071BB395630090F49E /* link.c in Sources */,
 				E90E24FA1BB395630090F49E /* disassemble.c in Sources */,
 				E90E25101BB395630090F49E /* savestate.c in Sources */,
-				E90E25041BB395630090F49E /* 86hw.c in Sources */,
 				E90E25141BB395630090F49E /* zlibcmp.c in Sources */,
 				E90E250D1BB395630090F49E /* gifhandle.c in Sources */,
-				E90E25051BB395630090F49E /* keys.c in Sources */,
 				E90E25121BB395630090F49E /* sound.c in Sources */,
 				E90E250C1BB395630090F49E /* gif.c in Sources */,
-				E90E25061BB395630090F49E /* lcd.c in Sources */,
 				E90E25131BB395630090F49E /* var.c in Sources */,
 				E90E250B1BB395630090F49E /* fileutilities.c in Sources */,
-				E90E25031BB395630090F49E /* 83psehw.c in Sources */,
 				E90E24FB1BB395630090F49E /* disassemblyview.cpp in Sources */,
-				E90E25001BB395630090F49E /* 81hw.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +688,21 @@
 				E9947BF01BB39E2700DEC14A /* control.cpp in Sources */,
 				E9947BF11BB39E2700DEC14A /* core.cpp in Sources */,
 				E9947BF31BB39E2700DEC14A /* indexcb.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9947BFC1BB45BC600DEC14A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9947C081BB45BF800DEC14A /* 86hw.cpp in Sources */,
+				E9947C091BB45BF800DEC14A /* keys.cpp in Sources */,
+				E9947C071BB45BF800DEC14A /* 83psehw.cpp in Sources */,
+				E9947C061BB45BF800DEC14A /* 83phw.cpp in Sources */,
+				E9947C0A1BB45BF800DEC14A /* lcd.cpp in Sources */,
+				E9947C0B1BB45BF800DEC14A /* link.cpp in Sources */,
+				E9947C041BB45BF800DEC14A /* 81hw.cpp in Sources */,
+				E9947C051BB45BF800DEC14A /* 83hw.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +850,22 @@
 			};
 			name = Release;
 		};
+		E9947C021BB45BC600DEC14A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E9947C031BB45BC600DEC14A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -844,6 +904,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E9947C011BB45BC600DEC14A /* Build configuration list for PBXNativeTarget "wabbithardware" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9947C021BB45BC600DEC14A /* Debug */,
+				E9947C031BB45BC600DEC14A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
