@@ -1044,35 +1044,19 @@ void WriteSave(const char *fn, SAVESTATE_t* save, int compress) {
 	int i;
 	FILE* ofile;
 	FILE* cfile;
-#ifdef _WINDOWS
 	char tmpfn[L_tmpnam];
 	char temp_save[PATH_MAX];
-#else
-	char tmpfn[L_tmpnam];
-	char temp_save[PATH_MAX];
-#endif
 	
 	if (!save) {
 		return;
 	}
 	if (compress == 0) {
-#ifdef WINVER
-		fopen(&ofile, fn, ("wb"));
-#else
 		ofile = fopen(fn, "wb");
-#endif
 	} else {
-#ifdef WINVER
-		tmpnam_s(tmpfn, sizeof(tmpfn));
-		GetAppDataString(temp_save, sizeof(temp_save));
-		StringCbCat(temp_save, sizeof(temp_save), tmpfn);
-		fopen(&ofile, temp_save, ("wb"));
-#else
 		tmpnam(tmpfn);
 		strcpy(temp_save, getenv("appdata"));
 		strcat(temp_save, tmpfn);
 		ofile = fopen(temp_save,"wb");
-#endif
 	}
 		
 	if (!ofile) {
@@ -1102,19 +1086,11 @@ void WriteSave(const char *fn, SAVESTATE_t* save, int compress) {
 	fclose(ofile);
 	
 	if (compress) {
-#ifdef WINVER
-		fopen(&cfile, fn, ("wb"));
-#else
 		cfile = fopen(fn, "wb");
-#endif
 		if (!cfile) {
 			return;
 		}
-#ifdef WINVER
-		fopen(&ofile, temp_save, ("rb"));
-#else
 		ofile = fopen(temp_save,"rb");
-#endif
 		if (!ofile) {
 			return;
 		}
@@ -1135,11 +1111,7 @@ void WriteSave(const char *fn, SAVESTATE_t* save, int compress) {
 		}
 		fclose(ofile);
 		fclose(cfile);
-#ifdef _WINDOWS
-		_tremove(temp_save);
-#else
 		remove(temp_save);
-#endif
 	}
 }
 
@@ -1148,13 +1120,8 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 	int compressed = false;
 	int chunk_offset,chunk_count;
 	char string[128];
-#ifdef _WINDOWS
 	char tmpfn[L_tmpnam];
 	char temp_save[PATH_MAX];
-#else
-	char tmpfn[L_tmpnam];
-	char temp_save[PATH_MAX];
-#endif
 	SAVESTATE_t *save;
 	CHUNK_t *chunk;
 	FILE *tmpfile;
@@ -1163,17 +1130,10 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 	string[8] = 0;
 	if (strncmp(DETECT_CMP_STR, string, 8) == 0) {
 		i = fgetc(ifile);
-#ifdef WINVER
-		_ttmpnam_s(tmpfn);
-		GetAppDataString(temp_save, sizeof(temp_save));
-		StringCbCat(temp_save, sizeof(temp_save), tmpfn);
-		fopen(&tmpfile, temp_save, ("wb"));
-#else
 		tmpnam(tmpfn);
 		strcpy(temp_save, getenv("appdata"));
 		strcat(temp_save, tmpfn);
 		tmpfile = fopen(temp_save,"wb");
-#endif
 		if (!tmpfile) {
 			return nullptr;
 		}
@@ -1183,32 +1143,22 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 			case ZLIB_CMP:
 				{
 					int error = inf(ifile,tmpfile);
+					fclose(tmpfile);
+					ifile = fopen(temp_save,"rb");	//this is not a leak, file gets closed
+													// outside of this routine.
+					if (!ifile) {
+						return nullptr;
+					}
+					compressed = true;
+					fread(string, 1, 8, ifile);
 					break;
 				}
 #endif
 			default:
 				fclose(tmpfile);
-#ifdef _WINDOWS
-				_tremove(tmpfn);
-#else
 				remove(tmpfn);
-#endif
 				return nullptr;
 		}
-		
-		fclose(tmpfile);
-#ifdef WINVER
-		fopen(&ifile, temp_save, ("rb"));	//this is not a leak, file gets closed
-											// outside of this routine.
-#else
-		ifile = fopen(temp_save,"rb");	//this is not a leak, file gets closed
-										// outside of this routine.
-#endif
-		if (!ifile) {
-			return nullptr;
-		}
-		compressed = true;
-		fread(string, 1, 8, ifile);
 	}
 		
 	if (strncmp(DETECT_STR, string, 8) != 0){
@@ -1261,11 +1211,7 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 	}
 	if (compressed == true) {
 		fclose(ifile);
-#ifdef _WINDOWS
-		_tremove(temp_save);
-#else
 		remove(temp_save);
-#endif
 	}
 /* check for read errors... */
 	return save;

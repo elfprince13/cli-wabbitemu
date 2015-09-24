@@ -4,7 +4,7 @@
 
 //Sends a file to the given calculator
 //from the given filename
-LINK_ERR SendFile(const CALC* lpCalc, const char * lpszFileName, SEND_FLAG Destination)
+LINK_ERR SendFile(/*const*/ CALC* lpCalc, const char * lpszFileName, SEND_FLAG Destination)
 {
 	TIFILE_t *var = newimportvar(lpszFileName, false);
 
