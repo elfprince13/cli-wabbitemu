@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #include "var.h"
 #include "link.h"
 #include "calc.h"
@@ -54,7 +52,7 @@ int link_connect_hub(int slot, CPU_t *cpu) {
 	return 0;
 }
 
-BOOL link_connected_hub(int slot) {
+bool link_connected_hub(int slot) {
 	return link_hub[slot] != NULL;
 }
 
@@ -87,7 +85,7 @@ static void link_wait(CPU_t *cpu, time_t tstates) {
 
 /* Send a byte through the virtual link
  * On error: Throws a Byte Exception */
-static void link_send(CPU_t *cpu, u_char byte) {
+static void link_send(CPU_t *cpu, uint8_t byte) {
 	link_t *link = cpu->pio.link;
 
 	for (u_int bit = 0; bit < 8; bit++, byte >>= 1) {
@@ -110,9 +108,9 @@ static void link_send(CPU_t *cpu, u_char byte) {
 
 /* Receive a byte through the virtual link
  * On error: Throws a Byte Exception */
-static u_char link_recv(CPU_t *cpu) {
+static uint8_t link_recv(CPU_t *cpu) {
 	link_t *link = cpu->pio.link;
-	u_char byte = 0;
+	uint8_t byte = 0;
 
 	for (u_int bit = 0; bit < 8; bit++) {
 		byte >>= 1;
@@ -147,14 +145,14 @@ static u_char link_recv(CPU_t *cpu) {
 static uint16_t link_chksum(const void *data, size_t length) {
 	uint16_t chksum = 0;
 	for (size_t i = 0; i < length; i++)
-		chksum += ((u_char *) data)[i];
+		chksum += ((uint8_t *) data)[i];
 
 	return chksum;
 }
 
 /* Returns a Machine ID for the calc attached to virtual link
  * On error: Returns -1 */
-static u_char link_target_ID(const CPU_t *cpu) {
+static uint8_t link_target_ID(const CPU_t *cpu) {
 	switch (cpu->pio.model) {
 	case TI_73:
 		return 0x07;
@@ -181,7 +179,7 @@ static u_char link_target_ID(const CPU_t *cpu) {
 static void link_send_bytes(CPU_t *cpu, void *data, size_t length) {
 	size_t i;
 	for (i = 0; i < length; i++)
-		link_send(cpu, ((u_char*) data)[i]);
+		link_send(cpu, ((uint8_t*) data)[i]);
 }
 
 /*
@@ -191,12 +189,12 @@ static void link_send_bytes(CPU_t *cpu, void *data, size_t length) {
 static void link_recv_bytes(CPU_t *cpu, void *data, size_t length) {
 	size_t i;
 	for (i = 0; i < length; i++)
-		((u_char*) data)[i] = link_recv(cpu);
+		((uint8_t*) data)[i] = link_recv(cpu);
 }
 
 /* Send a TI packet over the virtual link
  * On error: Throws a Packet Exception */
-static void link_send_pkt(CPU_t *cpu, u_char command_ID, void *data) {
+static void link_send_pkt(CPU_t *cpu, uint8_t command_ID, void *data) {
 	TI_PKTHDR hdr;
 	uint16_t data_len;
 
@@ -254,7 +252,7 @@ static void link_send_pkt(CPU_t *cpu, u_char command_ID, void *data) {
 	if (command_ID != CID_DATA) {
 		int i;
 		for (i = 0; i < data_len; i++) {
-			printf("%02x ", ((u_char *) data)[i]);
+			printf("%02x ", ((uint8_t *) data)[i]);
 		}
 	}
 	putchar('\n');
@@ -282,7 +280,7 @@ static void link_send_pkt(CPU_t *cpu, u_char command_ID, void *data) {
 
 /* Receive a TI packet over the virtual link (blocking)
  * On error: Throws a Packet Exception */
-static void link_recv_pkt(CPU_t *cpu, TI_PKTHDR *hdr, u_char *data) {
+static void link_recv_pkt(CPU_t *cpu, TI_PKTHDR *hdr, uint8_t *data) {
 	int err;
 	switch (err = setjmp(exc_byte)) {
 	case 0:
@@ -394,7 +392,7 @@ LINK_ERR link_send_backup(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 	case 0: {
 		TI_BACKUPHDR bkhdr;
 		TI_PKTHDR rpkt;
-		u_char data[64];
+		uint8_t data[64];
 
 		bkhdr.flags_size = backup->length1;
 		bkhdr.type_ID = backup->vartype;
@@ -536,7 +534,7 @@ LINK_ERR link_send_var(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 		switch (err = setjmp(exc_pkt)) {
 		case 0: {
 			TI_PKTHDR rpkt;
-			u_char data[64];
+			uint8_t data[64];
 
 			// Request to send
 			link_RTS(cpu, var, dest);
@@ -580,7 +578,7 @@ LINK_ERR link_send_var(CPU_t *cpu, TIFILE_t *tifile, SEND_FLAG dest) {
 	}
 	if (cpu->pio.model == TI_85) {
 		TI_PKTHDR rpkt;
-		u_char data[64];
+		uint8_t data[64];
 		link_send_pkt(cpu, CID_EOT, NULL);
 
 		// Receive the ACK
@@ -610,7 +608,7 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 	switch (err = setjmp(exc_pkt)) {
 	case 0: {
 		TI_PKTHDR rpkt;
-		u_char data[64];
+		uint8_t data[64];
 
 		// Send the version request
 		link_send_pkt(cpu, CID_VER, NULL);
@@ -693,8 +691,8 @@ LINK_ERR link_send_app(CPU_t *cpu, TIFILE_t *tifile) {
 	}
 }
 
-BOOL check_flashpage_empty(u_char (*dest)[PAGE_SIZE], u_int page, u_int num_pages) {
-	u_char *space = &dest[page][PAGE_SIZE - 1];
+bool check_flashpage_empty(uint8_t (*dest)[PAGE_SIZE], u_int page, u_int num_pages) {
+	uint8_t *space = &dest[page][PAGE_SIZE - 1];
 	u_int i;
 	// Make sure the subsequent pages are empty
 	for (i = 0; i < num_pages * PAGE_SIZE; i++, space--) {
@@ -712,7 +710,7 @@ BOOL check_flashpage_empty(u_char (*dest)[PAGE_SIZE], u_int page, u_int num_page
  */
 void fix_certificate(CPU_t *cpu, u_int page) {
 
-	u_char (*dest)[PAGE_SIZE] = (u_char (*)[PAGE_SIZE]) cpu->mem_c->flash;
+	uint8_t (*dest)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) cpu->mem_c->flash;
 	upages_t upages;
 	state_userpages(cpu, &upages);
 	//there is probably some logic here that I'm missing...
@@ -727,7 +725,7 @@ void fix_certificate(CPU_t *cpu, u_int page) {
 
 LINK_ERR forceload_os(CPU_t *cpu, TIFILE_t *tifile) {
 	u_int i, page;
-	u_char (*dest)[PAGE_SIZE] = (u_char (*)[PAGE_SIZE]) cpu->mem_c->flash;
+	uint8_t (*dest)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) cpu->mem_c->flash;
 	if (dest == NULL)
 		return LERR_MODEL;
 
@@ -772,7 +770,7 @@ LINK_ERR forceload_os(CPU_t *cpu, TIFILE_t *tifile) {
 	return LERR_SUCCESS;
 }
 
-int get_page_size(u_char (*dest)[PAGE_SIZE], int page) {
+int get_page_size(uint8_t (*dest)[PAGE_SIZE], int page) {
 	int i;
 	//apparently non user apps have a slightly different header
 	//therefore we have to actually find the identifier
@@ -786,7 +784,7 @@ int get_page_size(u_char (*dest)[PAGE_SIZE], int page) {
 /* Force load a TI-83+ series APP
  * On error: Returns an error code */
 static LINK_ERR forceload_app(CPU_t *cpu, TIFILE_t *tifile) {
-	u_char (*dest)[PAGE_SIZE] = (u_char (*)[PAGE_SIZE]) cpu->mem_c->flash;
+	uint8_t (*dest)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) cpu->mem_c->flash;
 	if (dest == NULL)
 		return LERR_MODEL;
 
@@ -869,7 +867,7 @@ static LINK_ERR forceload_app(CPU_t *cpu, TIFILE_t *tifile) {
 	//force reset the app list says BrandonW. seems to work, apps show up (sometimes)
 	mem_write(cpu->mem_c, 0x9C87, 0x00);
 
-	//u_char *space = &dest[page][PAGE_SIZE - 1];
+	//uint8_t *space = &dest[page][PAGE_SIZE - 1];
 	u_int i;
 	// Make sure the subsequent pages are empty
 	if (!check_flashpage_empty(dest, page, tifile->flash->pages))

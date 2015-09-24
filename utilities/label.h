@@ -4,7 +4,7 @@
 
 typedef struct {
     TCHAR *name;
-    BOOL IsRAM;
+    bool IsRAM;
     uint8_t page;
     uint16_t addr;
 } label_struct;

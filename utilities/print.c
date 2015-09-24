@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #include "print.h"
 #include "label.h"
 #include "core.h"
@@ -7,7 +5,7 @@
 
 #define press_text(sztext, zcolor) press_textA(sztext, zcolor, &r, hdc)
 
-static BOOL calc_size = FALSE;
+static bool calc_size = FALSE;
 static size_t mspf_size = 0;
 static int mspf_break = 9999;
 

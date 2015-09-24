@@ -67,7 +67,7 @@ static void LCD_advance_cursor(LCD_t *);
 static void LCD_reset(LCD_t *);
 static void LCD_enqueue(LCD_t *);
 static void LCD_free(LCD_t *);
-u_char *LCD_update_image(LCD_t *lcd);
+uint8_t *LCD_update_image(LCD_t *lcd);
 
 #define NORMAL_DELAY 60		//tstates
 //#define MICROSECONDS(xx) (((cpu->timer_c->freq * 10 / MHZ_6) * xx) / 10)
@@ -268,7 +268,7 @@ void LCD_data(CPU_t *cpu, device_t *dev) {
 
 	// Get a pointer to the byte referenced by the CRD cursor
 	u_int shift = 0;
-	u_char *cursor;
+	uint8_t *cursor;
 	if (lcd->word_len) {
 		int temp =  LCD_OFFSET(lcd->y, lcd->x, 0);
 		cursor = &lcd->display[temp];
@@ -426,7 +426,7 @@ void LCD_clear(LCD_t *lcd) {
 }
 
 
-u_char *LCD_update_image(LCD_t *lcd) {
+uint8_t *LCD_update_image(LCD_t *lcd) {
 	int level = abs((int) lcd->contrast - (int) lcd->base_level);
 	int base = (lcd->contrast - 54) * 24;
 	if (base < 0) {
@@ -457,7 +457,7 @@ u_char *LCD_update_image(LCD_t *lcd) {
 				p0 += u;
 			}
 			
-			u_char *scol = &lcd->screen[row][col * 8];
+			uint8_t *scol = &lcd->screen[row][col * 8];
 			scol[0] = p0 * level + base;
 			scol[1] = p1 * level + base;
 			scol[2] = p2 * level + base;
@@ -477,6 +477,6 @@ u_char *LCD_update_image(LCD_t *lcd) {
  * pushed to the queue.  If there are no images in the queue,
  * the generated image will be blank
  */
-u_char* LCD_image(LCD_t *lcd) {
+uint8_t* LCD_image(LCD_t *lcd) {
 	return LCD_update_image(lcd);
 }

@@ -55,8 +55,8 @@ typedef enum {
 /* Contains connections and current state
  * of a link port. */
 typedef struct link {
-	u_char host;					// what we wrote to the link port
-	u_char *client;					// what they wrote to the link port
+	uint8_t host;					// what we wrote to the link port
+	uint8_t *client;					// what they wrote to the link port
 	volatile size_t vlink_send;		// amount already sent over vlink
 	volatile size_t vlink_recv;		// amount already received over the link
 	size_t vlink_size;				// Size of the var currently on the link (if known)
@@ -65,7 +65,7 @@ typedef struct link {
 	#endif
 	BYTE vout;
 	LPBYTE vin;						// Virtual Link data
-	BOOL hasChanged;				// if were connected to a hub, has the hub value changed
+	bool hasChanged;				// if were connected to a hub, has the hub value changed
 	unsigned long long changedTime;	// when the data changed
 } link_t;
 
@@ -198,7 +198,7 @@ LINK_ERR link_send_backup(CPU_t *, TIFILE_t *, SEND_FLAG);
 LINK_ERR forceload_os(CPU_t *, TIFILE_t *);
 int link_connect(CPU_t *, CPU_t *);
 int link_connect_hub(int slot, CPU_t *cpu);
-BOOL link_connected_hub(int slot);
+bool link_connected_hub(int slot);
 int link_disconnect(CPU_t *);
 void writeboot(FILE* , memory_context_t *, int page);
 #endif

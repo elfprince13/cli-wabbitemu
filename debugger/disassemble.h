@@ -1,7 +1,5 @@
 #ifndef DISASSEMBLE_H
 #define DISASSEMBLE_H
-#include "stdafx.h"
-
 #include "core.h"
 #include "dbcommon.h"
 

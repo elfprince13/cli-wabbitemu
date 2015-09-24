@@ -679,7 +679,7 @@ void keypad_press(CPU_t *cpu, int group, int bit)
 	}
 }
 
-keyprog_t *keypad_key_press(CPU_t *cpu, unsigned int vk, BOOL *changed)
+keyprog_t *keypad_key_press(CPU_t *cpu, unsigned int vk, bool *changed)
 {
 	int i;
 	keypad_t *keypad = cpu->pio.keypad;

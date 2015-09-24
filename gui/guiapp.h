@@ -15,9 +15,9 @@ typedef struct ParsedCmdArgs
 	int num_utility_files;
 	int num_archive_files;
 	int num_ram_files;
-	BOOL silent_mode;
-	BOOL force_new_instance;
-	BOOL force_focus;
+	bool silent_mode;
+	bool force_new_instance;
+	bool force_focus;
 } ParsedCmdArgs_t;
 
 
@@ -38,7 +38,7 @@ private:
 	void ParseCommandLineArgs();
 	void LoadCommandlineFiles(INT_PTR,  void (*load_callback)(INT_PTR, LPTSTR, SEND_FLAG));
 public:
-	static BOOL DoRomWizard();
+	static bool DoRomWizard();
 };
 
 void LoadToLPCALC(INT_PTR lParam, LPTSTR filePath, SEND_FLAG sendLoc);

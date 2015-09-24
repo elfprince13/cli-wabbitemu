@@ -84,7 +84,7 @@ int SaveFile(TCHAR *lpstrFile, const TCHAR *lpstrFilter, const TCHAR *lpstrTitle
 	return 0;
 }
 
-BOOL ValidPath(TCHAR *lpstrFile) {
+bool ValidPath(TCHAR *lpstrFile) {
 	FILE *file;
 #ifdef WINVER
 	errno_t error = _tfopen_s(&file, lpstrFile, _T("r"));
@@ -93,7 +93,7 @@ BOOL ValidPath(TCHAR *lpstrFile) {
 	return error == 0;
 #else
 	file = _tfopen_s(lpstrFile, "r");
-	BOOL error = file == NULL;
+	bool error = file == NULL;
 	fclose(file);
 	return error;
 #endif

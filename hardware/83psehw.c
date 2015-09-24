@@ -205,7 +205,7 @@ void port6_83pse(CPU_t *cpu, device_t *dev) {
 		cpu->bus = ((cpu->mem_c->banks[1].ram) << 7) + cpu->mem_c->banks[1].page;
 		cpu->input = FALSE;
 	} else if (cpu->output) {
-		BOOL ram = (cpu->bus >> 7) & 1;
+		bool ram = (cpu->bus >> 7) & 1;
 		if (ram)
 			change_page(cpu, 1, (cpu->bus & 0x7f) % cpu->mem_c->ram_pages, ram);
 		else
@@ -219,7 +219,7 @@ void port7_83pse(CPU_t *cpu, device_t *dev) {
 		cpu->bus = ((cpu->mem_c->banks[2].ram) << 7) + cpu->mem_c->banks[2].page;
 		cpu->input = FALSE;
 	} else if (cpu->output) {
-		BOOL ram = (cpu->bus >> 7) & 1;
+		bool ram = (cpu->bus >> 7) & 1;
 		if (ram)
 			change_page(cpu, 2, (cpu->bus & 0x7f) % cpu->mem_c->ram_pages, ram);
 		else
@@ -929,7 +929,7 @@ void clock_read(CPU_t *cpu, device_t *dev) {
 #define USB_LINE_INTERRUPT_MASK BIT(2);
 #define USB_PROTOCOL_INTERRUPT_MASK BIT(4);
 
-void GenerateUSBEvent(CPU_t *cpu, USB_t *usb, int bit, BOOL lowToHigh) {
+void GenerateUSBEvent(CPU_t *cpu, USB_t *usb, int bit, bool lowToHigh) {
 	if (lowToHigh) {
 		usb->USBEvents |= BIT(bit);
 		usb->USBEvents &= ~BIT(bit - 1);

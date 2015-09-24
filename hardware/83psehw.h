@@ -14,11 +14,11 @@ typedef struct TIMER {
 	unsigned long long lastTstates;
 	double lastTicks;
 	double divsor;
-	BOOL loop;
-	BOOL interrupt;
-	BOOL underflow;
-	BOOL generate;
-	BOOL active;
+	bool loop;
+	bool interrupt;
+	bool underflow;
+	bool generate;
+	bool active;
 	unsigned char clock;
 	unsigned char count;
 	unsigned char max;
@@ -35,11 +35,11 @@ typedef struct LINKASSIST {
 	unsigned char in;
 	unsigned char out;
 	unsigned char working;
-	BOOL receiving;
-	BOOL read;
-	BOOL ready;
-	BOOL error;
-	BOOL sending;
+	bool receiving;
+	bool read;
+	bool ready;
+	bool error;
+	bool sending;
 	double last_access;
 	int bit;
 } LINKASSIST_t;
@@ -87,12 +87,12 @@ typedef struct USB {
 	unsigned int USBLineState;		//Whether each line is low or high
 	unsigned int USBEvents;			//Whether interrupts have occurred
 	unsigned int USBEventMask;		//Whether interrupts should be generated when USB lines change
-	BOOL LineInterrupt;
-	BOOL ProtocolInterrupt;
-	BOOL ProtocolInterruptEnabled;
+	bool LineInterrupt;
+	bool ProtocolInterrupt;
+	bool ProtocolInterruptEnabled;
 	unsigned int DevAddress;		//Current USB device address
 	int version;
-	BOOL USBPowered;
+	bool USBPowered;
 
 
 	unsigned char Port4A;

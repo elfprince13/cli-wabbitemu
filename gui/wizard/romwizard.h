@@ -15,8 +15,8 @@ private:
 	void OnFinish(wxWizardEvent &);
 	void OnPageChanged(wxWizardEvent &);
 	void ModelInit(LPCALC lpCalc, int model);
-	BOOL ExtractBootFree(wxString &bootfreePath, int model);
-	BOOL DownloadOS(wxString &osFilePath, int model, BOOL version);
+	bool ExtractBootFree(wxString &bootfreePath, int model);
+	bool DownloadOS(wxString &osFilePath, int model, bool version);
 protected:
 	DECLARE_EVENT_TABLE()
 public:

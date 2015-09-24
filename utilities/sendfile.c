@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #include "calc.h"
 #include "link.h"
 #include "label.h"

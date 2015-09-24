@@ -38,7 +38,7 @@ static TCHAR gif_fn_backup[MAX_PATH];
  * Gets where the next screenshot should be saved to.
  * Returns true if ready, false if user cancels
  */
-BOOL get_gif_filename() {
+bool get_gif_filename() {
 	int i;
 #ifdef _WINDOWS
 	StringCbCopy(gif_fn_backup, sizeof(gif_fn_backup), gif_file_name);
@@ -49,7 +49,7 @@ BOOL get_gif_filename() {
 		/* do file save */
 		if (gif_use_increasing) {
 			FILE *test = NULL;
-			BOOL fileExists = FALSE;
+			bool fileExists = FALSE;
 			i = 0;
 					
 			 do {
@@ -112,15 +112,15 @@ unsigned char* GIFGREYLCD(LCD_t *lpLCD) {
 			}
 			
 			// Convert lcd shades to gif
-			u_char *scol = &temp_gif[row][col * 8];
-			scol[0] = (u_char) p0;//(p0 * level + base);
-			scol[1] = (u_char) p1;//(p1 * level + base);
-			scol[2] = (u_char) p2;//(p2 * level + base);
-			scol[3] = (u_char) p3;//(p3 * level + base);
-			scol[4] = (u_char) p4;//(p4 * level + base);
-			scol[5] = (u_char) p5;//(p5 * level + base);
-			scol[6] = (u_char) p6;//(p6 * level + base);
-			scol[7] = (u_char) p7;//(p7 * level + base);
+			uint8_t *scol = &temp_gif[row][col * 8];
+			scol[0] = (uint8_t) p0;//(p0 * level + base);
+			scol[1] = (uint8_t) p1;//(p1 * level + base);
+			scol[2] = (uint8_t) p2;//(p2 * level + base);
+			scol[3] = (uint8_t) p3;//(p3 * level + base);
+			scol[4] = (uint8_t) p4;//(p4 * level + base);
+			scol[5] = (uint8_t) p5;//(p5 * level + base);
+			scol[6] = (uint8_t) p6;//(p6 * level + base);
+			scol[7] = (uint8_t) p7;//(p7 * level + base);
 		}
 	}
 	
@@ -150,14 +150,14 @@ unsigned char* GIFGREYLCD(LCD_t *lpLCD) {
 			lpLCD->gif[y][x] = tmp;
 		}
 	}
-	return (u_char*) lpLCD->gif;
+	return (uint8_t*) lpLCD->gif;
 }
 #endif
 
 void handle_screenshot() {
 	LCD_t* lcd;
 	int i, j, shades = 0;
-	BOOL running_backup[MAX_CALCS];
+	bool running_backup[MAX_CALCS];
 	for (i = 0; i < MAX_CALCS; i++) {
 		running_backup[i] = calcs[i].running;
 		calcs[i].running = FALSE;

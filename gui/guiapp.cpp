@@ -5,7 +5,7 @@
 
 WabbitemuFrame *frames[MAX_CALCS];
 
-BOOL WabbitemuApp::DoRomWizard() {
+bool WabbitemuApp::DoRomWizard() {
 	RomWizard wizard;	
 	bool success = wizard.Begin();
 	return success;
@@ -36,7 +36,7 @@ bool WabbitemuApp::OnInit()
 		frame = gui_frame(lpCalc);
 	} else {
 		calc_slot_free(lpCalc);
-		BOOL loadedRom = FALSE;
+		bool loadedRom = FALSE;
 		if (parsedArgs.num_rom_files > 0) {
 			for (int i = 0; i < parsedArgs.num_rom_files; i++) {
 				if (rom_load(lpCalc, parsedArgs.rom_files[i])) {

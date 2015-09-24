@@ -9,9 +9,9 @@ typedef struct {
 	unsigned int size;
 	unsigned char *data;
 	unsigned char *name;
-	BOOL read;
-	BOOL write;
-	BOOL bin;
+	bool read;
+	bool write;
+	bool bin;
 	int eof;
 } MFILE;
 

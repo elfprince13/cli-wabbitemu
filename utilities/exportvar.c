@@ -207,7 +207,7 @@ MFILE *ExportApp(LPCALC lpCalc, TCHAR *fn, apphdr_t *app) {
 	memset(buffer, 0, data_size);
 	uint8_t *temp_point = buffer;
 	for (tempnum = app->page; tempnum > app->page - app->page_count; tempnum--) {
-		u_char (*dest)[PAGE_SIZE] = (u_char (*)[PAGE_SIZE]) lpCalc->cpu.mem_c->flash;
+		uint8_t (*dest)[PAGE_SIZE] = (uint8_t (*)[PAGE_SIZE]) lpCalc->cpu.mem_c->flash;
 		memcpy(temp_point, &dest[tempnum], PAGE_SIZE);
 		temp_point += PAGE_SIZE;
 	}
