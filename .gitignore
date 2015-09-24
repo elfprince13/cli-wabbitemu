@@ -26,3 +26,5 @@ xcuserdata
 *.xcuserstate
 
 *.xcworkspacedata
+
+*.xcscmblueprint

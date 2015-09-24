@@ -1,0 +1,3 @@
+[submodule "libcrane"]
+	path = libcrane
+	url = git@github.com:elfprince13/libcrane.git

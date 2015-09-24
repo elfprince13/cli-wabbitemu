@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E90E24FA1BB395630090F49E /* disassemble.c in Sources */ = {isa = PBXBuildFile; fileRef = E90E24B61BB395630090F49E /* disassemble.c */; settings = {ASSET_TAGS = (); }; };
-		E90E24FB1BB395630090F49E /* disassemblyview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24B81BB395630090F49E /* disassemblyview.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947BE51BB39DEC00DEC14A /* calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D61BB395630090F49E /* calc.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947BE61BB39DF200DEC14A /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D81BB395630090F49E /* state.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947BEF1BB39E2700DEC14A /* alu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24A71BB395630090F49E /* alu.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -36,6 +34,16 @@
 		E9947C1F1BB4607E00DEC14A /* sendfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EC1BB395630090F49E /* sendfile.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C211BB4607E00DEC14A /* var.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F11BB395630090F49E /* var.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C221BB4607E00DEC14A /* zlibcmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F31BB395630090F49E /* zlibcmp.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C251BB4968A00DEC14A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9947C241BB4968A00DEC14A /* main.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C281BB496CC00DEC14A /* libwabbitutilities.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C131BB4606400DEC14A /* libwabbitutilities.a */; };
+		E9947C2B1BB4974400DEC14A /* libncurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C291BB496F200DEC14A /* libncurses.tbd */; };
+		E9947C2E1BB4994300DEC14A /* wabbitinstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9947C2C1BB4994300DEC14A /* wabbitinstance.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C301BB49FFC00DEC14A /* libpanel.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C2F1BB49FFC00DEC14A /* libpanel.tbd */; };
+		E9947C321BB4A14D00DEC14A /* libmenu.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C311BB4A14D00DEC14A /* libmenu.tbd */; };
+		E9947C341BB4A15500DEC14A /* libform.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C331BB4A15500DEC14A /* libform.tbd */; };
+		E9947C531BB4A32700DEC14A /* crane.m in Sources */ = {isa = PBXBuildFile; fileRef = E9947C3A1BB4A2AA00DEC14A /* crane.m */; settings = {ASSET_TAGS = (); }; };
+		E9947C561BB4A38200DEC14A /* libcrane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C4A1BB4A32100DEC14A /* libcrane.a */; };
+		E9947C571BB4A3F800DEC14A /* libcrane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C4A1BB4A32100DEC14A /* libcrane.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +67,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = E9947BFF1BB45BC600DEC14A;
 			remoteInfo = wabbithardware;
+		};
+		E9947C261BB496B500DEC14A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E90E24941BB395100090F49E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E9947C121BB4606400DEC14A;
+			remoteInfo = wabbitutilities;
+		};
+		E9947C541BB4A37B00DEC14A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E90E24941BB395100090F49E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E9947C491BB4A32100DEC14A;
+			remoteInfo = crane;
+		};
+		E9947C581BB4A3FF00DEC14A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E90E24941BB395100090F49E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E9947C491BB4A32100DEC14A;
+			remoteInfo = crane;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -218,6 +247,15 @@
 		E9947BEB1BB39E1B00DEC14A /* libwabbitcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwabbitcore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9947C001BB45BC600DEC14A /* libwabbithardware.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwabbithardware.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9947C131BB4606400DEC14A /* libwabbitutilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwabbitutilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9947C241BB4968A00DEC14A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../cli/main.cpp; sourceTree = "<group>"; };
+		E9947C291BB496F200DEC14A /* libncurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libncurses.tbd; path = usr/lib/libncurses.tbd; sourceTree = SDKROOT; };
+		E9947C2C1BB4994300DEC14A /* wabbitinstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wabbitinstance.cpp; path = ../../cli/wabbitinstance.cpp; sourceTree = "<group>"; };
+		E9947C2D1BB4994300DEC14A /* wabbitinstance.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = wabbitinstance.hpp; path = ../../cli/wabbitinstance.hpp; sourceTree = "<group>"; };
+		E9947C2F1BB49FFC00DEC14A /* libpanel.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpanel.tbd; path = usr/lib/libpanel.tbd; sourceTree = SDKROOT; };
+		E9947C311BB4A14D00DEC14A /* libmenu.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libmenu.tbd; path = usr/lib/libmenu.tbd; sourceTree = SDKROOT; };
+		E9947C331BB4A15500DEC14A /* libform.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libform.tbd; path = usr/lib/libform.tbd; sourceTree = SDKROOT; };
+		E9947C3A1BB4A2AA00DEC14A /* crane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = crane.m; sourceTree = "<group>"; };
+		E9947C4A1BB4A32100DEC14A /* libcrane.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcrane.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +263,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9947C561BB4A38200DEC14A /* libcrane.a in Frameworks */,
+				E9947C341BB4A15500DEC14A /* libform.tbd in Frameworks */,
+				E9947C321BB4A14D00DEC14A /* libmenu.tbd in Frameworks */,
+				E9947C301BB49FFC00DEC14A /* libpanel.tbd in Frameworks */,
+				E9947C2B1BB4974400DEC14A /* libncurses.tbd in Frameworks */,
 				E9947BF91BB39E6900DEC14A /* libwabbitinterface.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,6 +284,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9947C281BB496CC00DEC14A /* libwabbitutilities.a in Frameworks */,
 				E9947C0E1BB45CBD00DEC14A /* libwabbithardware.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +300,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9947C571BB4A3F800DEC14A /* libcrane.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9947C471BB4A32100DEC14A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +317,7 @@
 		E90E24931BB395100090F49E = {
 			isa = PBXGroup;
 			children = (
+				E9947C5A1BB4A40B00DEC14A /* External Libraries */,
 				E90E249E1BB395100090F49E /* CLI WabbitEmu */,
 				E90E249D1BB395100090F49E /* Products */,
 			);
@@ -278,6 +331,7 @@
 				E9947BEB1BB39E1B00DEC14A /* libwabbitcore.a */,
 				E9947C001BB45BC600DEC14A /* libwabbithardware.a */,
 				E9947C131BB4606400DEC14A /* libwabbitutilities.a */,
+				E9947C4A1BB4A32100DEC14A /* libcrane.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,6 +339,7 @@
 		E90E249E1BB395100090F49E /* CLI WabbitEmu */ = {
 			isa = PBXGroup;
 			children = (
+				E9947C231BB4965500DEC14A /* cli */,
 				E9947B871BB395D800DEC14A /* gui */,
 				E90E24A61BB395630090F49E /* core */,
 				E90E24B31BB395630090F49E /* debugger */,
@@ -513,6 +568,37 @@
 			path = wizard;
 			sourceTree = "<group>";
 		};
+		E9947C231BB4965500DEC14A /* cli */ = {
+			isa = PBXGroup;
+			children = (
+				E9947C241BB4968A00DEC14A /* main.cpp */,
+				E9947C2C1BB4994300DEC14A /* wabbitinstance.cpp */,
+				E9947C2D1BB4994300DEC14A /* wabbitinstance.hpp */,
+			);
+			name = cli;
+			sourceTree = "<group>";
+		};
+		E9947C351BB4A2AA00DEC14A /* libcrane */ = {
+			isa = PBXGroup;
+			children = (
+				E9947C3A1BB4A2AA00DEC14A /* crane.m */,
+			);
+			name = libcrane;
+			path = ../libcrane;
+			sourceTree = "<group>";
+		};
+		E9947C5A1BB4A40B00DEC14A /* External Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				E9947C351BB4A2AA00DEC14A /* libcrane */,
+				E9947C331BB4A15500DEC14A /* libform.tbd */,
+				E9947C311BB4A14D00DEC14A /* libmenu.tbd */,
+				E9947C2F1BB49FFC00DEC14A /* libpanel.tbd */,
+				E9947C291BB496F200DEC14A /* libncurses.tbd */,
+			);
+			name = "External Libraries";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -544,6 +630,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9947C481BB4A32100DEC14A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -558,6 +651,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E9947C551BB4A37B00DEC14A /* PBXTargetDependency */,
 				E9947BF71BB39E5700DEC14A /* PBXTargetDependency */,
 			);
 			name = wabbitemu;
@@ -594,6 +688,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E9947C271BB496B500DEC14A /* PBXTargetDependency */,
 				E9947C0D1BB45CB200DEC14A /* PBXTargetDependency */,
 			);
 			name = wabbitcore;
@@ -629,10 +724,28 @@
 			buildRules = (
 			);
 			dependencies = (
+				E9947C591BB4A3FF00DEC14A /* PBXTargetDependency */,
 			);
 			name = wabbitutilities;
 			productName = wabbitutilities;
 			productReference = E9947C131BB4606400DEC14A /* libwabbitutilities.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E9947C491BB4A32100DEC14A /* crane */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E9947C501BB4A32100DEC14A /* Build configuration list for PBXNativeTarget "crane" */;
+			buildPhases = (
+				E9947C461BB4A32100DEC14A /* Sources */,
+				E9947C471BB4A32100DEC14A /* Frameworks */,
+				E9947C481BB4A32100DEC14A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = crane;
+			productName = crane;
+			productReference = E9947C4A1BB4A32100DEC14A /* libcrane.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -659,6 +772,9 @@
 					E9947C121BB4606400DEC14A = {
 						CreatedOnToolsVersion = 7.0;
 					};
+					E9947C491BB4A32100DEC14A = {
+						CreatedOnToolsVersion = 7.0;
+					};
 				};
 			};
 			buildConfigurationList = E90E24971BB395100090F49E /* Build configuration list for PBXProject "CLI WabbitEmu" */;
@@ -678,6 +794,7 @@
 				E9947BEA1BB39E1B00DEC14A /* wabbitcore */,
 				E9947BFF1BB45BC600DEC14A /* wabbithardware */,
 				E9947C121BB4606400DEC14A /* wabbitutilities */,
+				E9947C491BB4A32100DEC14A /* crane */,
 			);
 		};
 /* End PBXProject section */
@@ -687,8 +804,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E90E24FA1BB395630090F49E /* disassemble.c in Sources */,
-				E90E24FB1BB395630090F49E /* disassemblyview.cpp in Sources */,
+				E9947C251BB4968A00DEC14A /* main.cpp in Sources */,
+				E9947C2E1BB4994300DEC14A /* wabbitinstance.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,6 +861,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9947C461BB4A32100DEC14A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9947C531BB4A32700DEC14A /* crane.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -761,6 +886,21 @@
 			isa = PBXTargetDependency;
 			target = E9947BFF1BB45BC600DEC14A /* wabbithardware */;
 			targetProxy = E9947C0C1BB45CB200DEC14A /* PBXContainerItemProxy */;
+		};
+		E9947C271BB496B500DEC14A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E9947C121BB4606400DEC14A /* wabbitutilities */;
+			targetProxy = E9947C261BB496B500DEC14A /* PBXContainerItemProxy */;
+		};
+		E9947C551BB4A37B00DEC14A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E9947C491BB4A32100DEC14A /* crane */;
+			targetProxy = E9947C541BB4A37B00DEC14A /* PBXContainerItemProxy */;
+		};
+		E9947C591BB4A3FF00DEC14A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E9947C491BB4A32100DEC14A /* crane */;
+			targetProxy = E9947C581BB4A3FF00DEC14A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -920,6 +1060,22 @@
 			};
 			name = Release;
 		};
+		E9947C511BB4A32100DEC14A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E9947C521BB4A32100DEC14A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -966,12 +1122,22 @@
 				E9947C031BB45BC600DEC14A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E9947C141BB4606400DEC14A /* Build configuration list for PBXNativeTarget "wabbitutilities" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E9947C151BB4606400DEC14A /* Debug */,
 				E9947C161BB4606400DEC14A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E9947C501BB4A32100DEC14A /* Build configuration list for PBXNativeTarget "crane" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9947C511BB4A32100DEC14A /* Debug */,
+				E9947C521BB4A32100DEC14A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
