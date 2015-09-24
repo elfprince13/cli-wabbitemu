@@ -32,7 +32,6 @@
 		E9947C1A1BB4607E00DEC14A /* gif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E21BB395630090F49E /* gif.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C1B1BB4607E00DEC14A /* gifhandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E41BB395630090F49E /* gifhandle.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C1C1BB4607E00DEC14A /* label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E61BB395630090F49E /* label.cpp */; settings = {ASSET_TAGS = (); }; };
-		E9947C1D1BB4607E00DEC14A /* print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24E81BB395630090F49E /* print.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C1E1BB4607E00DEC14A /* savestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EA1BB395630090F49E /* savestate.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C1F1BB4607E00DEC14A /* sendfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24EC1BB395630090F49E /* sendfile.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C211BB4607E00DEC14A /* var.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24F11BB395630090F49E /* var.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -136,8 +135,6 @@
 		E90E24E51BB395630090F49E /* gifhandle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gifhandle.hpp; sourceTree = "<group>"; };
 		E90E24E61BB395630090F49E /* label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = label.cpp; sourceTree = "<group>"; };
 		E90E24E71BB395630090F49E /* label.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = label.hpp; sourceTree = "<group>"; };
-		E90E24E81BB395630090F49E /* print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = print.cpp; sourceTree = "<group>"; };
-		E90E24E91BB395630090F49E /* print.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = print.hpp; sourceTree = "<group>"; };
 		E90E24EA1BB395630090F49E /* savestate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = savestate.cpp; sourceTree = "<group>"; };
 		E90E24EB1BB395630090F49E /* savestate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = savestate.hpp; sourceTree = "<group>"; };
 		E90E24EC1BB395630090F49E /* sendfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sendfile.cpp; sourceTree = "<group>"; };
@@ -400,8 +397,6 @@
 				E90E24E51BB395630090F49E /* gifhandle.hpp */,
 				E90E24E61BB395630090F49E /* label.cpp */,
 				E90E24E71BB395630090F49E /* label.hpp */,
-				E90E24E81BB395630090F49E /* print.cpp */,
-				E90E24E91BB395630090F49E /* print.hpp */,
 				E90E24EA1BB395630090F49E /* savestate.cpp */,
 				E90E24EB1BB395630090F49E /* savestate.hpp */,
 				E90E24EC1BB395630090F49E /* sendfile.cpp */,
@@ -745,7 +740,6 @@
 				E9947C221BB4607E00DEC14A /* zlibcmp.cpp in Sources */,
 				E9947C181BB4607E00DEC14A /* exportvar.cpp in Sources */,
 				E9947C1C1BB4607E00DEC14A /* label.cpp in Sources */,
-				E9947C1D1BB4607E00DEC14A /* print.cpp in Sources */,
 				E9947C1F1BB4607E00DEC14A /* sendfile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
