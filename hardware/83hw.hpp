@@ -1,7 +1,7 @@
 #ifndef TI83HW_H
 #define TI83HW_H
-#include "core.h"
-#include "ti_stdint.h"
+#include "../core/core.hpp"
+#include "ti_stdint.hpp"
 
 #define PAGE_SIZE 16384
 

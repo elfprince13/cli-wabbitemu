@@ -1,11 +1,9 @@
-#include "stdafx.h"
-
-#include "lcd.h"
-#include "keys.h"
-#include "86hw.h"
-#include "link.h"
-#include "device.h"
-#include "calc.h"
+#include "lcd.hpp"
+#include "keys.hpp"
+#include "86hw.hpp"
+#include "link.hpp"
+#include "../core/device.hpp"
+#include "calc.hpp"
 #include <math.h>
 
 static double timer_freq[4] = { 1.0 / 800.0, 1.0 / 400.0, 3.0 / 800.0, 1.0 / 200.0 };

@@ -1,5 +1,4 @@
-#include "stdafx.h"
-#include "keys.h"
+#include "keys.hpp"
 #if WXVER
 #include <wx/wx.h>
 #endif

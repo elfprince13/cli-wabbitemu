@@ -1,13 +1,13 @@
 #ifndef LINK_H
 #define LINK_H
-#include "core.h"		// CPU_t
+#include "../core/core.hpp"		// CPU_t
 
 #ifdef WINVER
 #include "sound.h"		// audio_t
 #endif
 
-#include "var.h"
-#include "state.h"
+#include "var.hpp"
+#include "../interface/state.h"
 
 // Link timing
 #define LINK_DELAY 			100				/* Delay between commands */

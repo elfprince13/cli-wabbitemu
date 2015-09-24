@@ -1,15 +1,15 @@
 #ifndef _CALC_H
 #define _CALC_H
 
-#include "coretypes.h"
+#include "../core/coretypes.hpp"
 
 #ifdef WXVER
 #include <wx/frame.h>
 #endif
-#include "core.h"
-#include "lcd.h"
-#include "keys.h"
-#include "link.h"
+#include "../core/core.hpp"
+#include "../hardware/lcd.hpp"
+#include "../hardware/keys.hpp"
+#include "../hardware/link.hpp"
 
 #ifdef _WINDOWS
 #include "Wabbitemu_h.h"
@@ -18,7 +18,7 @@
 #include "dbbreakpoints.h"
 #endif
 
-#include "label.h"
+#include "../utilities/label.h"
 
 typedef enum {
 	GDS_IDLE,

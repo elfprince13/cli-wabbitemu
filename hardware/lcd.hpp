@@ -1,7 +1,7 @@
 #ifndef LCD_H
 #define LCD_H
 
-#include "core.h"
+#include "../core/core.hpp"
 
 #define STEADY_FREQ_MIN		30
 #define STEADY_FREQ_MAX		120

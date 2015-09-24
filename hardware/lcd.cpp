@@ -1,13 +1,11 @@
-#include "stdafx.h"
-
-#include "lcd.h"
-#include "83psehw.h"
-#include "gifhandle.h"
+#include "lcd.hpp"
+#include "83psehw.hpp"
+#include "../utilties/gifhandle.hpp"
 #ifdef WINVER
 #include "registry.h"
 #endif
 
-#include "calc.h"
+#include "calc.hpp"
 
 /* 
  * Differing interpretations of contrast require that

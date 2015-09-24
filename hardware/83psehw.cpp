@@ -1,11 +1,9 @@
-#include "stdafx.h"
-
-#include "lcd.h"
-#include "keys.h"
-#include "83psehw.h"
-#include "link.h"
-#include "device.h"
-#include "calc.h"
+#include "lcd.hpp"
+#include "keys.hpp"
+#include "83psehw.hpp"
+#include "link.hpp"
+#include "../core/device.hpp"
+#include "calc.hpp"
 #include <math.h>
 #ifdef WINVER
 #include "dbbreakpoints.h"

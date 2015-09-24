@@ -1,8 +1,8 @@
-#include "81hw.h"
-#include "lcd.h"
-#include "keys.h"
-#include "device.h"
-#include "calc.h"
+#include "81hw.hpp"
+#include "lcd.hpp"
+#include "keys.hpp"
+#include "device.hpp"
+#include "calc.hpp"
 
 static void port10(CPU_t *cpu, device_t *dev);
 static double timer_freq81[4] = { 1.0 / 800.0, 1.0 / 400.0, 3.0 / 800.0, 1.0 / 200.0 };

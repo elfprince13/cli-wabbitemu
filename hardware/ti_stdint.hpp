@@ -1,7 +1,7 @@
 #ifndef STDINT_H
 #define STDINT_H
 
-#include "coretypes.h"
+#include "../core/coretypes.hpp"
 
 typedef struct STDINT {
 	unsigned char intactive;

@@ -1,8 +1,8 @@
-#include "var.h"
-#include "link.h"
-#include "calc.h"
-#include "lcd.h"	//lcd->active
-#include "keys.h"	//key_press
+#include "var.hpp"
+#include "link.hpp"
+#include "calc.hpp"
+#include "lcd.hpp"	//lcd->active
+#include "keys.hpp"	//key_press
 
 //#define DEBUG
 #define vlink(zlink) ((((zlink)->vout & 0x03)|(*((zlink)->vin) & 0x03))^3)	// Virtual Link status

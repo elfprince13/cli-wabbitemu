@@ -1,7 +1,7 @@
 #ifndef TI81HW_H
 #define TI81HW_H
-#include "core.h"
-#include "ti_stdint.h"
+#include "../core/core.hpp"
+#include "ti_stdint.hpp"
 
 #define NumElm(array) (sizeof (array) / sizeof ((array)[0]))
 

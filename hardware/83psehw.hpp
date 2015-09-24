@@ -1,7 +1,7 @@
 #ifndef TI83PSEHW_H
 #define TI83PSEHW_H
-#include "core.h"
-#include "ti_stdint.h"
+#include "../core/core.hpp"
+#include "ti_stdint.hpp"
 
 #ifndef LINK_READ
 #define LINK_READ

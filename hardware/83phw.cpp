@@ -1,10 +1,10 @@
-#include "lcd.h"
-#include "keys.h"
-#include "83phw.h"
-#include "link.h"
-#include "device.h"
-#include "calc.h"
-#include "83psehw.h"
+#include "lcd.hpp"
+#include "keys.hpp"
+#include "83phw.hpp"
+#include "link.hpp"
+#include "../core/device.hpp"
+#include "calc.hpp"
+#include "83psehw.hpp"
 #ifdef WINVER
 #include "dbbreakpoints.h"
 #endif

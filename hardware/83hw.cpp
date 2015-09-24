@@ -1,9 +1,9 @@
-#include "lcd.h"
-#include "keys.h"
-#include "83hw.h"
-#include "link.h"
-#include "device.h"
-#include "calc.h"
+#include "lcd.hpp"
+#include "keys.hpp"
+#include "83hw.hpp"
+#include "link.hpp"
+#include "../core/device.hpp"
+#include "calc.hpp"
 static double timer_freq83[4] = {1.0f / 600.0f, 1.0f / 257.14f, 1.0f / 163.63f, 1.0f / 120.0f};
 
 #define SWAP_BANK	0xFF

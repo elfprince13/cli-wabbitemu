@@ -36,6 +36,7 @@
 		E9947C091BB45BF800DEC14A /* keys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24CE1BB395630090F49E /* keys.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C0A1BB45BF800DEC14A /* lcd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D01BB395630090F49E /* lcd.cpp */; settings = {ASSET_TAGS = (); }; };
 		E9947C0B1BB45BF800DEC14A /* link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90E24D21BB395630090F49E /* link.cpp */; settings = {ASSET_TAGS = (); }; };
+		E9947C0E1BB45CBD00DEC14A /* libwabbithardware.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9947C001BB45BC600DEC14A /* libwabbithardware.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,12 +54,12 @@
 			remoteGlobalIDString = E9947BE01BB39DE200DEC14A;
 			remoteInfo = wabbitinterface;
 		};
-		E9947BFA1BB4593900DEC14A /* PBXContainerItemProxy */ = {
+		E9947C0C1BB45CB200DEC14A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E90E24941BB395100090F49E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E9947BE01BB39DE200DEC14A;
-			remoteInfo = wabbitinterface;
+			remoteGlobalIDString = E9947BFF1BB45BC600DEC14A;
+			remoteInfo = wabbithardware;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -243,6 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9947C0E1BB45CBD00DEC14A /* libwabbithardware.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,7 +585,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E9947BFB1BB4593900DEC14A /* PBXTargetDependency */,
+				E9947C0D1BB45CB200DEC14A /* PBXTargetDependency */,
 			);
 			name = wabbitcore;
 			productName = "wabbit-core";
@@ -719,10 +721,10 @@
 			target = E9947BE01BB39DE200DEC14A /* wabbitinterface */;
 			targetProxy = E9947BF61BB39E5700DEC14A /* PBXContainerItemProxy */;
 		};
-		E9947BFB1BB4593900DEC14A /* PBXTargetDependency */ = {
+		E9947C0D1BB45CB200DEC14A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E9947BE01BB39DE200DEC14A /* wabbitinterface */;
-			targetProxy = E9947BFA1BB4593900DEC14A /* PBXContainerItemProxy */;
+			target = E9947BFF1BB45BC600DEC14A /* wabbithardware */;
+			targetProxy = E9947C0C1BB45CB200DEC14A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
