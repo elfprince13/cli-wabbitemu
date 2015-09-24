@@ -1,6 +1,7 @@
 #include "../core/coretypes.hpp"
 
 #include "fileutilities.hpp"
+#include "../libcrane/crane.h"
 
 
 // These are terrifyingly unsafe.
@@ -14,12 +15,8 @@ int SaveFile(char *file, const char *filter, const char *title, const char defEx
 	return 0;
 }
 
-bool ValidPath(const char *fileName) {
-	FILE *file;
-	return false;
-}
-
 // This is a job for libcrane
-void GetAppDataString(char *buffer, int len) {
+void GetAppDataString(char *buffer, size_t len) {
+	getApplicationDataDirectory(buffer, len, "wabbit-cli");
 
 }

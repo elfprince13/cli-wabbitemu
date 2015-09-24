@@ -1039,12 +1039,12 @@ char* GetRomOnly(SAVESTATE_t *save, int *size) {
 	return (char *) chunk->data;
 }
 
-
+const char * tmpSuffix = "/tmpsvXXXXXX";
+	
 void WriteSave(const char *fn, SAVESTATE_t* save, int compress) {
 	int i;
 	FILE* ofile;
 	FILE* cfile;
-	char tmpfn[L_tmpnam];
 	char temp_save[PATH_MAX];
 	
 	if (!save) {
@@ -1053,9 +1053,9 @@ void WriteSave(const char *fn, SAVESTATE_t* save, int compress) {
 	if (compress == 0) {
 		ofile = fopen(fn, "wb");
 	} else {
-		tmpnam(tmpfn);
-		strcpy(temp_save, getenv("appdata"));
-		strcat(temp_save, tmpfn);
+		GetAppDataString(temp_save, PATH_MAX - 1 - strlen(tmpSuffix));
+		strcat(temp_save, tmpSuffix);
+		mkstemp(temp_save);
 		ofile = fopen(temp_save,"wb");
 	}
 		
@@ -1120,7 +1120,6 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 	int compressed = false;
 	int chunk_offset,chunk_count;
 	char string[128];
-	char tmpfn[L_tmpnam];
 	char temp_save[PATH_MAX];
 	SAVESTATE_t *save;
 	CHUNK_t *chunk;
@@ -1130,9 +1129,9 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 	string[8] = 0;
 	if (strncmp(DETECT_CMP_STR, string, 8) == 0) {
 		i = fgetc(ifile);
-		tmpnam(tmpfn);
-		strcpy(temp_save, getenv("appdata"));
-		strcat(temp_save, tmpfn);
+		GetAppDataString(temp_save, PATH_MAX - 1 - strlen(tmpSuffix));
+		strcat(temp_save, tmpSuffix);
+		mkstemp(temp_save);
 		tmpfile = fopen(temp_save,"wb");
 		if (!tmpfile) {
 			return nullptr;
@@ -1156,7 +1155,7 @@ SAVESTATE_t* ReadSave(FILE *ifile) {
 #endif
 			default:
 				fclose(tmpfile);
-				remove(tmpfn);
+				remove(temp_save);
 				return nullptr;
 		}
 	}

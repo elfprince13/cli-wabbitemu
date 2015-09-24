@@ -172,47 +172,23 @@ int ReadIntelHex(FILE *ifile, INTELHEX_t *ihex) {
 	if (!fgets((char*) str, 580, ifile))
 		return 0;
 	if (str[0] == 0) memcpy(str, str+1, 579);
-#ifdef WINVER
-	if (sscanf_s((const char*) str, ":%02X%04X%02X%*s", &size, &addr, &type) != 3)
-#else
 	if (sscanf((const char*) str, ":%02X%04X%02X%*s", &size, &addr, &type) != 3)
-#endif
 		return 0;
 	ihex->DataSize = size;
 	ihex->Address = addr;
 	ihex->Type = type;
 	memset(ihex->Data, 0x00, 256);
 	for (i = 0; i < size; i++) {
-#ifdef WINVER
-		if (sscanf_s((const char*)str + 9 + (i * 2), "%02X", &byte) != 1)
-#else
 		if (sscanf((const char*)str + 9 + (i * 2), "%02X", &byte) != 1)
-#endif
 			return 0;
 		ihex->Data[i] = byte;
 	}
-#ifdef WINVER
-	if (sscanf_s((const char*)str + 9 + (i * 2), "%02X", &byte) != 1)
-#else
 	if (sscanf((const char*)str + 9 + (i * 2), "%02X", &byte) != 1)
-#endif
 		return 0;
 	ihex->CheckSum = byte;
 	return 1;
 }
 
-#ifdef _WINDOWS
-TIFILE_t* ImportZipFile(const char * filePath, TIFILE_t *tifile) {
-	unzFile uf;
-	char path[PATH_MAX];
-	uf = unzOpen(filePath);
-	GetAppDataString(path, sizeof(path));
-	StringCbCat(path, sizeof(path), ("\\Zip"));
-	int err = extract_zip(uf, path);
-	unzClose(uf);
-	return err ? nullptr: tifile;
-}
-#endif
 
 TIFILE_t* ImportFlashFile(FILE *infile, TIFILE_t *tifile) {
 	int i;
