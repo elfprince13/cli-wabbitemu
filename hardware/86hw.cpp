@@ -3,7 +3,7 @@
 #include "86hw.hpp"
 #include "link.hpp"
 #include "../core/device.hpp"
-#include "calc.hpp"
+#include "../interface/calc.hpp"
 #include <math.h>
 
 static double timer_freq[4] = { 1.0 / 800.0, 1.0 / 400.0, 3.0 / 800.0, 1.0 / 200.0 };

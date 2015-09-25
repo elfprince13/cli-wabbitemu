@@ -3,7 +3,7 @@
 #include "83hw.hpp"
 #include "link.hpp"
 #include "../core/device.hpp"
-#include "calc.hpp"
+#include "../interface/calc.hpp"
 static double timer_freq83[4] = {1.0f / 600.0f, 1.0f / 257.14f, 1.0f / 163.63f, 1.0f / 120.0f};
 
 #define SWAP_BANK	0xFF

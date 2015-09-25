@@ -1,7 +1,7 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include "core.hpp"
+#include "../core/core.hpp"
 #include "../utilities/var.hpp"		// TIFILE
 
 typedef struct apphdr {

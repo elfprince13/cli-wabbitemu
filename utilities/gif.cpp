@@ -21,10 +21,8 @@
  * Compuserve Incorporated.
  */
 
-#include "calc.hpp"
-#ifndef WINVER
+#include "../interface/calc.hpp"
 #include "../core/coretypes.hpp"
-#endif
 
 //#include "gif.h" // uhh...
 

@@ -5,7 +5,7 @@
 #include "registry.h"
 #endif
 
-#include "calc.hpp"
+#include "../interface/calc.hpp"
 
 /* 
  * Differing interpretations of contrast require that

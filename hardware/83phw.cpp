@@ -3,7 +3,7 @@
 #include "83phw.hpp"
 #include "link.hpp"
 #include "../core/device.hpp"
-#include "calc.hpp"
+#include "../interface/calc.hpp"
 #include "83psehw.hpp"
 #ifdef WINVER
 #include "dbbreakpoints.h"

@@ -6,7 +6,7 @@
 #include "sound.h"		// audio_t
 #endif
 
-#include "var.hpp"
+#include "../utilities/var.hpp"
 #include "../interface/state.hpp"
 
 // Link timing

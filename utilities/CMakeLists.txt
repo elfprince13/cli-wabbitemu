@@ -6,7 +6,7 @@ add_library(wabbitutilities
 	label.cpp 
 	savestate.cpp 
 	sendfile.cpp 
-	sound.cpp 
+	#sound.cpp 
 	var.cpp 
 	zlibcmp.cpp)
 

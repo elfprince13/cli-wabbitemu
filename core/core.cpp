@@ -4,8 +4,8 @@
 #include "alu.hpp"
 #include "indexcb.hpp"
 #include "control.hpp"
-#include "83phw.hpp"
-#include "83psehw.hpp"
+#include "../hardware/83phw.hpp"
+#include "../hardware/83psehw.hpp"
 #include "optable.hpp"
 #ifdef WITH_REVERSE
 #include "alu_reverse.h"

@@ -1,6 +1,6 @@
-#include "var.hpp"
+#include "../utilities/var.hpp"
 #include "link.hpp"
-#include "calc.hpp"
+#include "../interface/calc.hpp"
 #include "lcd.hpp"	//lcd->active
 #include "keys.hpp"	//key_press
 

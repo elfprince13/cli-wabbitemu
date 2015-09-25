@@ -1,7 +1,7 @@
 #include "../core/coretypes.hpp"
 
 #include "fileutilities.hpp"
-#include "../libcrane/crane.h"
+#include "../libs/libcrane/include/crane.h"
 
 
 // These are terrifyingly unsafe.
