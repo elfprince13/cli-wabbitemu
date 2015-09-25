@@ -11,8 +11,8 @@ It is designed to run on any system which offers an ncurses interface (I expect 
 
 CLI-WabbitEmu is currently in the very early stages of development, but I hope to achieve feature parity with other WabbitEmu distributions down the road. 
 
-Where did it come from CLI-WabbitEmu?
--------------------------------------
+Where did CLI-WabbitEmu come from?
+----------------------------------
 This project is a fork of [Albert Huang's wxWabbitemu](https://github.com/alberthdev/wxwabbitemu), which in turn is a fork of the original [RevSoft WabbitEmu](https://wabbit.codeplex.com/).
 
 Building CLI-WabbitEmu
@@ -36,4 +36,4 @@ Other Stuff
 -----------
 That's it! We hope you enjoy CLI-WabbitEmu! Should it fail to do
 something, or crash, please help us by reporting bugs in our 
-issue tracker, located at [here](https://github.com/elfprince13/cli-wabbitemu/issues).
+issue tracker, located [here](https://github.com/elfprince13/cli-wabbitemu/issues).
