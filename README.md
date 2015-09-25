@@ -1,6 +1,5 @@
 CLI-WabbitEmu README
 ====================
-Updated: 06/11/2012
 
 What is CLI-WabbitEmu?
 ----------------------
@@ -19,21 +18,20 @@ This project is a fork of [Albert Huang's wxWabbitemu](https://github.com/albert
 Building CLI-WabbitEmu
 ---------------------
 You need the following:
-	* A working C compiler. This includes, but is not limited to,
-	  GCC and Clang.
-	* ncurses, panel, form, and menu. These are all very low-level libraries and are likely already installed on your machine if you're running any sort of modern Unix-like OS. 
-	* CMake (at least version 2.8.11).
-	* An IDE or build system for CMake to generate project files for.
-
+* A working C compiler. This includes, but is not limited to, GCC and Clang.
+* ncurses, panel, form, and menu. These are all very low-level libraries and are likely already installed on your machine if you're running any sort of modern Unix-like OS. 
+* CMake (at least version 2.8.11).
+* An IDE or build system for CMake to generate project files for.
 Once you have installed the dependencies, you can go ahead and start the build!
 
 In a terminal type, navigate to the directory containing this README, then execute the following.
-	mkdir build && cd build
-	cmake ..
-	make
+* `mkdir build && cd build`
+* `cmake ..`
+* `make`
+If you wish to use a different project generator, e.g. XCode, pass the `-G` option to `cmake`, and the appropriate project generator name.
 
-If you wish to use a different project generator, e.g. XCode, pass the -G option to cmake, and the appropriate project generator name.
-
+Other Stuff
+-----------
 That's it! We hope you enjoy CLI-WabbitEmu! Should it fail to do
 something, or crash, please help us by reporting bugs in our 
 issue tracker, located at [here](https://github.com/elfprince13/cli-wabbitemu/issues).
