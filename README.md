@@ -22,12 +22,14 @@ You need the following:
 * ncurses, panel, form, and menu. These are all very low-level libraries and are likely already installed on your machine if you're running any sort of modern Unix-like OS. 
 * CMake (at least version 2.8.11).
 * An IDE or build system for CMake to generate project files for.
+
 Once you have installed the dependencies, you can go ahead and start the build!
 
 In a terminal type, navigate to the directory containing this README, then execute the following.
 * `mkdir build && cd build`
 * `cmake ..`
 * `make`
+
 If you wish to use a different project generator, e.g. XCode, pass the `-G` option to `cmake`, and the appropriate project generator name.
 
 Other Stuff
