@@ -13,8 +13,7 @@
 
 
 #define MAX_FILES 255
-typedef struct ParsedCmdArgs
-{
+typedef struct {
 	const char * rom_files[MAX_FILES];
 	const char * utility_files[MAX_FILES];
 	const char * archive_files[MAX_FILES];
@@ -26,9 +25,13 @@ typedef struct ParsedCmdArgs
 	bool silent_mode;
 	bool force_new_instance;
 	bool force_focus;
-} ParsedCmdArgs_t;
+} ParsedCmdArgs;
 
 class WabbitInstance {
+	
+public:
+	ParsedCmdArgs parsedArgs;
+	bool parseArgs(const char ** argv, size_t argc);
 	
 };
 
